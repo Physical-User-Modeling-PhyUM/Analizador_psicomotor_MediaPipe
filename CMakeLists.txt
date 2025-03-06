@@ -11,6 +11,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 set(PROJECT_SOURCES
         main.cpp
@@ -23,11 +25,26 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(pfg
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        videoCapture.py
+
         posevisualizer.h posevisualizer.cpp
-        Usuarios/usuario.h Usuarios/usuario.cpp
-        Usuarios/gestordeusuarios.h Usuarios/gestordeusuarios.cpp
-        Usuarios/bdusuarios.h Usuarios/bdusuarios.cpp
+        profiles/user.h profiles/user.cpp
+        profiles/fitnesstrainer.h profiles/fitnesstrainer.cpp
+        profiles/userdbmanager.h profiles/userdbmanager.cpp
+        profiles/client.h profiles/client.cpp
+        profiles/admin.h profiles/admin.cpp
+        profiles/usermanager.h profiles/usermanager.cpp
+        profiles/userpreferences.h profiles/userpreferences.cpp
+        profiles/userfactory.h profiles/userfactory.cpp
+        mediapipePy/VideoCapture.py
+
+
+
+
+
+
+
+
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET pfg APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -47,7 +64,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(pfg PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(pfg PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${OpenCV_LIBS})
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
