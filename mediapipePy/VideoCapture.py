@@ -1,113 +1,229 @@
 import cv2
 import mediapipe as mp
 import numpy as np
-import multiprocessing.shared_memory as shm
 import json
-import threading
 import time
+import os
+import atexit
+import struct
+import mmap
+import posix_ipc
 
-# Configuraciion de Mediapipe
-
-mp_pose = mp.solutions.pose
-pose = mp_pose.Pose()
-
-# Se obtienen las dimensiones de la imagen para calcular su tamaño
-WIDTH, HEIGHT = 640, 480
-FRAME_SIZE = WIDTH * HEIGHT * 3  # Total de bytes en una imagen RGB
-
-#Debemos pasar las imagenes y los keypoints a la aplicación. Por tanto creamos memorias compartidas para
-#las imagenes y para los keypoints que luego recuperaremos.
-
-# Crear memoria compartida para imágenes de las dos cámaras
-mem_cam1 = shm.SharedMemory( name="mem_cam1",create=True, size=FRAME_SIZE,)
-mem_cam2 = shm.SharedMemory( name="mem_cam2",create=True, size=FRAME_SIZE)
-
-# Crear memoria compartida para los keypoints (formato JSON)
-mem_kp = shm.SharedMemory(create=True, size=2048, name="shm_keypoints")  # 2KB para los datos de keypoints
+class VideoCapture:
 
 
-
-#función que asigna una memoria a compartida a una camara y lee la imagende la misma
-def capture_camera(camera_index, mem_name):
-
-    cap = cv2.VideoCapture(camera_index)
-    if not cap.isOpened():
-        print(f"Error: No se pudo obtener la imagen de la camara {camera_index}")
-        return
-
-    memory = shm.SharedMemory(name=mem_name)
-
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            continue
-
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-        #obtenemos el array con la imagen de la cámara
-        #Escribimos la imagen en la memoria compartida
-        np_frame = np.array(frame_rgb, dtype=np.uint8).flatten()
-        # memory.buf[:FRAME_SIZE] = np_frame
-        memory.buf[:FRAME_SIZE] = np_frame.tobytes()
-        #  pausa de  sincronizacion
-        cv2.waitKey(1)
+    def __init__(self, camera_index=0):
+        #incializamos la clase
 
 
+        self.camera_index = camera_index
+        self.running = False
 
-# Funcion que captura las imágenes de las cámaras y obtienen los keypoints.
-def process_pose():
+        # Cargar configuración
+        config = self.load_config()
+        if(camera_index==0):
+            self.shm_name = config.get("CAM1", "/cam1")
+        else:
+            self.shm_name = config.get("CAM2", "/cam2")
 
-    cap1 = cv2.VideoCapture(0)  # Primera cámara
-    cap2 = cv2.VideoCapture(1)  # Segunda cámara
+        self.WIDTH = config.get("WIDTH", 640)
+        self.HEIGHT = config.get("HEIGHT", 480)
+        self.JSON_SIZE = config.get("JSON_SIZE", 4096)
+        self.FLAG_SIZE = 4
+        self.FRAME_SIZE = self.WIDTH * self.HEIGHT * 3  # Tamaño de la imagen en RGB
+        self.TOTAL_SIZE = self.FRAME_SIZE + self.JSON_SIZE
+        #self.TOTAL_SIZE = 512
+        if camera_index == 0:
+            self.SEM_SHM = config.get("SEM_SHM1", "/semShm1")
+        else:
+            self.SEM_SHM = config.get("SEM_SHM2", "/semShm2")
+        #self.sem = posix_ipc.Semaphore( self.SEM_SHM)
+        # Crear semáforo
+        print("Escritor> Creando el semáforo...")
+        self.sem = posix_ipc.Semaphore(self.SEM_SHM , posix_ipc.O_CREAT, initial_value=1)
 
-    if not cap1.isOpened() or not cap2.isOpened():
-        print("Error: No se pudo obtener la imagen de la camara")
-        return
+        # Imprimir configuración cargada
+        print( "=== Configuración Cargada ===")
+        print ("SHM: " + self.shm_name)
+        print ("WIDTH: " + str(self.WIDTH))
+        print ("HEIGHT: " + str(self.HEIGHT))
+        print ("JSON_SIZE: " + str(self.JSON_SIZE))
+        print ("FLAG_SIZE: " + str(self.FLAG_SIZE))
+        print ("FRAME_SIZE: " + str(self.FRAME_SIZE))
+        print ("TOTAL_SIZE: " + str(self.TOTAL_SIZE))
+        print ("SEM_SHM: " + self.SEM_SHM)
+        print ("=============================")
 
-    while True:
-        #leemos las imagenes de las camaras
-        ret1, frame1 = cap1.read()
-        ret2, frame2 = cap2.read()
 
-        # si falla la captura de alguna se intentara otra vez, así nos aseguramos que los keypoints esten sincronizados
-        if not ret1 or not ret2:
-            continue
+        # Configurar MediaPipe Pose
+        self.pose = mp.solutions.pose.Pose()
 
-        # Convertir imágenes a formato RGB
-        img_frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2RGB)
-        img_frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2RGB)
+        # Crear memoria compartida
+        self.mem = self.openMem(self.shm_name)
 
-        results1 = pose.process(img_frame1)
-        results2 = pose.process(img_frame2)
+        # Asegurar limpieza al finalizar
+        #atexit.register(self.cleanup)
 
-        #diccionario para almacenar los keypoints de las camaras tomados al mismo tiempo y la marca temporal
-        keypoints = {
-                 "timestamp": timestamp, #en milisegundos
-                 "cam1": {},
-                 "cam2": {}
-        }
+    # Cargar la configuración desde el archivo JSON
+    def load_config(self):
+        # Obtener la ruta del directorio donde está el script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
 
-        # se obtinenen los keypoints de la primera cámara
-        #se multiplica por la altura para obtener el tamaño real de pixeles
-        if results1.pose_landmarks:
-            for idx, lm in enumerate(results1.pose_landmarks.landmark):
-                keypoints["cam1"][idx] = [lm.x * WIDTH, lm.y * HEIGHT]
-        # se obtinenen los keypoints de la segunda cámara
-        if results2.pose_landmarks:
-            for idx, lm in enumerate(results2.pose_landmarks.landmark):
-                keypoints["cam2"][idx] = [lm.x * WIDTH, lm.y * HEIGHT]
+        # Crear la ruta del archivo dentro de ese directorio
+        json_path = os.path.join( script_dir , "config/poseConfig.json")
+        print( "ruta del archivo ce configuración"+json_path  )
 
-        # Se guardan los keypoints en memoria
-        json_data = json.dumps(keypoints)
-        mem_kp.buf[:len(json_data)] = json_data.encode('utf-8')
+        try:
+            with open(json_path, "r") as file:
+                config = json.load(file)
+                return config
 
-        cv2.waitKey(1)  # Espera pequeña para sincronización
 
-# Lanzar hilos para capturar imágenes en paralelo
-threading.Thread(target=capture_camera, args=(0, "mem_cam1"), daemon=True).start()
-threading.Thread(target=capture_camera, args=(1, "mem_cam2"), daemon=True).start()
-threading.Thread(target=process_pose, daemon=True).start()
+        except FileNotFoundError:
+            print(" Python>Error: No se encontró el archivo config.json en "+json_path)
+            exit(1)
+        except json.JSONDecodeError:
+            print("Python>Error: El archivo config.json tiene un formato inválido")
+            exit(1)
 
-# Mantener el proceso en ejecución
-while True:
-    pass
+    #función que inicializa la memoria compartida
+    def openMem(self,shm_name):
+        while True:
+                try:
+                    #shm_path = f"/tmp{shm_name}"
+                    #fd = os.open(shm_path, os.O_CREAT | os.O_RDWR)
+                    #os.ftruncate(fd, self.TOTAL_SIZE)  # Ajustar tamaño de la memoria
+                    # Mapear la memoria compartida
+                    #mem_map = mmap.mmap(fd, self.TOTAL_SIZE, mmap.MAP_SHARED, mmap.PROT_WRITE)
+
+                    # Crear memoria compartida POSIX correctamente
+                    self.mem = posix_ipc.SharedMemory(self.shm_name, posix_ipc.O_CREAT, size=self.TOTAL_SIZE)
+                    mem_map = mmap.mmap( self.mem.fd, self.TOTAL_SIZE, mmap.MAP_SHARED, mmap.PROT_WRITE)
+                    self.mem.close_fd()
+
+                    print(f"Python> Memoria compartida {shm_name} conectada correctamente.")
+
+                    return mem_map
+                except FileNotFoundError:
+                    print("Python> Esperando a que C++ cree la memoria compartida...")
+                    time.sleep(1)
+
+
+    #función que lee la imagende la la cámara
+    def start(self):
+
+        cap = cv2.VideoCapture(self.camera_index)
+        if not cap.isOpened():
+            print(f"Error: No se pudo abrir la cámara {self.camera_index}")
+            cap.release()  # Asegura que la cámara se libere
+            return
+
+
+        try:
+            while True:
+                ret, frame = cap.read()
+                if not ret:
+                    continue  # Si falla ,se intenta nuevamente
+
+                # Convertir la imagen a RGB y escribirla en memoria compartida
+                fullframe_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                frame_rgb = cv2.resize(fullframe_rgb, (self.WIDTH, self.HEIGHT))
+                np_frame = np.array(frame_rgb, dtype=np.uint8).flatten()
+
+                frameRawData=np_frame.tobytes()
+
+
+                # Obtenemos los timestamp en milisegundos para poder sincronizar los keypoints
+                timestamp = int(time.time() * 1000)
+
+                # Procesamos los keypoints con Mediapipe
+                results = self.pose.process(frame_rgb)
+
+                keypoints = {
+                        "timestamp": timestamp,
+                        "keypoints": {}
+                }
+
+                if results.pose_landmarks:
+                    for idx, lm in enumerate(results.pose_landmarks.landmark):
+                        keypoints["keypoints"][idx] = [lm.x * self.WIDTH, lm.y * self.HEIGHT]
+
+                #creamos el JSON
+                json_data = json.dumps(keypoints).encode('utf-8')
+
+
+                #comprobamos que el los datos no son mas grandes que la memoria compartida
+                if len(frameRawData) > self.FRAME_SIZE:
+                    print(f"Python>Error: La imagen '{len(frameRawData)} es demasiado grande para la memoria compartida '{self.frame_size} ")
+                    continue
+                if len(json_data) > self.JSON_SIZE:
+                    print("Python>Error: Los keypoints son demasiado grandes para la memoria compartida")
+                    continue
+
+                # Se guardan los keypoints en memoria compartida con formato JSON
+                # Asegurar que el JSON ocupa exactamente self.JSON_SIZE bytes
+                json_padded = json_data.ljust(self.JSON_SIZE, b'\x00')[:self.JSON_SIZE]
+                # Asegurar que el JSON ocupa exactamente self.JSON_SIZE bytes
+                json_padded = json_data.ljust(self.JSON_SIZE, b'\x00')[:self.JSON_SIZE]
+
+                # Se guardan los datos en memoria compartida
+                self.sem.acquire()
+
+                #mensaje = f"Hola desde el proceso escritor! Mensaje en {int(time.time())}".encode('utf-8')
+                #self.mem.seek(0)  # Mover al inicio de la memoria compartida
+                #self.mem.write(mensaje.ljust( self.TOTAL_SIZE, b'\x00'))  # Escribir y rellenar con '\0'
+                #print(f"Escritor> Mensaje escrito: {mensaje.decode('utf-8')}")
+
+                # Escribir imagen en memoria compartida
+                self.mem.seek(0)
+                self.mem.write(frameRawData)
+                # Escribir JSON en memoria compartida
+                self.mem.seek(self.FRAME_SIZE)
+                self.mem.write(json_padded)
+
+                #vamos a ller los datos  escrita en la memoria compartida
+                self.mem.seek(0)
+                readFrameRawData = self.mem.read(self.FRAME_SIZE)
+
+                self.mem.seek(self.FRAME_SIZE)
+                json_raw = self.mem.read(self.JSON_SIZE)
+                json_str = json_raw.split(b'\x00', 1)[0].decode('utf-8')  # Eliminar bytes nulos
+                try:
+                    json_data = json.loads(json_str)
+                except json.JSONDecodeError:
+                    json_data = {"error": "No se pudo decodificar el JSON"}
+
+                self.sem.release()
+
+                #comprobamos los datos escritos
+                print(f"Python> Escribiendo imagen de {len(frameRawData)} bytes y JSON de {len(json_padded)} bytes en memoria.")
+
+               # Imprimir JSON en consola
+                print("JSON leído desde memoria compartida:", json.dumps(json_data, indent=4))
+
+                np_frame = np.frombuffer(readFrameRawData, dtype=np.uint8).reshape((self.HEIGHT, self.WIDTH, 3))
+                cv2.imshow("Imagen desde Memoria Compartida", np_frame)
+                cv2.waitKey(1)
+
+        except KeyboardInterrupt:
+            print("\nPython> Detenido manualmente.")
+        finally:
+            print("VideoCapture> Liberando recursos...")
+            cap.release()
+            self.cleanup()
+            print("VideoCapture> Memoria cerrada correctamente (NO eliminada).")
+
+    def cleanup(self):
+        print("Liberando memoria compartida...")
+        self.mem.close()
+        self.sem.close()
+
+
+
+
+
+# Ejecutar la captura de video
+if __name__ == "__main__":
+    video_capture = VideoCapture(camera_index=0)
+    video_capture.start()
+
