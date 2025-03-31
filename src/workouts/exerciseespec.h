@@ -18,7 +18,15 @@ private:
     int idEx;
     QString name;
     QString description;
+    QString exersiseType;
     QString targetMuscle;
+    QString Equipment;
+    int series=-1;
+    int repetitions=-1;
+    int duration=-1;
+    int weight=-1;
+    int restTime=-1;
+
     QList<State> statesList;
     QHash<QPair<int, int>, QSet<Condition>> transitionTable;
 };

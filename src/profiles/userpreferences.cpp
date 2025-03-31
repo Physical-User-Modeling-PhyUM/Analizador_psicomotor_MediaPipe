@@ -14,3 +14,8 @@ int UserPreferences::getId() const
 {
     return 0;
 }
+
+int UserPreferences::getUserId() const
+{
+    return idUser;
+}

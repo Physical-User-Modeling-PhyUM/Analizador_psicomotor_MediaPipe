@@ -2,17 +2,30 @@
 #define ADMIN_H
 
 #include "user.h"
+#include "enums/GeneralDataEnum.h"
 
 class Admin : public User {
 public:
-    explicit Admin(int id, const QString &userName, const QString &email, const QString &password, int permissionLevel, QObject *parent = nullptr);
-    void assignPlan(int planId, const QDateTime &startDate, const QDateTime &endDate) override;
+    explicit Admin(QMap<UserField, QVariant> dataMap, QObject *parent = nullptr);
+
 
     int getPermissionLevel() const;
     void setPermissionLevel(int newLevel);
 
+    QString getRoleDescription() const;
+    void setRoleDescription(const QString &desc);
+
+    bool canManage() const;
+    void setCanManage(bool value);
+
+    bool canModifyTrainingPlans() const;
+    void setCanModifyTrainingPlans(bool value);
+
 private:
     int permissionLevel;
+    QString roleDescription;
+    bool canManageUsers;
+    bool canModifyPlans;
 };
 
 #endif // ADMIN_H

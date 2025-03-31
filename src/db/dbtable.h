@@ -16,6 +16,7 @@ public:
     QString getColumnName(int columnNumber) const;
     void setColumns(const QStringList& colNames);
     void addRow(const QList<QVariant>& rowData) ;
+    QList<QVariant> getRow(int rowIndex) const;
 
 private:
     QString tableName;

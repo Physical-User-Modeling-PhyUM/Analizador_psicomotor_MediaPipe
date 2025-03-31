@@ -8,16 +8,16 @@ PoseManager::PoseManager(StateMachine& poseAnalyzer,QWidget *parent,bool dualMod
     : QMainWindow(parent),poseAnalyzer(poseAnalyzer), dualMode(dualMode) {
     try {
 
-            loadConfig();
+        loadConfig();
 
 
-            startPythonProcesses();
-            qDebug(PoseManagerLog) << "Constructor PoseManager: dualMode= " << dualMode;
-            //init();
+        startPythonProcesses();
+        qDebug(PoseManagerLog) << "Constructor PoseManager: dualMode= " << dualMode;
+        //init();
 
 
     }catch(const std::exception &e) {
-       qCritical(PoseManagerLog) << "Error fatal:" << e.what();
+        qCritical(PoseManagerLog) << "Error fatal:" << e.what();
     }
 }
 
@@ -104,7 +104,7 @@ void PoseManager::startPythonProcesses() {
 
     // Comprobar si el script de Python existe antes de ejecutarlo
     if (!QFile::exists(scriptPath)) {
-       qCritical(PoseManagerLog) <<"Error: No se encontró el script de Python en " << scriptPath.toStdString() ;
+        qCritical(PoseManagerLog) <<"Error: No se encontró el script de Python en " << scriptPath.toStdString() ;
         shm_unlink(CAM_1.toUtf8().constData());
         return;
     }
@@ -151,7 +151,7 @@ bool PoseManager::connectSharedMemory() {
     //shm_1 = (unsigned char*) mmap(NULL, TOTAL_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd1, 0);
     shm_1 = (char*) mmap(NULL, TOTAL_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd1, 0);
     if (shm_1 == MAP_FAILED) {
-         qCritical(PoseManagerLog) << "> Error al mapear la memoria compartida "<<CAM_1;
+        qCritical(PoseManagerLog) << "> Error al mapear la memoria compartida "<<CAM_1;
         return false;
     }
     if (dualMode){
@@ -179,7 +179,7 @@ bool PoseManager::connectSharedMemory() {
         }
 
     }
-     qDebug(PoseManagerLog) << "PoseManager (C++)> Conectado a la memoria compartida ...fd= "<<shm_fd1;
+    qDebug(PoseManagerLog) << "PoseManager (C++)> Conectado a la memoria compartida ...fd= "<<shm_fd1;
     return true;
 }
 
@@ -187,7 +187,7 @@ void PoseManager::stopPythonProcesses() {
 
     process_cam1->terminate();
     if (dualMode) process_cam2->terminate();
-   qDebug(PoseManagerLog) << "=== Capturador parado ===";
+    qDebug(PoseManagerLog) << "=== Capturador parado ===";
 }
 
 Pose *PoseManager::getNewPose(QString cam_name,sem_t* sem,unsigned char *shm, int64_t &lastTimestamp) {
@@ -235,7 +235,7 @@ Pose *PoseManager::getNewPose(QString cam_name,sem_t* sem,unsigned char *shm, in
 
     // se lee el JSON y se busca un timestamp
     if (!json_data.contains("timestamp")) {
-         qCritical(PoseManagerLog)<< "Error: La memoria no contiene un timestamp";
+        qCritical(PoseManagerLog)<< "Error: La memoria no contiene un timestamp";
         return nullptr;
     }
 
@@ -243,7 +243,7 @@ Pose *PoseManager::getNewPose(QString cam_name,sem_t* sem,unsigned char *shm, in
 
     // Comprobar si la pose ya fue procesada
     if (timestamp == lastTimestamp) {
-         qWarning(PoseManagerLog) << "Error: La memoria no contiene una nueva pose";
+        qWarning(PoseManagerLog) << "Error: La memoria no contiene una nueva pose";
         return nullptr;
     }
 
@@ -302,7 +302,7 @@ void PoseManager::init(TrainingSesion sesion) {
             }
             if (pose2!=nullptr){
                 for (auto it = pose2->getAngles().constBegin(); it != pose2->getAngles().constEnd(); ++it) {
-                        angles.insert(it.key()+"_L", it.value());
+                    angles.insert(it.key()+"_L", it.value());
                 }
                 pose2->drawKeypoints();
                 emit newImage2(pose2->getImage_bgr());
@@ -364,7 +364,7 @@ void PoseManager::testShareMemory(){
 }
 
 void PoseManager::PythonProccesLogOutput(){
-  qDebug(PoseManagerLog) << "Python output: " << process_cam1->readAllStandardOutput();
+    qDebug(PoseManagerLog) << "Python output: " << process_cam1->readAllStandardOutput();
 
 
 

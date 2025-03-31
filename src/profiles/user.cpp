@@ -62,3 +62,13 @@ void User::setProfile_Picture(const QImage &newProfile_Picture)
 {
     profile_Picture = newProfile_Picture;
 }
+
+UserType User::getUserType() const
+{
+    return userType;
+}
+
+void User::setUserType(UserType newUserType)
+{
+    userType = newUserType;
+}

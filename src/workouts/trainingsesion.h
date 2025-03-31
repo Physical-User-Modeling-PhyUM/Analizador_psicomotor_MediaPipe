@@ -17,8 +17,9 @@ public:
 private:
     int IdSesion;
     int idClient;
-    ExerciseEspec espec;
-    Exercise ex;
+    int espec;
+    //ExerciseEspec espec;
+    //Exercise ex;
     QDateTime date;
     qint64 Duration;
     SesionReport report;

@@ -3,12 +3,14 @@
 
 #include <QObject>
 #include <QList>
-#include <memory>
+
 
 #include "profiles/profiles.h"
 
-#include "db/DBManager.h"
-#include "profiles/userdatatypes.h"
+#include "core/DBManager.h"
+#include <QPointer>
+#include "enums/enums.h"
+
 
 class UserRepository : public QObject {
     Q_OBJECT
@@ -17,15 +19,22 @@ public:
 
     QPointer<User> getUserById(int id);
 
-    QList<QPointer<User>> getAllUsers();
     DBTable listUsers(UserType tipo);
+
     DBTable getUsersData(UserType tipo);
+
+    QPointer<ClientProfile> getClientProfile(int idClient);
+    void saveClientProfile(const ClientProfile& profile);
 
     void saveUser(const User& user);
     void deleteUser(int id);
 
+    int checkUserName (QString newUserName) const;
+
 private:
     DBManager* db;
+
+
 };
 
 #endif // USERREPOSITORY_H

@@ -15,6 +15,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Test Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Test Core)
 find_package(OpenCV REQUIRED)
 find_package(nlohmann_json REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Sql)
 
 # Incluir directorios
 include_directories(${Qt6Widgets_INCLUDE_DIRS})
@@ -24,27 +25,31 @@ include_directories(/usr/local/opt/sqlite/include)
 link_directories(/usr/local/opt/sqlite/lib)
 
 
-# Definir fuentes del ejecutable principal (SIN TESTS)
+# Definir fuentes del ejecutable principal
 set(PROJECT_SOURCES
     src/main.cpp
     src/mainwindow.cpp
     src/mainwindow.h
     src/mainwindow.ui
+
+
     src/profiles/user.h src/profiles/user.cpp
     src/profiles/fitnesstrainer.h src/profiles/fitnesstrainer.cpp
-
     src/profiles/client.h src/profiles/client.cpp
     src/profiles/admin.h src/profiles/admin.cpp
-    src/profiles/usermanager.h src/profiles/usermanager.cpp
     src/profiles/userpreferences.h src/profiles/userpreferences.cpp
 
     mediapipePy/VideoCapture.py
-    src/pose/posemanager.h src/pose/posemanager.cpp
+
     src/pose/pose.h src/pose/pose.cpp
     src/pose/poseanalyzer.h src/pose/poseanalyzer.cpp
     src/pose/feedback.h src/pose/feedback.cpp
-    config/poseConfig.json
     src/pose/state.h src/pose/state.cpp
+
+    config/poseConfig.json
+
+    config/schema.sql
+
 
 
 )
@@ -63,11 +68,42 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/pose/sesionreport.h src/pose/sesionreport.cpp
 
         src/repositories/userrepository.h src/repositories/userrepository.cpp
-        src/db/dbmanager.h src/db/dbmanager.cpp
+
         src/db/dbtable.h src/db/dbtable.cpp
-        src/profiles/Userdatatypes.h
+
         src/profiles/profiles.h
-        src/profiles/profileRecords.h)
+
+        src/enums/MorfologicalFields.h
+        src/enums/MobilityLevelEnum.h
+        src/enums/FeedbackModeEnum.h
+        src/enums/GenderEnum.h
+        src/enums/UserTypeEnum.h
+        src/enums/PreferencesFieldEnum.h
+        src/enums/GeneralDataEnum.h
+        src/enums/FunctionalFieldEnum.h
+        src/enums/enums.h
+
+        src/profiles/clientprofile.h src/profiles/clientprofile.cpp
+        src/enums/RoMFields.h
+        src/enums/MedicalRecordsEnum.h
+        src/enums/LifeStyleFields.h
+
+        src/repositories/trainingrepository.h src/repositories/trainingrepository.cpp
+        src/workouts/trainingworkout.h src/workouts/trainingworkout.cpp
+        src/enums/UserFieldEnum.h
+        src/enums/ClientProfileDataType.h
+        src/repositories/metricsrepository.h src/repositories/metricsrepository.cpp
+        src/metrics/performancemetric.h src/metrics/performancemetric.cpp
+        src/enums/TypeBDEnum.h
+
+        src/core/core.h src/core/core.cpp
+        src/core/dbmanager.h src/core/dbmanager.cpp
+        src/core/trainingmanager.h src/core/trainingmanager.cpp
+        src/core/posemanager.h src/core/posemanager.cpp
+        src/core/usermanager.h src/core/usermanager.cpp
+        src/core/loginmanager.h src/core/loginmanager.cpp
+
+        )
 else()
     add_executable(pfg ${PROJECT_SOURCES})
 endif()
@@ -80,7 +116,7 @@ target_link_libraries(pfg PRIVATE
     nlohmann_json::nlohmann_json
     sqlite3
 )
-
+target_link_libraries(pfg PRIVATE Qt6::Sql)
 # -------------------
 # COMPILAR TESTS COMO EJECUTABLES SEPARADOS
 # -------------------
@@ -116,6 +152,7 @@ add_executable(Test_Integration
     src/pose/feedback.cpp
 )
 target_link_libraries(Test_Integration PRIVATE
+
     Qt${QT_VERSION_MAJOR}::Test
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Core
@@ -125,10 +162,12 @@ target_link_libraries(Test_Integration PRIVATE
 )
 
 # Test funcional (Enlaza con posemanager.cpp y pose.cpp)
-add_executable(Test_Functional  src/pose/posemanager.cpp src/pose/pose.cpp src/pose/poseanalyzer.cpp src/pose/feedback.cpp
+add_executable(Test_Functional
 
+    src/pose/posemanager.cpp src/pose/pose.cpp src/pose/poseanalyzer.cpp src/pose/feedback.cpp
     test/functional/functional_test_pose.h test/functional/functional_test_pose.cpp
     test/functional/main.cpp
+    src/core/metricsmanager.h src/core/metricsmanager.cpp
 )
 target_link_libraries(Test_Functional PRIVATE Qt${QT_VERSION_MAJOR}::Test Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Core nlohmann_json::nlohmann_json ${OpenCV_LIBS})
 

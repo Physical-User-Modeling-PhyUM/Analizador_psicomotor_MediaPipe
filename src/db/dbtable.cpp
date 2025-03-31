@@ -1,9 +1,9 @@
 #include "dbtable.h"
 
-BDTable::BDTable(QString tableName):tableName(tableName) {}
+DBTable::DBTable(QString tableName):tableName(tableName) {}
 
 
-QVariant BDTable::value(int row, const QString& column) const
+QVariant DBTable::value(int row, const QString& column) const
 {
     int colIndex = columns.indexOf(column);
 
@@ -12,21 +12,29 @@ QVariant BDTable::value(int row, const QString& column) const
     return rows[row][colIndex];
 }
 
-int  BDTable::rowCount() const { return rows.size();}
+int  DBTable::rowCount() const { return rows.size();}
 
 
-int BDTable::columnCount() const { return columns.size(); }
+int DBTable::columnCount() const { return columns.size(); }
 
-QStringList BDTable::getColumnsNames() const {return columns;}
+QStringList DBTable::getColumnsNames() const {return columns;}
 
-QString BDTable::getColumnName(int columnNumber) const{
+QString DBTable::getColumnName(int columnNumber) const{
     return columns[columnNumber];
 }
 
-void BDTable::setColumns(const QStringList& colNames) {
+void DBTable::setColumns(const QStringList& colNames) {
     columns = colNames;
 }
 
-void BDTable::addRow(const QList<QVariant>& rowData) {
+void DBTable::addRow(const QList<QVariant>& rowData) {
     rows.append(rowData);
+}
+
+QList<QVariant> DBTable::getRow(int rowIndex) const {
+    QList<QVariant> row;
+    for (const QString& col : columns) {
+        row.append(value(rowIndex, col));
+    }
+    return row;
 }

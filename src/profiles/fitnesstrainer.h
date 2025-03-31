@@ -2,17 +2,30 @@
 #define FITNESSTRAINER_H
 
 #include "user.h"
+#include "enums/GeneralDataEnum.h"
 
 class FitnessTrainer : public User {
 public:
-    explicit FitnessTrainer(int id, const QString &userName, const QString &email, const QString &password, const QString &qualifications, QObject *parent = nullptr);
-    void assignPlan(int planId, const QDateTime &startDate, const QDateTime &endDate) override;
+    explicit FitnessTrainer(QMap<UserField, QVariant> dataMap, QObject *parent = nullptr);
+
 
     QString getQualifications() const;
     void setQualifications(const QString &newQualifications);
 
+    QString getSpecialtyArea() const;
+    void setSpecialtyArea(const QString &area);
+
+    int getYearsOfExperience() const;
+    void setYearsOfExperience(int years);
+
+    QString getResume() const;
+    void setResume(const QString &newResume);
+
 private:
     QString qualifications;
+    QString specialtyArea;
+    int experienceYears;
+    QString resume;
 };
 
 #endif // FITNESSTRAINER_H

@@ -9,10 +9,10 @@
 #include <QTimer>
 #include <nlohmann/json.hpp>
 #include <opencv2/opencv.hpp>
-#include "pose.h"
+#include "pose/pose.h"
 //#include "poseanalyzer.h"
-#include "statemachine.h"
-#include "feedback.h"
+#include "pose/statemachine.h"
+#include "pose/feedback.h"
 #include <QDateTime>
 #include <qthread.h>
 #include <fstream>
@@ -26,7 +26,8 @@
 #include <semaphore.h>
 #include <sys/stat.h>
 #include "workouts/trainingSesion.h"
-
+#include "QMainWindow.h"
+#include "pose/StateMachine.h"
 
 Q_DECLARE_LOGGING_CATEGORY(PoseManagerLog)
 

@@ -1,34 +1,52 @@
 #include "client.h"
 
 
-Client::Client(QMap<DataType, QVariant> dataMap, QObject* parent)
+Client::Client(QMap<UserField, QVariant> dataMap, QObject* parent)
     : User(
-          dataMap.value(DataType::IdUser).toInt(),
-          dataMap.value(DataType::UserName).toString(),
-          dataMap.value(DataType::Email).toString(),
-          dataMap.value(DataType::Pass).toString(),
+          dataMap.value(UserField::IdUser).toInt(),
+          dataMap.value(UserField::UserName).toString(),
+          dataMap.value(UserField::Email).toString(),
+          dataMap.value(UserField::Pass).toString(),
           parent
-          ),
-    expLevel(dataMap.value(DataType::Level).toInt())
+          )
+
 {
-    if (!dataMap.contains(DataType::IdUser)
-        || !dataMap.contains(DataType::UserName)
-        ||!dataMap.contains(DataType::Email)
-        || !dataMap.contains(DataType::Pass)) {
+    if (!dataMap.contains(UserField::IdUser)
+        || !dataMap.contains(UserField::UserName)
+        ||!dataMap.contains(UserField::Email)
+        || !dataMap.contains(UserField::Pass)) {
         qWarning() << "Error: Faltan campos requeridos para crear un Client";
         return;
     }
+
+}
+Client::~Client() = default;
+
+// void Client::assignPlan(int planId, const QDateTime &startDate, const QDateTime &endDate) {
+//     // A ver  que estructura se usa para esto
+// }
+
+ClientProfile Client::getProfile() const
+{
+    return profile;
 }
 
-
-void Client::assignPlan(int planId, const QDateTime &startDate, const QDateTime &endDate) {
-    // Implement plan assignment logic
+void Client::setProfile(const ClientProfile &newProfile)
+{
+    profile = newProfile;
 }
 
-int Client::getExpLevel() const {
-    return expLevel;
+int Client::getWorkoutId(QDateTime fecha)
+{
+    return workoutCalendar.value(fecha);
 }
 
-void Client::setExpLevel(int newExpLevel) {
-    expLevel = newExpLevel;
+void Client::setWorkout(QDateTime fecha, int workoutId)
+{
+    workoutCalendar.insert(fecha,workoutId);
+}
+
+bool Client::isDateAvailable(QDateTime fecha)
+{
+    return workoutCalendar.contains(fecha);
 }
