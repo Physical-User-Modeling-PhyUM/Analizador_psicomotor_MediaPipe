@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QTimer>
 #include <iostream>
-#include "../../src/pose/posemanager.h"
+#include "core/posemanager.h"
 
 class TestPoseManager : public QObject {
 

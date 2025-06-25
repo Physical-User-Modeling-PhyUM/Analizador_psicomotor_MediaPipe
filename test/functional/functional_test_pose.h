@@ -2,7 +2,7 @@
 #define FUNCTIONAL_TEST_POSE_H
 
 #include <QDebug>
-#include "../src/pose/posemanager.h"
+#include "../src/core/posemanager.h"
 
 class Functional_Test_Pose
 {

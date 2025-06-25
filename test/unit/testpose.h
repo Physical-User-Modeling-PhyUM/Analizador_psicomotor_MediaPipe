@@ -18,10 +18,10 @@ public:
     nlohmann::json keypoints1;
     nlohmann::json keypoints2;
     nlohmann::json JsonConnections;
-    QVector<QPair<int, int>> connections;
+    QHash<QPair<int, int>, QString>connections;
     cv::Mat image1;
     cv::Mat image2;
-
+     QHash<int,QString> keypoints;
 
     void runTests();
 private:
@@ -30,5 +30,9 @@ private:
     void testAngles();
     void testDistance();
     void testDrawKeyPoints();
+
+
+
+
 };
 #endif // TESTPOSE_H

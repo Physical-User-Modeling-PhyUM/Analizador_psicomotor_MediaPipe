@@ -15,10 +15,6 @@ CREATE TABLE IF NOT EXISTS clients (
     idClient INTEGER PRIMARY KEY,
     idUser INTEGER NOT NULL,
     expLevel INTEGER,
-    age INTEGER,
-    sex TEXT,
-    weight REAL,
-    height REAL,
     plan TEXT,
     FOREIGN KEY (idUser) REFERENCES users(idUser)
 );
@@ -27,10 +23,10 @@ CREATE TABLE IF NOT EXISTS clients (
 CREATE TABLE IF NOT EXISTS fitnesstrainers (
     idTrainer INTEGER PRIMARY KEY,
     idUser INTEGER NOT NULL,
-    qualifications TEXT,
+    Qualification TEXT,
     specialtyArea TEXT,
-    experience_years INTEGER,
-    resumme TEXT,
+      resume TEXT,
+     experience_years INTEGER,
     FOREIGN KEY (idUser) REFERENCES users(idUser)
 );
 
@@ -41,82 +37,261 @@ CREATE TABLE IF NOT EXISTS admins (
     roleDescription TEXT,
     canManageUsers BOOLEAN,
     canModifyPlans BOOLEAN,
+    permissionLevel TEXT,
     FOREIGN KEY (idUser) REFERENCES users(idUser)
 );
 
 -- Preferencias de usuario
 CREATE TABLE IF NOT EXISTS userpreferences (
     idPref INTEGER PRIMARY KEY,
-    idUser INTEGER NOT NULL,
-    language TEXT,
-    notifications BOOLEAN,
-    units TEXT,
-    FOREIGN KEY (idUser) REFERENCES users(idUser)
+    idUser INTEGER,
+    dualMode TEXT,
+    infoSound TEXT,
+    alertSound TEXT,
+    mute TEXT,
+    connectionsJson TEXT
 );
 
--- Registros corporales
-CREATE TABLE IF NOT EXISTS bodyrecords (
+
+-- Registros generales de cliente
+CREATE TABLE IF NOT EXISTS general_records (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     idClient INTEGER NOT NULL,
-    metric TEXT,
-    value TEXT,
+    Age INTEGER,
+    Gender TEXT,
+    Weight REAL,
+    Height REAL,
+    Plan TEXT,
     FOREIGN KEY (idClient) REFERENCES clients(idClient)
 );
 
--- Registros de estilo de vida
-CREATE TABLE IF NOT EXISTS lifestylerecords (
+
+-- Registros funcionales
+CREATE TABLE IF NOT EXISTS functional_records (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     idClient INTEGER NOT NULL,
-    type TEXT,
-    value TEXT,
+    StaticPosture TEXT,
+    HipMobility TEXT,
+    AnkleMobility TEXT,
+    ShoulderMobilityLevel TEXT,
+    SquatStrength TEXT,
+    BalanceTest TEXT,
+    FOREIGN KEY (idClient) REFERENCES clients(idClient)
+);
+
+-- Registros morfologicos
+CREATE TABLE IF NOT EXISTS morfological_records (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    idClient INTEGER NOT NULL,
+    FatPercentage REAL,
+    MuscleMass REAL,
+    BMI REAL,
+    VO2Max REAL,
+    HeartRate INTEGER,
+    TorsoLength REAL,
+    LegLength REAL,
+    ArmLength REAL,
+    ForearmLength REAL,
+    ThighCircumference REAL,
+    WaistCircumference REAL,
+    FOREIGN KEY (idClient) REFERENCES clients(idClient)
+);
+
+-- Registros Rangos de Movimientos
+CREATE TABLE IF NOT EXISTS rom_records (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    idClient INTEGER NOT NULL,
+    NeckFlexion REAL,
+    NeckExtension REAL,
+    NeckRotation REAL,
+    NeckLateralFlexion REAL,
+    ShoulderFlexion REAL,
+    ShoulderExtension REAL,
+    ShoulderAbduction REAL,
+    ShoulderAdduction REAL,
+    ShoulderInternalRotation REAL,
+    ShoulderExternalRotation REAL,
+    ElbowFlexion REAL,
+    ElbowExtension REAL,
+    ForearmSupination REAL,
+    ForearmPronation REAL,
+    WristFlexion REAL,
+    WristExtension REAL,
+    WristRadialDeviation REAL,
+    WristUlnarDeviation REAL,
+    FingerFlexion REAL,
+    ThumbOpposition REAL,
+    ThoracicRotation REAL,
+    ThoracicLateralFlexion REAL,
+    ThoracicExtension REAL,
+    LumbarFlexion REAL,
+    LumbarExtension REAL,
+    LumbarLateralFlexion REAL,
+    LumbarRotation REAL,
+    HipFlexion REAL,
+    HipExtension REAL,
+    HipAbduction REAL,
+    HipAdduction REAL,
+    HipInternalRotation REAL,
+    HipExternalRotation REAL,
+    KneeFlexion REAL,
+    KneeExtension REAL,
+    AnkleDorsiflexion REAL,
+    AnklePlantarflexion REAL,
+    FootInversion REAL,
+    FootEversion REAL,
+    ToeFlexion REAL,
+    ToeExtension REAL,
+    FOREIGN KEY (idClient) REFERENCES clients(idClient)
+);
+
+
+-- Registros de estilo de vida
+CREATE TABLE IF NOT EXISTS lifestyle_records (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    idClient INTEGER NOT NULL,
+    TrainingFrequency TEXT,
+    TypeOfTraining TEXT,
+    PreviousSports TEXT,
     FOREIGN KEY (idClient) REFERENCES clients(idClient)
 );
 
 -- Condiciones médicas
-CREATE TABLE IF NOT EXISTS medicalconditions (
+CREATE TABLE IF NOT EXISTS medical_records (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     idClient INTEGER NOT NULL,
-    condition TEXT,
-    value TEXT,
+    PreviousInjuries TEXT,
+    MedicalLimitations TEXT,
+    PainZones TEXT,
     FOREIGN KEY (idClient) REFERENCES clients(idClient)
 );
 
 -- Adicional
-CREATE TABLE IF NOT EXISTS medicalconditions (
+CREATE TABLE IF NOT EXISTS aditional_records (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     idClient INTEGER NOT NULL,
     FOREIGN KEY (idClient) REFERENCES clients(idClient)
 );
 
--- Especificaciones de ejercicios
-CREATE TABLE IF NOT EXISTS exerciseespecs (
-    idEx INTEGER PRIMARY KEY,
-    name TEXT,
-    description TEXT,
-    exerciseType TEXT,
-    targetMuscle TEXT,
-    equipment TEXT,
-    series INTEGER,
-    repetitions INTEGER,
-    duration INTEGER,
-    weight INTEGER,
-    restTime INTEGER
+
+
+
+CREATE TABLE client_workout_calendar (
+    idClient INTEGER,
+    date TEXT,
+    idWorkout INTEGER,
+    PRIMARY KEY (idClient, date)
 );
 
--- Workouts de entrenamiento
-CREATE TABLE IF NOT EXISTS trainingworkouts (
+-- Tabla principal de workouts
+CREATE TABLE training_workout (
     idWorkout INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
+    name TEXT,
     description TEXT,
     estimatedDuration INTEGER
 );
 
--- Asociación workout - ejercicios
-CREATE TABLE IF NOT EXISTS workout_exerciseespec (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    workoutId INTEGER NOT NULL,
-    exerciseId INTEGER NOT NULL,
-    "order" INTEGER DEFAULT 0,
-    FOREIGN KEY (workoutId) REFERENCES trainingworkouts(idWorkout) ON DELETE CASCADE,
-    FOREIGN KEY (exerciseId) REFERENCES exerciseespecs(idEx) ON DELETE CASCADE
+-- Tabla de ejercicios
+CREATE TABLE exercise_espec (
+   idEx INTEGER PRIMARY KEY,
+    Name TEXT,
+   Description TEXT,
+   ExerciseType TEXT,
+   TargetMuscle TEXT,
+    Equipment TEXT,
+    Series INTEGER,
+    Repetitions INTEGER,
+    Duration INTEGER,
+   Weight INTEGER,
+   RestTime INTEGER
+);
+
+-- Relación Workout → ExerciseEspec con orden
+CREATE TABLE workout_exercise_espec (
+    idWorkout INTEGER,
+    idEx INTEGER,
+    exerciseOrder INTEGER,
+    PRIMARY KEY (idWorkout, idEx),
+    FOREIGN KEY (idWorkout) REFERENCES training_workout(idWorkout),
+    FOREIGN KEY (idEx) REFERENCES exercise_espec(idEx)
+);
+
+-- Estados de un ejercicio
+CREATE TABLE state (
+    idState INTEGER,
+    idEx INTEGER,
+    minTime INTEGER,
+    maxTime INTEGER,
+    orderInList INTEGER,
+    name TEXT,
+    PRIMARY KEY (idEx, idState),
+    FOREIGN KEY (idEx) REFERENCES exercise_espec(idEx)
+);
+
+-- Restricciones angulares por estado
+CREATE TABLE angle_constraint (
+   idConstraint INTEGER,
+   idState INTEGER,
+   idEx INTEGER,
+   line TEXT,
+   minAngle REAL,
+   maxAngle REAL,
+   maxSafeAngle REAL,
+   minSafeAngle REAL,
+   fastThreshold INTEGER,
+   slowThreshold INTEGER,
+   symetricalAngle REAL,
+   evolution TEXT,
+   toler REAL,
+   view TEXT,
+   PRIMARY KEY (idEx, idState,idConstraint),
+   FOREIGN KEY (idState) REFERENCES state(idState)
+);
+
+-- Transiciones con condiciones
+CREATE TABLE transition (
+   idEx INTEGER,
+   fromState INTEGER,
+   toState INTEGER,
+   conditionType TEXT,
+   keypointLine TEXT,
+   view TEXT,
+   PRIMARY KEY (idEx, fromState, toState, conditionType, keypointLine),
+   FOREIGN KEY (idEx) REFERENCES exercise_espec(idEx)
+);
+
+-- Sesiones de entrenamiento
+CREATE TABLE TrainingSesion (
+    idSesion INTEGER PRIMARY KEY,
+    idClient INTEGER NOT NULL,
+    idWorkout INTEGER,
+    idEx INTEGER ,
+    date TEXT ,
+    duration INTEGER ,
+    FOREIGN KEY (idClient) REFERENCES Users(idUser),
+    FOREIGN KEY (idExercise) REFERENCES ExerciseSummary(idExercise)
+);
+
+--Resumenes de los ejercicions de las sesiones
+CREATE TABLE ExerciseSummary (
+    idEx INTEGER PRIMARY KEY,
+    idWorkout INTEGER,
+    name TEXT,
+    description TEXT,
+    type TEXT,
+    targetMuscle TEXT,
+    series INTEGER,
+    repetitions INTEGER,
+    duration INTEGER,
+    weightPercentage REAL,
+    restTime INTEGER
+);
+
+--Reportes de las sesiones
+CREATE TABLE SesionReport (
+    idSesion INTEGER PRIMARY KEY,
+    seriesDataJson TEXT,
+    globalAnglesJson TEXT,
+    globalOverloadsJson TEXT,
+    log TEXT
 );

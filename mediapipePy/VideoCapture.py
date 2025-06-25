@@ -26,6 +26,11 @@ class VideoCapture:
         else:
             self.shm_name = config.get("CAM2", "/cam2")
 
+        # Definir ruta del archivo .ready
+        self.APP_DIR = os.path.dirname(os.path.abspath(__file__))
+        self.ready_path = os.path.join(self.APP_DIR, self.shm_name[1:] + ".ready")
+
+
         self.WIDTH = config.get("WIDTH", 640)
         self.HEIGHT = config.get("HEIGHT", 480)
         self.JSON_SIZE = config.get("JSON_SIZE", 4096)
@@ -97,7 +102,12 @@ class VideoCapture:
                     #mem_map = mmap.mmap(fd, self.TOTAL_SIZE, mmap.MAP_SHARED, mmap.PROT_WRITE)
 
                     # Crear memoria compartida POSIX correctamente
-                    self.mem = posix_ipc.SharedMemory(self.shm_name, posix_ipc.O_CREAT, size=self.TOTAL_SIZE)
+                    #self.mem = posix_ipc.SharedMemory(self.shm_name, posix_ipc.O_CREAT, size=self.TOTAL_SIZE)
+                    try:
+                        self.mem = posix_ipc.SharedMemory(self.shm_name, posix_ipc.O_CREAT | posix_ipc.O_EXCL, size=self.TOTAL_SIZE)
+                    except posix_ipc.ExistentialError:
+                        self.mem = posix_ipc.SharedMemory(self.shm_name)  # Abrir sin size si ya existe
+
                     mem_map = mmap.mmap( self.mem.fd, self.TOTAL_SIZE, mmap.MAP_SHARED, mmap.PROT_WRITE)
                     self.mem.close_fd()
 
@@ -113,6 +123,7 @@ class VideoCapture:
     def start(self):
 
         cap = cv2.VideoCapture(self.camera_index)
+        created_ready = False
         if not cap.isOpened():
             print(f"Error: No se pudo abrir la cámara {self.camera_index}")
             cap.release()  # Asegura que la cámara se libere
@@ -144,9 +155,17 @@ class VideoCapture:
                         "keypoints": {}
                 }
 
+                #if results.pose_landmarks:
+                #    for idx, lm in enumerate(results.pose_landmarks.landmark):
+                #        keypoints["keypoints"][idx] = [lm.x * self.WIDTH, lm.y * self.HEIGHT]
+
                 if results.pose_landmarks:
                     for idx, lm in enumerate(results.pose_landmarks.landmark):
-                        keypoints["keypoints"][idx] = [lm.x * self.WIDTH, lm.y * self.HEIGHT]
+                        keypoints["keypoints"][idx] = {
+                            "x": lm.x, #* self.WIDTH,
+                            "y": lm.y #* self.HEIGHT
+                        }
+
 
                 #creamos el JSON
                 json_data = json.dumps(keypoints).encode('utf-8')
@@ -182,28 +201,41 @@ class VideoCapture:
                 self.mem.write(json_padded)
 
                 #vamos a ller los datos  escrita en la memoria compartida
-                self.mem.seek(0)
-                readFrameRawData = self.mem.read(self.FRAME_SIZE)
+                #self.mem.seek(0)
+                #readFrameRawData = self.mem.read(self.FRAME_SIZE)
 
-                self.mem.seek(self.FRAME_SIZE)
-                json_raw = self.mem.read(self.JSON_SIZE)
-                json_str = json_raw.split(b'\x00', 1)[0].decode('utf-8')  # Eliminar bytes nulos
-                try:
-                    json_data = json.loads(json_str)
-                except json.JSONDecodeError:
-                    json_data = {"error": "No se pudo decodificar el JSON"}
+                #self.mem.seek(self.FRAME_SIZE)
+                #json_raw = self.mem.read(self.JSON_SIZE)
+                # Eliminamos los bytes nulos
+                #json_str = json_raw.split(b'\x00', 1)[0].decode('utf-8')  # Eliminar bytes nulos
+
+
+                #try:
+                #    json_data = json.loads(json_str)
+                #except json.JSONDecodeError:
+                #    json_data = {"error": "No se pudo decodificar el JSON"}
 
                 self.sem.release()
+
+                #creamos unarchoivo para indicar que la alicaciones esta totalmente lista
+                if not created_ready:
+                    try:
+                        with open(self.ready_path, "w") as f_ready:
+                            f_ready.write("ready")
+                        print(f"[Python] Archivo de señal creado: {self.ready_path}")
+                        created_ready = True
+                    except Exception as e:
+                        print(f"[Python] Error al crear archivo .ready: {e}")
 
                 #comprobamos los datos escritos
                 print(f"Python> Escribiendo imagen de {len(frameRawData)} bytes y JSON de {len(json_padded)} bytes en memoria.")
 
                # Imprimir JSON en consola
-                print("JSON leído desde memoria compartida:", json.dumps(json_data, indent=4))
+               # print("JSON leído desde memoria compartida:", json.dumps(json_data, indent=4))
 
-                np_frame = np.frombuffer(readFrameRawData, dtype=np.uint8).reshape((self.HEIGHT, self.WIDTH, 3))
-                cv2.imshow("Imagen desde Memoria Compartida", np_frame)
-                cv2.waitKey(1)
+               # np_frame = np.frombuffer(readFrameRawData, dtype=np.uint8).reshape((self.HEIGHT, self.WIDTH, 3))
+               # cv2.imshow("Imagen desde Memoria Compartida", np_frame)
+               # cv2.waitKey(1)
 
         except KeyboardInterrupt:
             print("\nPython> Detenido manualmente.")
@@ -217,13 +249,18 @@ class VideoCapture:
         print("Liberando memoria compartida...")
         self.mem.close()
         self.sem.close()
+        try:
+            os.remove(self.ready_path)
+            print(f"[Python] Archivo de señal eliminado: {self.ready_path}")
+        except Exception as e:
+            print(f"[Python] Error al eliminar archivo .ready: {e}")
 
 
 
 
-
-# Ejecutar la captura de video
 if __name__ == "__main__":
-    video_capture = VideoCapture(camera_index=0)
+    import sys
+    cam_index = int(sys.argv[1]) if len(sys.argv) > 1 else 0
+    video_capture = VideoCapture(camera_index=cam_index)
     video_capture.start()
 

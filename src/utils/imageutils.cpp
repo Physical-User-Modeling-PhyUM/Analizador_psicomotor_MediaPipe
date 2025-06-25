@@ -1,9 +1,23 @@
+/**
+ * @file imageutils.cpp
+ * @brief Implementación de las funciones de utilidad para comparación de imágenes definidas en ImageUtils.
+ */
+
 #include "imageutils.h"
-
-
-
 #include <opencv2/opencv.hpp>
 
+/**
+ * @brief Compara dos imágenes para verificar si son visualmente iguales.
+ *
+ * Este método realiza una comparación pixel a pixel entre las dos imágenes.
+ * - Verifica primero que ambas imágenes tengan el mismo tamaño y tipo.
+ * - Si ambas son imágenes en color (3 canales), se convierten a escala de grises para asegurar una comparación neutral.
+ * - Se calcula la diferencia absoluta entre las imágenes y se cuenta el número de píxeles diferentes.
+ *
+ * @param mat1 Primera imagen.
+ * @param mat2 Segunda imagen.
+ * @return true si no hay diferencias entre las imágenes; false en caso contrario.
+ */
 bool ImageUtils::areSameImage(const cv::Mat &mat1, const cv::Mat &mat2)
 {
     // Verificamos si tienen el mismo tamaño y tipo
