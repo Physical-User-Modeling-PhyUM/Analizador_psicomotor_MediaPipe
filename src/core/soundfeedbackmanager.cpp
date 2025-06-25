@@ -28,8 +28,8 @@ void SoundFeedbackManager::addSound(ConditionType type, const QString &path)
     // effect.play();
 
     QSoundEffect* effect = new QSoundEffect(this);
-    //effect->setSource(QUrl::fromLocalFile(path));
-    effect->setSource(QUrl(path));
+    effect->setSource(QUrl::fromLocalFile(path));
+    //effect->setSource(QUrl(path));
     effect->setVolume(0.8);
 
     connect(effect, &QSoundEffect::statusChanged, this, [=]() {
@@ -57,23 +57,43 @@ void SoundFeedbackManager::onSoundStatusChanged(QSoundEffect* effect, const QStr
  */
 void SoundFeedbackManager::loadSounds()
 {
-    addSound(ConditionType::OptimalForm, "qrc:/sounds/good_job.wav");
-    addSound(ConditionType::FastMovement, "qrc:/sounds/fast.wav");
-    addSound(ConditionType::SlowMovement, "qrc:/sounds/slow.wav");
-    addSound(ConditionType::JointOverload, "qrc:/sounds/overload.wav");
-    addSound(ConditionType::EndOfRepetition, "qrc:/sounds/rep.wav");
-    addSound(ConditionType::EndOfSet, "qrc:/sounds/set.wav");
-    addSound(ConditionType::ExerciseOvertime, "qrc:/sounds/time.wav");
-    addSound(ConditionType::MaxStateTimeout, "qrc:/sounds/time.wav");
-    addSound(ConditionType::MinStateTimeout, "qrc:/sounds/time.wav");
-    addSound(ConditionType::RestOverTime, "qrc:/sounds/rest.wav");
-    addSound(ConditionType::Has_Stopped, "qrc:/sounds/No_stop.wav");
-    addSound(ConditionType::IncorrectExecution, "qrc:/sounds/Wrong_exec.wav");
-    addSound(ConditionType::Not_Steady, "qrc:/sounds/not_steady.wav");
-    //addSound(ConditionType::OpositeDirection, "qrc:/sounds/.wav");
-    addSound(ConditionType::RestTime, "qrc:/sounds/time.wav");
-    addSound(ConditionType::symmetryDeviation, "qrc:/sounds/symetry.wav");
-    addSound(ConditionType::exerciseInit, "qrc:/sounds/go.wav");
+
+    addSound(ConditionType::OptimalForm, soundPath + "good_job.wav");
+    addSound(ConditionType::FastMovement, soundPath +"fast.wav");
+    addSound(ConditionType::SlowMovement, soundPath +"slow.wav");
+    addSound(ConditionType::JointOverload, soundPath +"overload.wav");
+    addSound(ConditionType::EndOfRepetition, soundPath +"rep.wav");
+    addSound(ConditionType::EndOfSet, soundPath +"set.wav");
+    addSound(ConditionType::ExerciseOvertime, soundPath +"time.wav");
+    addSound(ConditionType::MaxStateTimeout, soundPath +"time.wav");
+    addSound(ConditionType::MinStateTimeout, soundPath +"time.wav");
+    addSound(ConditionType::RestOverTime, soundPath +"rest.wav");
+    addSound(ConditionType::Has_Stopped, soundPath +"No_stop.wav");
+    addSound(ConditionType::IncorrectExecution, soundPath +"Wrong_exec.wav");
+    addSound(ConditionType::Not_Steady, soundPath +"not_steady.wav");
+    addSound(ConditionType::RestTime, soundPath +"time.wav");
+    addSound(ConditionType::symmetryDeviation, soundPath +"symetry.wav");
+    addSound(ConditionType::exerciseInit, soundPath +"go.wav");
+    //addSound(ConditionType::FastMovement, soundPath + "camera_qt.wav");
+
+   // addSound(ConditionType::OptimalForm, "qrc:/sounds/tadaa_qt.wav");
+    //addSound(ConditionType::OptimalForm, "qrc:/sounds/good_job.wav");
+    // addSound(ConditionType::FastMovement, "qrc:/sounds/fast.wav");
+    // addSound(ConditionType::SlowMovement, "qrc:/sounds/slow.wav");
+    // addSound(ConditionType::JointOverload, "qrc:/sounds/overload.wav");
+    // addSound(ConditionType::EndOfRepetition, "qrc:/sounds/rep.wav");
+    // addSound(ConditionType::EndOfSet, "qrc:/sounds/set.wav");
+    // addSound(ConditionType::ExerciseOvertime, "qrc:/sounds/time.wav");
+    // addSound(ConditionType::MaxStateTimeout, "qrc:/sounds/time.wav");
+    // addSound(ConditionType::MinStateTimeout, "qrc:/sounds/time.wav");
+    // addSound(ConditionType::RestOverTime, "qrc:/sounds/rest.wav");
+    // addSound(ConditionType::Has_Stopped, "qrc:/sounds/No_stop.wav");
+    // addSound(ConditionType::IncorrectExecution, "qrc:/sounds/Wrong_exec.wav");
+    // addSound(ConditionType::Not_Steady, "qrc:/sounds/not_steady.wav");
+    // //addSound(ConditionType::OpositeDirection, "qrc:/sounds/.wav");
+    // addSound(ConditionType::RestTime, "qrc:/sounds/time.wav");
+    // addSound(ConditionType::symmetryDeviation, "qrc:/sounds/symetry.wav");
+    // addSound(ConditionType::exerciseInit, "qrc:/sounds/go.wav");
     // addSound(ConditionType::SlowMovement, "slow.wav");
     // addSound(ConditionType::JointOverload, "overload.wav");
     // addSound(ConditionType::EndOfSet, "endset.wav");
