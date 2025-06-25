@@ -12,6 +12,7 @@
 #include <QWidget>
 #include <QSharedPointer>
 #include "core/loginmanager.h"
+#include <QPainter>
 
 namespace Ui {
 class LoginWidget;
@@ -39,6 +40,7 @@ public:
      * @brief Destructor.
      */
     ~LoginWidget();
+
 
 private slots:
     /**

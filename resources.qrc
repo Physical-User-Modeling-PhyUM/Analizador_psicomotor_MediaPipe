@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/images">
-        <file>Images/blank-profile.jpg</file>
-        <file>Images/ChatGPT Image 6 jun 2025, 17_34_48.png</file>
+        <file>images/blank-profile.jpg</file>
+        <file>images/login.png</file>
     </qresource>
     <qresource prefix="/sounds">
         <file>sounds/tadaa.wav</file>
