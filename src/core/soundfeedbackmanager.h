@@ -96,6 +96,7 @@ private:
      * @param path Ruta al archivo de sonido.
      */
     void addSound(ConditionType type, const QString& path);
+    void onSoundStatusChanged(QSoundEffect *effect, const QString &path);
 };
 
 #endif // SOUNDFEEDBACKMANAGER_H

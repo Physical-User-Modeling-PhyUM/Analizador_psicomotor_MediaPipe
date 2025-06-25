@@ -28,24 +28,30 @@ void SoundFeedbackManager::addSound(ConditionType type, const QString &path)
     // effect.play();
 
     QSoundEffect* effect = new QSoundEffect(this);
-    effect->setSource(QUrl::fromLocalFile(path));
+    //effect->setSource(QUrl::fromLocalFile(path));
+    effect->setSource(QUrl(path));
     effect->setVolume(0.8);
 
-    connect(effect, &QSoundEffect::statusChanged, this, [effect, path]() {
-        switch (effect->status()) {
-        case QSoundEffect::Ready:
-            qDebug() << "Sonido cargado correctamente:" << path;
-            break;
-        case QSoundEffect::Error:
-            qCritical() << "Error: No se pudo decodificar el archivo de sonido:" << path;
-            break;
-        default:
-            break;
-        }
+    connect(effect, &QSoundEffect::statusChanged, this, [=]() {
+        onSoundStatusChanged(effect, path);
     });
 
     soundMap.insert(type, effect);
 }
+
+void SoundFeedbackManager::onSoundStatusChanged(QSoundEffect* effect, const QString& path) {
+    switch (effect->status()) {
+    case QSoundEffect::Ready:
+        qDebug() << "Sonido cargado correctamente:" << path;
+        break;
+    case QSoundEffect::Error:
+        qCritical() << "Error: No se pudo decodificar el archivo de sonido:" << path;
+        break;
+    default:
+        break;
+    }
+}
+
 /**
  * @brief Carga los sonidos predeterminados para condiciones específicas.
  */
@@ -57,9 +63,11 @@ void SoundFeedbackManager::loadSounds()
     //addSound(ConditionType::OptimalForm, "tadaa_qt.wav");
     //addSound(ConditionType::FastMovement, "camera_qt.wav");
 
-    addSound(ConditionType::OptimalForm, soundPath + "tadaa.wav");
-    addSound(ConditionType::FastMovement, soundPath + "camera_qt.wav");
+    //addSound(ConditionType::OptimalForm, soundPath + "tadaa.wav");
+    //addSound(ConditionType::FastMovement, soundPath + "camera_qt.wav");
 
+    addSound(ConditionType::OptimalForm, "qrc:/sounds/tadaa.wav");
+    addSound(ConditionType::FastMovement, "qrc:/sounds/camera_qt.wav");
 
     // addSound(ConditionType::SlowMovement, "slow.wav");
     // addSound(ConditionType::JointOverload, "overload.wav");

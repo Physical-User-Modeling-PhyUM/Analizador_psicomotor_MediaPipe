@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>Images/blank-profile.jpg</file>
+        <file>Images/ChatGPT Image 6 jun 2025, 17_34_48.png</file>
+    </qresource>
+    <qresource prefix="/sounds">
+        <file>sounds/tadaa.wav</file>
+        <file>sounds/camera_qt.wav</file>
+    </qresource>
+    <qresource prefix="/config">
+        <file>config/schema.sql</file>
+    </qresource>
+</RCC>

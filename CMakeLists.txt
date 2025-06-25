@@ -55,10 +55,10 @@ set(PROJECT_SOURCES
     src/pose/state.h src/pose/state.cpp
 
     config/poseConfig.json
-    config/schema.sql
-    config/blank-profile.jpg
-    sounds/camera.mp3
-    sounds/tadaa.mp3
+    #config/schema.sql
+    #config/blank-profile.jpg
+    #sounds/camera.mp3
+    #sounds/tadaa.mp3
 
 
 
@@ -164,6 +164,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/ui/admin/appconfigwidget.h src/ui/admin/appconfigwidget.cpp src/ui/admin/appconfigwidget.ui
         src/ui/admin/usersadminwidget.h src/ui/admin/usersadminwidget.cpp src/ui/admin/usersadminwidget.ui
         src/ui/client/userclientconfigwidget.h src/ui/client/userclientconfigwidget.cpp src/ui/client/userclientconfigwidget.ui
+        resources.qrc
 
 
 
