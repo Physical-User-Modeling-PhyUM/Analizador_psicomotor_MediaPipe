@@ -128,15 +128,15 @@ void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
             QString message = feedback.getMessage(type);
 
             if (feedback.isCritical(type)){
-                ui->criticalMsgEdit->append(QString("<b style='color:red;'>[CRÍTICO] " + message + "</b>"+"\n"));
+                ui->criticalMsgEdit->append(QString("<b style='color:red;'" + message + "</b>"+"\n"));
                 if (!mute && criticaSoundEnable)soundManager->play(type);
             }
             else if (feedback.isAlert(type)){
-                 ui->alertsMsgEdit->append(QString("<span style='color:orange;'>[ALERTA] " + message + "</span>"+"\n"));
+                 ui->alertsMsgEdit->append(QString("<span style='color:orange;'" + message + "</span>"+"\n"));
                  if (!mute && alertSoundEnabled)soundManager->play(type);
             }
             else{
-                 ui->infoMsgEdit->append(QString("<span style='color:gray;'>[INFO] " + message + "</span>"+"\n"));
+                 ui->infoMsgEdit->append(QString("<span style='color:gray;'" + message + "</span>"+"\n"));
                  if (!mute && infoSoundEnable)soundManager->play(type);
             }
         }

@@ -57,18 +57,23 @@ void SoundFeedbackManager::onSoundStatusChanged(QSoundEffect* effect, const QStr
  */
 void SoundFeedbackManager::loadSounds()
 {
-    //addSound(ConditionType::OptimalForm, "tadaa.wav");
-    //addSound(ConditionType::OptimalForm, "tadaa_fixed.wav");
-    //addSound(ConditionType::FastMovement, "camera.wav");
-    //addSound(ConditionType::OptimalForm, "tadaa_qt.wav");
-    //addSound(ConditionType::FastMovement, "camera_qt.wav");
-
-    //addSound(ConditionType::OptimalForm, soundPath + "tadaa.wav");
-    //addSound(ConditionType::FastMovement, soundPath + "camera_qt.wav");
-
-    addSound(ConditionType::OptimalForm, "qrc:/sounds/tadaa.wav");
-    addSound(ConditionType::FastMovement, "qrc:/sounds/camera_qt.wav");
-
+    addSound(ConditionType::OptimalForm, "qrc:/sounds/good_job.wav");
+    addSound(ConditionType::FastMovement, "qrc:/sounds/fast.wav");
+    addSound(ConditionType::SlowMovement, "qrc:/sounds/slow.wav");
+    addSound(ConditionType::JointOverload, "qrc:/sounds/overload.wav");
+    addSound(ConditionType::EndOfRepetition, "qrc:/sounds/rep.wav");
+    addSound(ConditionType::EndOfSet, "qrc:/sounds/set.wav");
+    addSound(ConditionType::ExerciseOvertime, "qrc:/sounds/time.wav");
+    addSound(ConditionType::MaxStateTimeout, "qrc:/sounds/time.wav");
+    addSound(ConditionType::MinStateTimeout, "qrc:/sounds/time.wav");
+    addSound(ConditionType::RestOverTime, "qrc:/sounds/rest.wav");
+    addSound(ConditionType::Has_Stopped, "qrc:/sounds/No_stop.wav");
+    addSound(ConditionType::IncorrectExecution, "qrc:/sounds/Wrong_exec.wav");
+    addSound(ConditionType::Not_Steady, "qrc:/sounds/not_steady.wav");
+    //addSound(ConditionType::OpositeDirection, "qrc:/sounds/.wav");
+    addSound(ConditionType::RestTime, "qrc:/sounds/time.wav");
+    addSound(ConditionType::symmetryDeviation, "qrc:/sounds/symetry.wav");
+    addSound(ConditionType::exerciseInit, "qrc:/sounds/go.wav");
     // addSound(ConditionType::SlowMovement, "slow.wav");
     // addSound(ConditionType::JointOverload, "overload.wav");
     // addSound(ConditionType::EndOfSet, "endset.wav");

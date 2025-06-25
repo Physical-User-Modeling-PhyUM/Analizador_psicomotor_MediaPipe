@@ -130,10 +130,22 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QTextEdit" name="criticalMsgEdit"/>
+        <widget class="QTextEdit" name="criticalMsgEdit">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+        </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="alertsMsgEdit"/>
+        <widget class="QTextEdit" name="alertsMsgEdit">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QTextEdit" name="infoMsgEdit">
@@ -142,6 +154,11 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
          </property>
         </widget>
        </item>

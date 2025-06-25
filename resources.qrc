@@ -6,6 +6,19 @@
     <qresource prefix="/sounds">
         <file>sounds/tadaa.wav</file>
         <file>sounds/camera_qt.wav</file>
+        <file>sounds/good_job.wav</file>
+        <file>sounds/overload.wav</file>
+        <file>sounds/rest.wav</file>
+        <file>sounds/set.wav</file>
+        <file>sounds/rep.wav</file>
+        <file>sounds/slow.wav</file>
+        <file>sounds/fast.wav</file>
+        <file>sounds/time.wav</file>
+        <file>sounds/No_stop.wav</file>
+        <file>sounds/symetry.wav</file>
+        <file>sounds/Wrong_exec.wav</file>
+        <file>sounds/Not_steady.wav</file>
+        <file>sounds/go.wav</file>
     </qresource>
     <qresource prefix="/config">
         <file>config/schema.sql</file>
