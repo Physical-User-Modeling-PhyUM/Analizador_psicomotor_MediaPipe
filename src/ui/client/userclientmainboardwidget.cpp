@@ -1,8 +1,10 @@
+/// @brief Implementación de la clase UserClientMainBoardWidget.
 #include "userclientmainboardwidget.h"
 #include "ui/client/userclientconfigwidget.h"
 #include "ui_userclientmainboardwidget.h"
 #include <QMessageBox>
 
+/// @brief Constructor. Inicializa los widgets hijos, conecta las señales y prepara la navegación.
 
 UserClientMainBoardWidget::UserClientMainBoardWidget(QSharedPointer<AppController> controller,QWidget *parent)
     : QWidget(parent)
@@ -42,11 +44,12 @@ UserClientMainBoardWidget::UserClientMainBoardWidget(QSharedPointer<AppControlle
             &UserClientMainBoardWidget::onUiErrorMessage);
 
 }
-
+/// @brief Destructor.
 UserClientMainBoardWidget::~UserClientMainBoardWidget()
 {
     delete ui;
 }
+/// @brief Asigna el cliente autenticado y carga su configuración personalizada.
 
 void UserClientMainBoardWidget::setUser(QSharedPointer<Client> user)
 {
@@ -55,7 +58,8 @@ void UserClientMainBoardWidget::setUser(QSharedPointer<Client> user)
     //updateUserInfo();
     configWidget->loadConfig();
 }
-
+/// @brief Cambia la sección visible en el stackedWidget.
+/// Si se selecciona la última entrada, se interpreta como logout.
 void UserClientMainBoardWidget::onSectionChanged(int index)
 {
     ui->stackedWidget->setCurrentIndex(index);
@@ -102,6 +106,7 @@ void UserClientMainBoardWidget::onSectionChanged(int index)
         break;
     }
 }
+/// @brief Muestra un mensaje modal según el tipo de mensaje recibido (info, warning o error).
 
 void UserClientMainBoardWidget::onUiErrorMessage(const QString& msg, QtMsgType type)
 {

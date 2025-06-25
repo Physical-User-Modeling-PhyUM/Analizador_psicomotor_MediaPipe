@@ -1,3 +1,6 @@
+
+/// @brief Implementación de la clase UsersAdminWidget.
+
 #include "usersadminwidget.h"
 #include "ui_usersadminwidget.h"
 #include "enums/UserFieldEnum.h"
@@ -6,6 +9,8 @@
 #include "profiles/fitnesstrainer.h"
 #include "ui/main/comboboxdelegate.h"
 
+
+/// @brief Constructor. Inicializa los modelos, conecta señales y carga los usuarios disponibles.
 UsersAdminWidget::UsersAdminWidget(QSharedPointer<AppController> controller, QWidget *parent)
     : QWidget(parent), ui(new Ui::UsersAdminWidget), controller(controller) {
     ui->setupUi(this);
@@ -27,10 +32,12 @@ UsersAdminWidget::UsersAdminWidget(QSharedPointer<AppController> controller, QWi
     loadUsers();
 }
 
+/// @brief Destructor.
 UsersAdminWidget::~UsersAdminWidget() {
     delete ui;
 }
 
+/// @brief Carga todos los usuarios y los muestra en la tabla principal.
 void UsersAdminWidget::loadUsers() {
     QList<QSharedPointer<User>> allUsers;
      allUsers = controller->getUserManager()->listUsers(UserType::Unknown);
@@ -47,7 +54,7 @@ void UsersAdminWidget::loadUsers() {
 
     userTableModel->setDataSet(rows, {"IdUser", "UserName", "Email", "UserType"});
 }
-
+/// @brief Maneja la selección de un usuario y carga sus datos en la tabla de edición.
 void UsersAdminWidget::onUserSelected(const QModelIndex& index) {
     int row = index.row();
     if (row < 0 || row >= userTableModel->rowCount()) return;
@@ -59,7 +66,7 @@ void UsersAdminWidget::onUserSelected(const QModelIndex& index) {
     if (!editUser) return;
     populateEditTable(editUser);
 }
-
+/// @brief Llena la tabla de edición con los datos del usuario proporcionado.
 void UsersAdminWidget::populateEditTable(QSharedPointer<User> user) {
     QList<QList<QVariant>> rows;
     rows << (QList<QVariant>() << "Type" << UserTypeToString(user->getUserType()));
@@ -87,7 +94,7 @@ void UsersAdminWidget::populateEditTable(QSharedPointer<User> user) {
     editTableModel->setDataSet(rows, {"Field", "Value"});
     editTableModel->setColumnReadOnly(0);
 }
-
+/// @brief Extrae los datos modificados por el usuario desde la tabla de edición.
 QHash<UserField, QVariant> UsersAdminWidget::collectEditTableData() {
 
     QHash<UserField, QVariant> data;
@@ -103,6 +110,7 @@ QHash<UserField, QVariant> UsersAdminWidget::collectEditTableData() {
     return data;
 }
 
+/// @brief Guarda los datos del usuario actualmente en edición, reemplazando su instancia según su tipo.
 
 void UsersAdminWidget::onSaveClicked() {
     if (!editUser) return;
@@ -131,6 +139,7 @@ void UsersAdminWidget::onSaveClicked() {
     // selectedUserId = editUser->getId();
     loadUsers();
 }
+/// @brief Elimina el usuario actualmente seleccionado del sistema.
 
 void UsersAdminWidget::onDeleteClicked() {
     if (selectedUserId < 0) return;
@@ -156,6 +165,7 @@ void UsersAdminWidget::onDeleteClicked() {
 //     editTableModel->setDataSet(baseFields, {"Field", "Value"});
 //     editTableModel->setColumnReadOnly(0);
 // }
+/// @brief Inicia el flujo de creación de un nuevo usuario, mostrando los campos básicos para edición.
 
 void UsersAdminWidget::onNewClicked() {
     clearEditTable();
@@ -174,6 +184,7 @@ void UsersAdminWidget::onNewClicked() {
 
 
 }
+/// @brief Reacciona a los cambios en la tabla de edición, en particular al cambiar el tipo de usuario.
 
 void UsersAdminWidget::onEditTableDataChanged(const QModelIndex &m1, const QModelIndex &m2)
 {
@@ -184,10 +195,11 @@ void UsersAdminWidget::onEditTableDataChanged(const QModelIndex &m1, const QMode
 
 
 }
-
+/// @brief Limpia la tabla de edición.
 void UsersAdminWidget::clearEditTable() {
     editTableModel->setDataSet({}, {"Field", "Value"});
 }
+/// @brief Cambia el tipo de usuario actual en edición y carga campos apropiados por tipo.
 void UsersAdminWidget::onUserTypeChanged(const QString& typeStr) {
     UserType tipo = UserTypeFromString(typeStr);
 

@@ -1,3 +1,5 @@
+/// @brief Implementación de la clase UserClientTrainingSesionWidget.
+
 #include "userclienttrainingsesionwidget.h"
 #include "utils/uiutils.h"
 #include <QDebug>
@@ -5,6 +7,7 @@
 
 Q_LOGGING_CATEGORY(TrainigSesionBoard, "TrainigSesionBoard")
 
+/// @brief Constructor. Inicializa la interfaz, modelos y conecta señales.
 UserClientTrainingSesionWidget::UserClientTrainingSesionWidget(QSharedPointer<AppController> controller, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui_UserClientTrainingSesionWidget)
@@ -22,25 +25,25 @@ UserClientTrainingSesionWidget::UserClientTrainingSesionWidget(QSharedPointer<Ap
     connect(ui->startSesionButton, &QPushButton::clicked,
             this, &UserClientTrainingSesionWidget::onStartSesionButtonClicked);
 }
-
+/// @brief Destructor.
 UserClientTrainingSesionWidget::~UserClientTrainingSesionWidget()
 {
     delete ui;
 }
-
+/// @brief Asigna el usuario cliente y carga los entrenamientos disponibles para él.
 void UserClientTrainingSesionWidget::setUser(QSharedPointer<Client> user)
 {
     currentUser = user;
     loadAssignedWorkouts();
     loadCurrentWorkoutData();
 }
-
+/// @brief Carga la tabla de entrenamientos asignados desde el calendario del usuario.
 void UserClientTrainingSesionWidget::loadAssignedWorkouts()
 {
 
       UiUtils::fromWorkoutCalendar(currentUser->getWorkoutCalendar(), assignedModel);
 }
-
+/// @brief Carga el entrenamiento actual para la fecha de hoy, si existe.
 void UserClientTrainingSesionWidget::loadCurrentWorkoutData()
 {
     int workoutId = controller->getUserManager()->getUserWorkout(QDateTime::currentDateTime());
@@ -54,7 +57,7 @@ void UserClientTrainingSesionWidget::loadCurrentWorkoutData()
 
     UiUtils::fromWorkoutExercises(workout, exerciseModel);
 }
-
+/// @brief Actualiza las etiquetas informativas del workout seleccionado.
 void UserClientTrainingSesionWidget::updateWorkoutInfo(const WorkoutSummary& summary)
 {
     ui->workout_label->setText(summary.getTitle());
@@ -63,12 +66,12 @@ void UserClientTrainingSesionWidget::updateWorkoutInfo(const WorkoutSummary& sum
     QString tot=QString::number(summary.getTotalExercises());
     ui->total_ex_label->setText(tot);
 }
-
+/// @brief Rellena la tabla de ejercicios del workout (no implementado aún).
 void UserClientTrainingSesionWidget::populateExerciseTable(const QList<ExerciseSummary>& exercises)
 {
 
 }
-
+/// @brief Carga el contenido del workout seleccionado y lo muestra en la tabla de ejercicios.
 void UserClientTrainingSesionWidget::onAssignedWorkoutSelected(const QModelIndex& index)
 {
     int row = index.row();
@@ -88,7 +91,7 @@ void UserClientTrainingSesionWidget::onAssignedWorkoutSelected(const QModelIndex
     UiUtils::fromWorkoutExercises(workout, exerciseModel);
 }
 
-
+/// @brief Inicia una sesión para el ejercicio actualmente seleccionado.
 void UserClientTrainingSesionWidget::onStartSesionButtonClicked()
 {
     QModelIndex index = ui->tableExercises->currentIndex();

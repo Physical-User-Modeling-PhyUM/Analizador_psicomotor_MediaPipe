@@ -1,8 +1,10 @@
+/// @brief Implementación de la clase UserClientConfigWidget.
 #include "userclientconfigwidget.h"
 #include <QComboBox>
 #include <QDebug>
 #include <nlohmann/json.hpp>
 
+/// @brief Constructor. Configura la interfaz y conecta el botón de guardado.
 UserClientConfigWidget::UserClientConfigWidget(QSharedPointer<AppController> controller, QWidget *parent)
     : QWidget(parent), ui(new Ui_UserClientConfigWidget), controller(controller)
 {
@@ -11,12 +13,12 @@ UserClientConfigWidget::UserClientConfigWidget(QSharedPointer<AppController> con
     connect(ui->saveButton, &QPushButton::clicked, this, &UserClientConfigWidget::saveUserPreferences);
     //loadConfig();
 }
-
+/// @brief Destructor.
 UserClientConfigWidget::~UserClientConfigWidget()
 {
     delete ui;
 }
-
+/// @brief Carga las preferencias del usuario desde el sistema y las muestra en el formulario.
 void UserClientConfigWidget::loadConfig()
 {
 \
@@ -81,7 +83,8 @@ void UserClientConfigWidget::loadConfig()
 }
 
 
-
+/// @brief Guarda las preferencias del usuario, incluyendo opciones y conexiones entre keypoints.
+/// Almacena las conexiones en formato JSON y actualiza los datos en el sistema.
 void UserClientConfigWidget::saveUserPreferences()
 {
     UserPreferences prefs;

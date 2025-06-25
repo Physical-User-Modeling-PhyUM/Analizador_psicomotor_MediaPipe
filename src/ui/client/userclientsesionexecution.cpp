@@ -6,7 +6,7 @@
 #include <QDateTime>
 //#include <opencv2/imgproc/imgproc.hpp>
 //#include <opencv2/highgui/highgui.hpp>
-
+/// @brief Constructor. Inicializa interfaz, gráficos, temporizador y configuración de feedback auditivo.
 UserClientSesionExecution::UserClientSesionExecution(QSharedPointer<TrainingSesion> sesion,
                                                      AppController* controller,
                                                      QSharedPointer<SoundFeedbackManager> soundManager,
@@ -87,12 +87,12 @@ UserClientSesionExecution::UserClientSesionExecution(QSharedPointer<TrainingSesi
      if (infoSoundEnable)ui->infoButton->setStyleSheet("QPushButton { background-color: green; color: white; font-weight: bold; }");
      else ui->infoButton->setStyleSheet("QPushButton { background-color: red; color: white; font-weight: bold; }");
 }
-
+/// @brief Destructor.
 UserClientSesionExecution::~UserClientSesionExecution()
 {
     delete ui;
 }
-
+/// @brief Muestra imagen cámara principal capturada en tiempo real.
 void UserClientSesionExecution::onNewImage1(const cv::Mat& image)
 {
     if (image.empty()) return;
@@ -103,7 +103,7 @@ void UserClientSesionExecution::onNewImage1(const cv::Mat& image)
     QPixmap pix=QPixmap::fromImage(qimg).scaled(s,Qt::KeepAspectRatio);
     ui->frontImage->setPixmap(pix);
 }
-
+/// @brief Muestra imagen secundaria capturada en tiempo real.
 void UserClientSesionExecution::onNewImage2( const cv::Mat& image)
 {
     qDebug() << "[UI] Imagen secundaria recibida en sideImage, tamaño:" << image.cols << "x" << image.rows;
@@ -115,7 +115,7 @@ void UserClientSesionExecution::onNewImage2( const cv::Mat& image)
     QPixmap pix=QPixmap::fromImage(qimg).scaled(s,Qt::KeepAspectRatio);
     ui->sideImage->setPixmap(pix);
 }
-
+/// @brief Procesa feedback recibido y actualiza gráficas, mensajes y sonidos si corresponde.
 void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
 {
     if (graphWidget!=nullptr) graphWidget->updateFromFeedback(feedback);
@@ -197,12 +197,12 @@ void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
 
 
 
-
+/// @brief Procesa feedback recibido y actualiza gráficas, mensajes y sonidos si corresponde.
 void UserClientSesionExecution::appendFeedbackMessages( const FeedBack& feedback)
 {
 
 }
-
+/// @brief Lógica de temporizador que actualiza la interfaz de tiempo y progreso.
 void UserClientSesionExecution::updateTimeLabel()
 {
     elapsedSeconds++;
@@ -270,13 +270,13 @@ void UserClientSesionExecution::updateTimeLabel()
 
 }
 
-
+/// @brief Activa el análisis de la sesión desde el controlador.
 void UserClientSesionExecution::on_ReadyButon_clicked()
 {
     controller->startSesionAnalysis();
 }
 
-
+/// @brief Pausa o reanuda la sesión.
 void UserClientSesionExecution::on_pauseButton_clicked()
 {
     if (sessionTimer->isActive()) {
@@ -290,13 +290,13 @@ void UserClientSesionExecution::on_pauseButton_clicked()
     }
 }
 
-
+/// @brief Finaliza la sesión y cierra el diálogo.
 void UserClientSesionExecution::on_EndSesionButton_clicked()
 {
     controller->finishExerciseSesion();
     this->accept();
 }
-
+/// @brief Controla si se debe mostrar un efecto o reproducir sonido según el tipo de condición.
 bool UserClientSesionExecution::fireEffect(ConditionType type)
 {
     int now = elapsedSeconds;
@@ -306,7 +306,7 @@ bool UserClientSesionExecution::fireEffect(ConditionType type)
     }
     return false;
 }
-
+/// @brief Alterna el sonido para condiciones críticas.
 void UserClientSesionExecution::on_criticalButton_clicked()
 {
 
@@ -316,7 +316,7 @@ void UserClientSesionExecution::on_criticalButton_clicked()
     else ui->criticalButton->setStyleSheet("QPushButton { background-color: red; color: white; font-weight: bold; }");
 }
 
-
+/// @brief Alterna el sonido para alertas.
 void UserClientSesionExecution::on_alertsButton_clicked()
 {
     alertSoundEnabled = !alertSoundEnabled;
@@ -326,7 +326,7 @@ void UserClientSesionExecution::on_alertsButton_clicked()
 
 }
 
-
+/// @brief Alterna el sonido para mensajes informativos.
 void UserClientSesionExecution::on_infoButton_clicked()
 {
     infoSoundEnable = !infoSoundEnable;
@@ -335,7 +335,7 @@ void UserClientSesionExecution::on_infoButton_clicked()
     else ui->infoButton->setStyleSheet("QPushButton { background-color: red; color: white; font-weight: bold; }");
 }
 
-
+/// @brief Alterna el estado de silencio global.
 void UserClientSesionExecution::on_muteButton_clicked()
 {
     mute = !mute;
@@ -344,7 +344,7 @@ void UserClientSesionExecution::on_muteButton_clicked()
     else ui->muteButton->setStyleSheet("QPushButton { background-color: red; color: white; font-weight: bold; }");
 }
 
-
+/// @brief Disminuye el volumen de salida.
 void UserClientSesionExecution::on_volumeDownButton_clicked()
 {
     if (currentVolume > 0.0) {
@@ -353,7 +353,7 @@ void UserClientSesionExecution::on_volumeDownButton_clicked()
     }
 }
 
-
+/// @brief Aumenta el volumen de salida.
 void UserClientSesionExecution::on_volumeUpButton_clicked()
 {
     if (currentVolume < 1.0) {

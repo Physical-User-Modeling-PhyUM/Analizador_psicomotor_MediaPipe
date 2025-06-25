@@ -1,3 +1,4 @@
+/// @brief Implementación de la clase TrainerBoardWidget.
 #include "trainerboardwidget.h"
 
 #include "ui/fitnesstrainer/trainermetricsmainwidget.h"
@@ -7,6 +8,7 @@
 
 Q_LOGGING_CATEGORY(TrainerBoard, "TrainerBoardWidget")
 
+/// @brief Constructor. Inicializa los widgets y conecta eventos de navegación y error.
 TrainerBoardWidget::TrainerBoardWidget(QSharedPointer<AppController> controller, QWidget *parent)
     : QWidget(parent),
     ui(new Ui_TrainerBoardWidget),
@@ -46,12 +48,12 @@ TrainerBoardWidget::TrainerBoardWidget(QSharedPointer<AppController> controller,
     // metricsMainWidget = new TrainerMetricsMainWidget(controller, this);
     // ui->stackedWidget->insertWidget(5, metricsMainWidget);
 }
-
+/// @brief Destructor.
 TrainerBoardWidget::~TrainerBoardWidget()
 {
     delete ui;
 }
-
+/// @brief Asigna el usuario entrenador y actualiza los widgets correspondientes.
 void TrainerBoardWidget::setUser(QSharedPointer<FitnessTrainer> user)
 {
     currentTrainer = user;
@@ -63,7 +65,7 @@ void TrainerBoardWidget::setUser(QSharedPointer<FitnessTrainer> user)
     if (assignWidget) assignWidget->setTrainer(currentTrainer);
 
 }
-
+/// @brief Actualiza los campos de encabezado con los datos del entrenador.
 void TrainerBoardWidget::updateTrainerInfo()
 {
     ui->IdUserLabel->setText(QString::number(currentTrainer->getId()));
@@ -83,7 +85,7 @@ void TrainerBoardWidget::updateTrainerInfo()
         ui->pictureLabel->clear();
     }
 }
-
+/// @brief Cambia de sección en el stackedWidget según el índice del menú lateral.
 void TrainerBoardWidget::sectionChanged(int index)
 {
 
@@ -121,9 +123,9 @@ void TrainerBoardWidget::sectionChanged(int index)
 
 void TrainerBoardWidget::populateMetricsTable()
 {
-    // Aquí puedes conectar con metricsWidget si decides implementarlo más adelante
-}
 
+}
+/// @brief Muestra un mensaje modal según el tipo de mensaje de error recibido.
 void TrainerBoardWidget::onUiErrorMessage(const QString& msg, QtMsgType type)
 {
     switch (type) {
@@ -140,23 +142,23 @@ void TrainerBoardWidget::onUiErrorMessage(const QString& msg, QtMsgType type)
         break;
     }
 }
-
+/// @brief Devuelve si un cliente ya está en el buffer.
 bool TrainerBoardWidget::isInBuffer(QSharedPointer<Client> client) const
 {
     if(client!=nullptr &&  clientBuffer.contains(client->getId())) return true;
     else return false;
 }
-
+/// @brief Devuelve si un ID de cliente está en el buffer
 bool TrainerBoardWidget::isInBuffer(int id) const
 {
     return clientBuffer.contains(id);
 }
-
+/// @brief Obtiene un cliente del buffer por ID.
 QSharedPointer<Client> TrainerBoardWidget::getFromBuffer(int id) const
 {
     return clientBuffer.value(id, nullptr);
 }
-
+/// @brief Añade un cliente al buffer y mantiene el tamaño máximo.
 void TrainerBoardWidget::addToBuffer(QSharedPointer<Client> client)
 {
     if (client==nullptr) return;

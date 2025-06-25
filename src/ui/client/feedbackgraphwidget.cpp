@@ -1,19 +1,22 @@
+/// @brief Implementación de la clase FeedBackGraphWidget.
 #include "feedbackgraphwidget.h"
 #include <QPainter>
 #include <QConicalGradient>
 #include <QFont>
 #include <QPen>
 
+/// @brief Constructor. Establece el tamaño mínimo del widget.
 FeedBackGraphWidget::FeedBackGraphWidget(QWidget *parent)
     : QWidget(parent)
 {
     setMinimumSize(200, 200);
 }
 
+/// @brief Procesa el feedback recibido y actualiza los contadores de condiciones.
+/// Llama a `update()` para repintar el widget.
+/// @param feedback Objeto con las condiciones a analizar.
 void FeedBackGraphWidget::updateFromFeedback(const FeedBack &feedback)
 {
-
-
     for (const ConditionType &type:feedback.getEntriesList()) {
          if (feedback.isCritical(type)) ++criticalCount;
          else if (feedback.isAlert(type)) ++alertCount;
@@ -22,7 +25,8 @@ void FeedBackGraphWidget::updateFromFeedback(const FeedBack &feedback)
     //Actializa el widget(repinta)
     update();
 }
-
+/// @brief Evento que redibuja el widget con los datos actuales de feedback.
+/// Dibuja una gráfica circular y una leyenda textual inferior.
 void FeedBackGraphWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);

@@ -1,9 +1,12 @@
+/// @brief Implementación de la clase UserClientinfoWidget.
 #include "userclientinfowidget.h"
 #include "ui_userclientinfowidget.h"
 #include <QFileDialog>
 #include <QMessageBox>
 
 Q_LOGGING_CATEGORY(UserClientBoard, "UserClientBoardWidget")
+
+/// @brief Constructor. Inicializa la interfaz y conecta la acción del botón de cambiar foto.
 
 UserClientinfoWidget::UserClientinfoWidget(QSharedPointer<AppController> controller,QWidget *parent)
     : QWidget(parent),
@@ -13,12 +16,13 @@ UserClientinfoWidget::UserClientinfoWidget(QSharedPointer<AppController> control
     ui->setupUi(this);
     connect(ui->newPhoto, &QPushButton::clicked, this, &UserClientinfoWidget::on_newPhoto_clicked);
 }
-
+/// @brief Destructor.
 UserClientinfoWidget::~UserClientinfoWidget()
 {
     delete ui;
 }
 
+/// @brief Actualiza en la interfaz los datos del usuario cliente, incluyendo su imagen de perfil.
 
 void UserClientinfoWidget::updateUserInfo()
 {
@@ -39,6 +43,8 @@ void UserClientinfoWidget::updateUserInfo()
                         <<userClient->getLast_login();
 
 }
+/// @brief Asigna el usuario cliente que se mostrará en la interfaz.
+
 void UserClientinfoWidget::setUser(QSharedPointer<Client> user)
 {
 
@@ -46,7 +52,8 @@ void UserClientinfoWidget::setUser(QSharedPointer<Client> user)
     //updateUserInfo();
 }
 
-
+/// @brief Permite al usuario seleccionar una nueva imagen de perfil desde el sistema de archivos.
+/// La imagen se guarda en el perfil del usuario y se actualiza visualmente.
 void UserClientinfoWidget::on_newPhoto_clicked()
 {
     if (!userClient) return;

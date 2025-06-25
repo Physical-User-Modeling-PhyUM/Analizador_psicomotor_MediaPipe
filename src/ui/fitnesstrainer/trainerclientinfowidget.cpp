@@ -4,6 +4,7 @@
 #include "ui/main/comboboxdelegate.h"
 #include "enums/profileEnums.h"
 
+/// @brief Implementación de la clase TrainerClientInfoWidget.
 TrainerClientInfoWidget::TrainerClientInfoWidget(QSharedPointer<AppController> controller, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TrainerClientInfoWidget),
@@ -70,7 +71,7 @@ void TrainerClientInfoWidget::loadClientList()
     connect(ui->clientTable->horizontalHeader(), &QHeaderView::sectionClicked, this, &TrainerClientInfoWidget::onHeaderClickedClients);
 }
 
-
+/// @brief Carga el perfil del cliente seleccionado y lo muestra en las tablas.
 void TrainerClientInfoWidget::onClientSelected(int row)
 {
     QModelIndex proxyIndex = proxyModel->index(row, 0);
@@ -88,7 +89,7 @@ void TrainerClientInfoWidget::onClientSelected(int row)
     loadProfileToTables(currentClient->getProfile());
 }
 
-
+/// @brief Carga los datos del perfil en las tablas correspondientes.
 void TrainerClientInfoWidget::loadProfileToTables(QSharedPointer<ClientProfile> profile)
 {
 
@@ -99,7 +100,7 @@ void TrainerClientInfoWidget::loadProfileToTables(QSharedPointer<ClientProfile> 
     UiUtils::populateEnumTable(ui->medRecords, profile->getAllRecords(ClientProfileData::Medical), MedicalRecordsFieldNames());
     UiUtils::populateEnumTable(ui->lifeStylerecords, profile->getAllRecords(ClientProfileData::LifeStyle), LifeStyleFieldNames());
 }
-
+/// @brief Aplica los valores de las tablas al perfil del cliente.
 void TrainerClientInfoWidget::applyTablesToProfile(QSharedPointer<ClientProfile> profile)
 {
 
@@ -165,7 +166,7 @@ void TrainerClientInfoWidget::onAddLifeStyleRow() {
 void TrainerClientInfoWidget::onDeleteLifeStyleRow() {
     ui->lifeStylerecords->model()->removeRow(ui->lifeStylerecords->currentIndex().row());
 }
-
+/// @brief Guarda los cambios realizados en las tablas en el sistema.
 void TrainerClientInfoWidget::onSaveClicked()
 {
     if (!currentClient) return;
@@ -173,7 +174,7 @@ void TrainerClientInfoWidget::onSaveClicked()
     applyTablesToProfile(currentClient->getProfile());
     controller->getUserManager()->updateClientProfile(currentClient->getProfile());
 }
-
+/// @brief Descarta cambios y recarga la información del perfil desde el modelo.
 void TrainerClientInfoWidget::onDiscardClicked()
 {
     if (!currentClient) return;

@@ -1,3 +1,5 @@
+
+/// @brief Implementación de la clase AssignWorkoutDialog.
 #include "assignworkoutdialog.h"
 #include "ui_assignworkoutdialog.h"
 #include "utils/uiutils.h"
@@ -17,12 +19,12 @@ AssignWorkoutDialog::AssignWorkoutDialog(QSharedPointer<AppController> controlle
     connect(ui->Assign_Button, &QPushButton::clicked, this, &AssignWorkoutDialog::onAssignButtonClicked);
     connect(ui->cancel_Button, &QPushButton::clicked, this, &AssignWorkoutDialog::onCancelButtonClicked);
 }
-
+/// @brief Constructor del diálogo. Configura la tabla de clientes y conecta botones.
 AssignWorkoutDialog::~AssignWorkoutDialog()
 {
     delete ui;
 }
-
+/// @brief Configura la tabla de clientes con datos filtrables y columnas no editables.
 void AssignWorkoutDialog::setupClientsTable()
 {
 
@@ -40,7 +42,8 @@ void AssignWorkoutDialog::setupClientsTable()
     ui->clientsTable->setModel(proxyModel);
     ui->clientsTable->resizeColumnsToContents();
 }
-
+/// @brief Devuelve el ID del cliente actualmente seleccionado en la tabla.
+/// @return ID del cliente, o -1 si no hay selección válida.
 int AssignWorkoutDialog::getSelectedClientId() const
 {
     QModelIndex index = ui->clientsTable->currentIndex();
@@ -52,7 +55,7 @@ int AssignWorkoutDialog::getSelectedClientId() const
     return idVariant.toInt();
 }
 
-
+/// @brief Manejador del botón "Asignar". Intenta asignar el workout a la fecha y cliente seleccionados.
 void AssignWorkoutDialog::on_clientsTable_clicked(const QModelIndex &index)
 {
     // if (!index.isValid()) return;
@@ -67,6 +70,7 @@ void AssignWorkoutDialog::on_clientsTable_clicked(const QModelIndex &index)
 //     return ui->dateEdit->date();
 // }
 
+/// @brief Manejador del botón "Cancelar".
 void AssignWorkoutDialog::onAssignButtonClicked()
 {
     int id = getSelectedClientId();
@@ -92,12 +96,12 @@ void AssignWorkoutDialog::onAssignButtonClicked()
     accept();
 }
 
-
+/// @brief Evento de clic sobre una fila de la tabla de clientes.
 void AssignWorkoutDialog::onCancelButtonClicked()
 {
     reject();
 }
-
+/// @brief Muestra un filtro emergente al hacer clic sobre el encabezado de una columna.
 void AssignWorkoutDialog::onHeaderClickedClients(int logicalIndex)
 {
     UiUtils::showFilterPopup(this, ui->clientsTable, proxyModel, logicalIndex);
