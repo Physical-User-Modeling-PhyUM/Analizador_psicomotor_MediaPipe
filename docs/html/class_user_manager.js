@@ -1,0 +1,26 @@
+var class_user_manager =
+[
+    [ "UserManager", "class_user_manager.html#aee6dbc6895893b99a5a517a7f620b169", null ],
+    [ "assignWorkoutToClient", "class_user_manager.html#ae373a9c21eeee6f84c0c89a36c30cce5", null ],
+    [ "createClient", "class_user_manager.html#a12199de8c1c2e8dc47ecfe442e1631b2", null ],
+    [ "deleteUser", "class_user_manager.html#adc8d56758ced5aa3e070e8015347050f", null ],
+    [ "getClientProfile", "class_user_manager.html#af618d99d0f0c3dce9ff54311ccfa541b", null ],
+    [ "getCurrentUser", "class_user_manager.html#a1b782e81a3569b0a67a3f870371bbd84", null ],
+    [ "getNextUserId", "class_user_manager.html#a57a61c65640fd87cbf805f49c384951d", null ],
+    [ "getUser", "class_user_manager.html#ad31cca8bbcc03e9ae9a2a20669b87d3b", null ],
+    [ "getUserPreferences", "class_user_manager.html#a589c0f6baebe240d548a8da5df0e7a45", null ],
+    [ "getUserWorkout", "class_user_manager.html#ad31d069fda6620758a1504ebe3fabacd", null ],
+    [ "listUsers", "class_user_manager.html#abf592d93b0f8775aa3701793f93a5870", null ],
+    [ "login", "class_user_manager.html#a8b20581108614182c3f6fac5405d6267", null ],
+    [ "loging_As", "class_user_manager.html#a8192f085c38f827da8d175a976f79f28", null ],
+    [ "logout", "class_user_manager.html#a7a20e40fdb9fb7357ebfff9ffbdb1055", null ],
+    [ "newClient", "class_user_manager.html#a1729080909b191b6902ae05c3e781597", null ],
+    [ "setCurrentUser", "class_user_manager.html#a8c313c16f7b416b80d97b9ffc560a695", null ],
+    [ "ui_errorMessage", "class_user_manager.html#ad084c0c0e0335155bc57aa8682c2df3d", null ],
+    [ "unassignWorkoutFromClient", "class_user_manager.html#a4e210950c3b48eb9fba242fb90a0505d", null ],
+    [ "updateClientProfile", "class_user_manager.html#a096fe85780de2ec25d53e677742fa879", null ],
+    [ "updateUser", "class_user_manager.html#a50348e30da2976a50ebbc33cc99af4dc", null ],
+    [ "updateUserPreferences", "class_user_manager.html#a2b46991385eb5803f02cdbecbc49f316", null ],
+    [ "userLoggedIn", "class_user_manager.html#a975018374532b9732cb22e1cfbd6db90", null ],
+    [ "userLoggedOut", "class_user_manager.html#a912e20f58768195f193bd00b06d4d806", null ]
+];

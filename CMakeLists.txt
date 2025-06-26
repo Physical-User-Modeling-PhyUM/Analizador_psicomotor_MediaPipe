@@ -37,10 +37,6 @@ include_directories(/usr/local/opt/sqlite/include)
 set(PROJECT_SOURCES
     src/main.cpp
 
-
-
-
-
     src/profiles/user.h src/profiles/user.cpp
     src/profiles/fitnesstrainer.h src/profiles/fitnesstrainer.cpp
     src/profiles/client.h src/profiles/client.cpp
@@ -388,3 +384,7 @@ install(TARGETS pfg
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(pfg)
 endif()
+
+# Mostrar documentación Doxygen en Qt Creator
+file(GLOB_RECURSE DOXYGEN_DOCS "docs/html/*")
+source_group("Documentation" FILES ${DOXYGEN_DOCS})

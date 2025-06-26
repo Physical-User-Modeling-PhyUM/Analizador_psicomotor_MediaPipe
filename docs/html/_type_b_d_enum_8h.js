@@ -1,0 +1,47 @@
+var _type_b_d_enum_8h =
+[
+    [ "DBFilter", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bc", [
+      [ "IdUser", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca30d6ef8aa058bc6372d502f753a3c422", null ],
+      [ "IdClient", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca7b0724f17ca150329476ba32b4a5e8b1", null ],
+      [ "IdTrainer", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bcaa6c81568019faef61ed3cb3262dcf34c", null ],
+      [ "IdAdmin", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca74459939b08b0baf077669f5781fc6e2", null ],
+      [ "Email", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bcace8ae9da5b7cd6c3df2929543a9af92d", null ],
+      [ "Name", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca49ee3087348e8d44e1feda1917443987", null ],
+      [ "UserName", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca7e20d471144b1bff4e1f5d953e05ed15", null ],
+      [ "FamilyName", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca66afb8580305c04534c520eb243f3957", null ],
+      [ "IdEx", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bcaff3bee929eefd3d3240d8e19ebe4ff0e", null ],
+      [ "IdWorkout", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca4e96ec0ceca1e3397076bf42ecdcc4aa", null ],
+      [ "IdState", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca8ee27469bbf6106def6aa1159ddd013d", null ],
+      [ "idConstraint", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bcae5da93b3fd0aa1eeabc7fdad779365b6", null ],
+      [ "IdSesion", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca24adaed45ac885efb975c813a62d8490", null ],
+      [ "none", "_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca334c4a4c42fdb79d7ebc3e73b517e6f8", null ]
+    ] ],
+    [ "TypeBDEnum", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6f", [
+      [ "User", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa8f9bfe9d1345237cb3b2b205864da075", null ],
+      [ "Client", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa577d7068826de925ea2aec01dbadf5e4", null ],
+      [ "Trainer", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa6a637f7058902bd845b674214be7d85c", null ],
+      [ "Admin", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fae3afed0047b08059d0fada10f400c1e5", null ],
+      [ "ProfileFunctional", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa0f7944030834170157f591315c21360f", null ],
+      [ "ProfileMorphology", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa9dbf145ed18059205fd7e8d8e31ae5ea", null ],
+      [ "ProfileROM", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa03b0395f71dd165a08136ef737b62288", null ],
+      [ "ProfileLifestyle", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa171dd9390c19b1c070ef0ceef3f77540", null ],
+      [ "ProfileMedical", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fac7d2c3b76f512534f5f4cecb292a707c", null ],
+      [ "ProfileGeneral", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fac86711e65d8d8062910b3b808a74467b", null ],
+      [ "ProfileAditional", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa394343b456443e4beed1ec24e5e07f2c", null ],
+      [ "ClientWorkoutCalendar", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa1d695ab45c32854a74b41b11df74c299", null ],
+      [ "Preferences", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fad0834fcec6337785ee749c8f5464f6f6", null ],
+      [ "ExerciseEspec", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa33cace949c55ab7f0bbbce785fce2413", null ],
+      [ "TrainingWorkout", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa814ff86e2333581d28200f3b09b1dc30", null ],
+      [ "WorkoutExercises", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fac399dd74f857161b1db15cf46e893bdc", null ],
+      [ "State", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa46a2a41cc6e552044816a2d04634545d", null ],
+      [ "AngleConstraint", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa0e47b1cd0aa332af0cc69b1f3fbe546d", null ],
+      [ "Transition", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6faafedf9afee367f51f98d7cf030c976a6", null ],
+      [ "TrainingSesion", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa2d7c69cca5948af4972e14704a587915", null ],
+      [ "ExerciseSummary", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa4c52280f785011c3db71ae08081a7e8a", null ],
+      [ "SesionReport", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa928161dd1ebccc52e14f0f4665c47e27", null ],
+      [ "Unknown", "_type_b_d_enum_8h.html#a826bd9db82dd720eebf9276c8504ec6fa88183b946cc5f0e8c96b2e66e1c74a7e", null ]
+    ] ],
+    [ "BDFilterToString", "_type_b_d_enum_8h.html#a6e98b32dae1a92ebd1a52c8e0eff2868", null ],
+    [ "TypeBDEnumFromString", "_type_b_d_enum_8h.html#adc6a6cb7d95896d1aee59f190d6954a4", null ],
+    [ "TypeBDEnumToString", "_type_b_d_enum_8h.html#a8921a2651796652ca53b9f0edf8aadee", null ]
+];

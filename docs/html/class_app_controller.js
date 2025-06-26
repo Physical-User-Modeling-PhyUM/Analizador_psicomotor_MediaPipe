@@ -1,0 +1,28 @@
+var class_app_controller =
+[
+    [ "AppController", "class_app_controller.html#a8f651479592578a94ba43279f45f9386", null ],
+    [ "~AppController", "class_app_controller.html#a2aeb07ffaa5dbb2320bf2173f4ffa178", null ],
+    [ "finishExerciseSesion", "class_app_controller.html#a65c57c51a3473a8ac0dd0513e319d348", null ],
+    [ "getConnections", "class_app_controller.html#a28f5ed2630270e4742c880730efad950", null ],
+    [ "getKeypoints", "class_app_controller.html#a349467c9a8b14f1aaf4264cc91e4245b", null ],
+    [ "getLoginManager", "class_app_controller.html#aa0a420cec6eb37613a8ef30944593424", null ],
+    [ "getMaxBufferSize", "class_app_controller.html#a1301130f9cbcdc4bd31c8dff6a2028e4", null ],
+    [ "getMetricsManager", "class_app_controller.html#ae973a9f1eef7e03687b80a1d35334862", null ],
+    [ "getPoseCaptureConfig", "class_app_controller.html#a8c98a93e0ce685d079f22541e9d57ab1", null ],
+    [ "getPoseManager", "class_app_controller.html#a6a6bfb09afb22fe8dd7d85bc126bd588", null ],
+    [ "getSoundFeedbackManager", "class_app_controller.html#a267125ab19d304bb92d8cd647d2babab", null ],
+    [ "getTrainingManager", "class_app_controller.html#ab79e8ad88f2f6332260dff06908fe918", null ],
+    [ "getUserManager", "class_app_controller.html#a9536f627fbd3adecd454b3a18174f1e9", null ],
+    [ "getValidationManager", "class_app_controller.html#a0a2ac16559dd7a26002a2c184603d010", null ],
+    [ "initialize", "class_app_controller.html#a61afa8cb28f6e13042f834c85c0a2492", null ],
+    [ "pauseSesion", "class_app_controller.html#a4a8a9da6659786fd82f95875055170ab", null ],
+    [ "setConnections", "class_app_controller.html#a67a91e1e80c4f7a1d531a5e6e3ebeb09", null ],
+    [ "setKeypoints", "class_app_controller.html#adb4426be26b8928dc9415a930ab997a1", null ],
+    [ "setPoseCaptureConfig", "class_app_controller.html#ad63b23705290ffed10c896384f63ef8e", null ],
+    [ "setSelf", "class_app_controller.html#ab44b6bb41048fe0e5f46f0d334c86386", null ],
+    [ "startExerciseSesion", "class_app_controller.html#a84e431a80b688d86d58a256fa3b11f89", null ],
+    [ "startLoginFlow", "class_app_controller.html#a1cf1e7b84d4c21597c7a3c7166bad8b3", null ],
+    [ "startSesionAnalysis", "class_app_controller.html#af9d685fff5844821b5517f8fc6df8d7d", null ],
+    [ "espec", "class_app_controller.html#a648964fe5ccdf300a23cba7e641879cc", null ],
+    [ "sesion", "class_app_controller.html#a99ef08c4cb81fb0be16fcd37633edc4f", null ]
+];

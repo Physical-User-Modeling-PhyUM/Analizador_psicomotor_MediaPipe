@@ -1,0 +1,43 @@
+var condition_8h =
+[
+    [ "Condition", "struct_condition.html", "struct_condition" ],
+    [ "ConditionCategory", "condition_8h.html#aa09a486d490962f742dd1067eb31dbfd", [
+      [ "critical", "condition_8h.html#aa09a486d490962f742dd1067eb31dbfda7e85bcb66fb9a809d5ab4f62a8b8bea8", null ],
+      [ "alert", "condition_8h.html#aa09a486d490962f742dd1067eb31dbfda7ed21143076d0cca420653d4345baa2f", null ],
+      [ "info", "condition_8h.html#aa09a486d490962f742dd1067eb31dbfdacaf9b6b99962bf5c2264824231d7a40c", null ],
+      [ "none", "condition_8h.html#aa09a486d490962f742dd1067eb31dbfda334c4a4c42fdb79d7ebc3e73b517e6f8", null ]
+    ] ],
+    [ "ConditionType", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446", [
+      [ "MaxAngle", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a760b0dc82f28fae49499031a80acfe3e", null ],
+      [ "MinAngle", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446ae6180b62ed1a93aa7c0953bd5d93295b", null ],
+      [ "Increase", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446aaac247ca22789872bad95dc8f6c45d37", null ],
+      [ "Decrease", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a9e661cc6f7c72b95abfd6b372aacbfa1", null ],
+      [ "OpositeDirection", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446af47c8d02465e1340b2ad529d122d302d", null ],
+      [ "Has_Stopped", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446accb7d3cfcb26c63a83a8ab5715b01459", null ],
+      [ "is_Steady", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a38c4cfc77226aa7f3631c02fb1c2d7a1", null ],
+      [ "Not_Steady", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a18e5a5e24044ff6d78afdc50daeb834f", null ],
+      [ "MaxStateTimeout", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446ae93d84320c95e12fc13c27afc6764fa6", null ],
+      [ "MinStateTimeout", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446ae503489457e47f17fefa7af71327d85a", null ],
+      [ "OptimalForm", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a1254bfbc6c87aef55651904d325c4028", null ],
+      [ "FastMovement", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a11a78598ce03ba573b35ac06d8da2f90", null ],
+      [ "SlowMovement", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a12c00d5fdad5a1ae8fee35f5c2c91cde", null ],
+      [ "JointOverload", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a98ba02df3968fbfe5e2a9e6cc1730546", null ],
+      [ "symmetryDeviation", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a506811c70e431c2124f9e201ef9d8f34", null ],
+      [ "exerciseInit", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446aeb365de840596d0550c38d0663e70fb9", null ],
+      [ "EndOfRepetition", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a2551afe3e275966d9113bfd6e8059c71", null ],
+      [ "EndOfSet", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a2861c806ff3ad31f6b42c55defaa2470", null ],
+      [ "EndOfExercise", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446ad0b1a876de19e5511689bacb80938822", null ],
+      [ "SetTime", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a62a4d37310bb74175f9888a8915e5cb8", null ],
+      [ "RestTime", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a546c85c0a0ab5d7bee42a284f62ca3a3", null ],
+      [ "RestOverTime", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a6e4fa8073749a786a515b9ae897eeb69", null ],
+      [ "EndOfMovementPhase", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446afa65fcaf937dfb30fca461cc268325ca", null ],
+      [ "AccelerationSpikes", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a4f997eefd5e401338bd336d14dd17264", null ],
+      [ "RangeOfMotionDeficit", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446ad661dbe5d379ba734dd85fa571e37229", null ],
+      [ "IncorrectExecution", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a565d1a92adbf240f42e283627bbe40e1", null ],
+      [ "ExerciseOvertime", "condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446adeb755f8cd6d2806fa80d340b2b5d26d", null ]
+    ] ],
+    [ "conditionTypeFromString", "condition_8h.html#a5f4e5206f2e3af45409de534a3fdc342", null ],
+    [ "conditionTypeToString", "condition_8h.html#a54c6331eba62e673b1b28c521ea0e062", null ],
+    [ "operator==", "condition_8h.html#aaeedee912cb2c15a1f4549b45393e837", null ],
+    [ "qHash", "condition_8h.html#af179cfdcd17407571e6116750f2bbf2f", null ]
+];

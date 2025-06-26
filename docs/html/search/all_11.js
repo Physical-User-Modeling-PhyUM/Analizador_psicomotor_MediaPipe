@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['rangeofmotiondeficit_0',['RangeOfMotionDeficit',['../condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446ad661dbe5d379ba734dd85fa571e37229',1,'condition.h']]],
+  ['readjsonfile_1',['readJsonFile',['../class_json_utils.html#a6e8a8f96acdad097bc04ba46df7578ee',1,'JsonUtils']]],
+  ['registernewclient_2',['registerNewClient',['../class_login_manager.html#ab8d7b82b96bf06bf3c511cc1c8184053',1,'LoginManager']]],
+  ['removeexercise_3',['removeExercise',['../class_training_workout.html#aa9fe7b4265ed6482d7b70942528bd91e',1,'TrainingWorkout']]],
+  ['repetitioncomplete_4',['repetitionComplete',['../class_pose_manager.html#ae871582e9352d7a6d0e3ecbad3c6c7e9',1,'PoseManager']]],
+  ['repetitions_5',['Repetitions',['../_ex_espec_field_enum_8h.html#ababb8b061222493711be4edc546ced75a78b3407d9f9fedc19ab456f9166b78f7',1,'ExEspecFieldEnum.h']]],
+  ['replaceexercise_6',['replaceExercise',['../class_training_workout.html#a154b2c41572f7245c3f15c4a2e83c627',1,'TrainingWorkout']]],
+  ['reset_7',['reset',['../class_sesion_report.html#a3ff739f9a3513b3c7fd7f5dbff7ccef6',1,'SesionReport']]],
+  ['resetmemory_8',['resetMemory',['../class_pose_manager.html#a7541297f42c2900b394a476c9b018e76',1,'PoseManager']]],
+  ['restovertime_9',['RestOverTime',['../condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a6e4fa8073749a786a515b9ae897eeb69',1,'condition.h']]],
+  ['resttime_10',['RestTime',['../_ex_espec_field_enum_8h.html#ababb8b061222493711be4edc546ced75a546c85c0a0ab5d7bee42a284f62ca3a3',1,'RestTime:&#160;ExEspecFieldEnum.h'],['../condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a546c85c0a0ab5d7bee42a284f62ca3a3',1,'RestTime:&#160;condition.h']]],
+  ['resume_11',['resume',['../_user_field_enum_8h.html#a0400d65ddbb19f42caa40cfbedf1fb57a69f2afc2390cec954f7c208b07212d39',1,'UserFieldEnum.h']]],
+  ['right_12',['Right',['../_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967da92b09c7c48c520c3c55e497875da437c',1,'PoseViewEnum.h']]],
+  ['roledescription_13',['roleDescription',['../_user_field_enum_8h.html#a0400d65ddbb19f42caa40cfbedf1fb57a15ede2139ec5a2494d72c148f1d8e5ee',1,'UserFieldEnum.h']]],
+  ['rom_14',['ROM',['../profile_enums_8h.html#a9189e4d87490c4c995f0af2187b46739a2ab3e8c8b1582343bc7f8aae9d9dfa6b',1,'profileEnums.h']]],
+  ['romjoint_15',['ROMJoint',['../profile_enums_8h.html#ac070a4b5d3295f66f4e1ff3fbe67411e',1,'profileEnums.h']]],
+  ['romjointfromstring_16',['ROMJointFromString',['../profile_enums_8cpp.html#af07794e85667367b3ba55de05585b325',1,'ROMJointFromString(const QString &amp;str):&#160;profileEnums.cpp'],['../profile_enums_8h.html#af07794e85667367b3ba55de05585b325',1,'ROMJointFromString(const QString &amp;str):&#160;profileEnums.cpp']]],
+  ['romjointnames_17',['ROMJointNames',['../profile_enums_8cpp.html#ac1a9a9381794eb16e118376316b179d3',1,'ROMJointNames():&#160;profileEnums.cpp'],['../profile_enums_8h.html#ac1a9a9381794eb16e118376316b179d3',1,'ROMJointNames():&#160;profileEnums.cpp']]],
+  ['romjointtostring_18',['ROMJointToString',['../profile_enums_8cpp.html#a4cddf4918b9cf436e5077913c315a9bc',1,'ROMJointToString(ROMJoint field):&#160;profileEnums.cpp'],['../profile_enums_8h.html#a4cddf4918b9cf436e5077913c315a9bc',1,'ROMJointToString(ROMJoint field):&#160;profileEnums.cpp']]],
+  ['rowcount_19',['rowCount',['../class_d_b_table.html#a58f2298e39fe9d40b20ae5da7ab8ed4a',1,'DBTable::rowCount()'],['../class_ui_table_model.html#ac3c8f887e38b7581c5969a44c83b4057',1,'UiTableModel::rowCount()']]],
+  ['run_20',['run',['../class_state_machine.html#a022aa5a6865d0e1e1e6f52fdbc423731',1,'StateMachine']]],
+  ['runanalysis_21',['runAnalysis',['../class_pose_manager.html#aaf8ad7cb972d1f9e36ec19738de6e403',1,'PoseManager']]]
+];
