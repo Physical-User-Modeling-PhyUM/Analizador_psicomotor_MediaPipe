@@ -141,19 +141,15 @@ void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
         }
         switch (type){
             case ConditionType::exerciseInit: {
-                inRest=false;
-                inExecution=true;
-
-                ui->restTimeBar->setValue(0);
-                //ui->workingTimeLabel->setStyleSheet("QLabel { color : black; }");
-                //ui->workingTimeBar->setStyleSheet("QProgressBar::chunk { background-color: blue; }");
-                ui->restTimeLabel->setStyleSheet("QLabel { color : black; }");
-                //ui->SetLabel->setStyleSheet("QLabel { color : black; }");
-                //ui->RepsLabel->setStyleSheet("QLabel { color : black; }");
-                ui->restTimeBar->setStyleSheet("QProgressBar::chunk { background-color: blue; }");
-                };
-                break;
-
+                    if (waitingForExecutionActivation){
+                        inRest=false;
+                        inExecution=true;
+                        ui->restTimeBar->setValue(0);
+                        ui->restTimeLabel->setStyleSheet("QLabel { color : black; }");
+                        ui->restTimeBar->setStyleSheet("QProgressBar::chunk { background-color: blue; }");
+                    }
+                    break;
+            };
             case ConditionType::EndOfSet: {
                 int current = ui->setBar->value() + 1;
                 if (current > maxSets) {
@@ -172,6 +168,8 @@ void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
                 inExecution = false;
                 inRest = true;
                 restTime = 0;
+                waitingForExecutionActivation=false;
+                controller->pauseSesion();
                 break;
             }
             case ConditionType::EndOfRepetition: {
@@ -184,7 +182,11 @@ void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
                 ui->RepsLabel->setText(reps);
                 break;
             }
+            case ConditionType::RestTime: {
+                waitingForExecutionActivation=true;
 
+                break;
+            }
             default:
                 break;
          }
@@ -273,6 +275,7 @@ void UserClientSesionExecution::updateTimeLabel()
 void UserClientSesionExecution::on_ReadyButon_clicked()
 {
     controller->startSesionAnalysis();
+    waitingForExecutionActivation=true;
 }
 
 /// @brief Pausa o reanuda la sesión.
@@ -282,6 +285,7 @@ void UserClientSesionExecution::on_pauseButton_clicked()
         sessionTimer->stop();
         ui->pauseButton->setText("Resume");
         controller->pauseSesion();
+
     } else {
         sessionTimer->start();
         ui->pauseButton->setText("Pause");

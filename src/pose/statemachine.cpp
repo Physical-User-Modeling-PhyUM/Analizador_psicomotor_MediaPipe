@@ -29,9 +29,9 @@ StateMachine::StateMachine(QSharedPointer<ExerciseEspec> espec)
     transitionTable(espec->getTransitionTable()),
     currentState(espec->getStatesList().first()),
     series(espec->getSeries()),
-    duration(espec->getDuration()),
+    duration((espec->getDuration())*1000),// el valor está en segundos
     repetitions(espec->getRepetitions()),
-    restTime(espec->getRestTime()),
+    restTime((espec->getRestTime())*1000),//el valor está en  segundos
     complete(false)
 
 {
@@ -69,7 +69,7 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
     QList<Condition> currentReport;
     currentReport.clear();
 
-    //Durante el tiempo de descanso no se realizará ningun análisis
+    //Durante el tiempo de descanso no se realizará ningun análisis, si se incluye un tiempo este sera respetado siempre
     if (resting) {
         if (initRestTime != -1 && restTime != -1 && (time - initRestTime) > restTime) {
             resting = false;

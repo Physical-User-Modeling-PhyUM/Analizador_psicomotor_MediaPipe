@@ -135,7 +135,8 @@ private:
     char* shm_1;
     char* shm_2;
     bool dualMode;
-    bool running, runningAnalysis;
+    bool running;
+    bool runningAnalysis=false;
     QTimer* timer = nullptr;
     int WIDTH, HEIGHT, FRAME_SIZE, JSON_SIZE, FLAG_SIZE, TOTAL_SIZE;
     QString CAM_1, CAM_2, SEM_SHM1, SEM_SHM2;

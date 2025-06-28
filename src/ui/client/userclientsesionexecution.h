@@ -102,6 +102,7 @@ private:
     bool inRest; ///< Indica si el usuario está en descanso.
     int restTime; ///< Tiempo de descanso configurado.
     bool inExecution; ///< Indica si la sesión está en ejecución.
+    bool waitingForExecutionActivation=true;///< Indica si la sesión se puede poner en ejecución o no.
     int executionTime; ///< Tiempo de ejecución actual.
     int maxReps; ///< Número máximo de repeticiones.
     int maxSets; ///< Número máximo de series.

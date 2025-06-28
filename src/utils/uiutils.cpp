@@ -36,7 +36,7 @@ void UiUtils::fromWorkoutSummaries(const QList<WorkoutSummary>& list, UiTableMod
  */
 void UiUtils::fromWorkoutExercises(const QSharedPointer<TrainingWorkout>& workout, UiTableModel* model)
 {
-    QStringList headers = {"ID", "Exercise name", "Description","type", "Target Muscle", "Equipment", "Series", "Reps", "Duration", "% Weight", "Rest"};
+    QStringList headers = {"ID", "Exercise name", "Description","type", "Target Muscle", "Equipment", "Series", "Reps", "Duration (sec)", "% Weight", "Rest (sec)"};
     QList<QList<QVariant>> rows;
 
     auto exercises = workout->getExercises();
@@ -67,7 +67,7 @@ void UiUtils::fromWorkoutExercises(const QSharedPointer<TrainingWorkout>& workou
  */
 void UiUtils::fromExerciseStates(const QSharedPointer<ExerciseEspec>& exercise, UiTableModel* model)
 {
-    QStringList headers = {"IdState","IdExercise", "Min time", "Max Time","Name"};
+    QStringList headers = {"IdState","IdExercise", "Min time(ms)", "Max Time(ms)","Name"};
     QList<QList<QVariant>> rows;
 
      auto states = exercise->getStatesList();
@@ -92,7 +92,7 @@ void UiUtils::fromExerciseStates(const QSharedPointer<ExerciseEspec>& exercise, 
  */
 void UiUtils::fromStateConstraints(const QHash<QString, AngleConstraint>& constraints, UiTableModel* model)
 {
-    QStringList headers = {"idConst","idState","IdEx","Axis", "Min Angle.", "Max Angle", "Min Safe Angle", "Max Safe Angle", "Constant Angle", "Movement direction", "Tolerance", "Fast Threshold", "Slow Threshold","view"};
+    QStringList headers = {"idConst","idState","IdEx","Axis", "Min Angle.", "Max Angle", "Min Safe Angle", "Max Safe Angle", "Constant Angle", "Movement direction", "Tolerance", "Fast Threshold(deg/sec)", "Slow Threshold(deg/sec)","view"};
     QList<QList<QVariant>> rows;
 
     for (auto it = constraints.constBegin(); it != constraints.constEnd(); ++it) {
