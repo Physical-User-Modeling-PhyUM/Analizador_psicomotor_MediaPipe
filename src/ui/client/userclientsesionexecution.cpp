@@ -118,7 +118,7 @@ void UserClientSesionExecution::onNewImage2( const cv::Mat& image)
 /// @brief Procesa feedback recibido y actualiza gráficas, mensajes y sonidos si corresponde.
 void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
 {
-    if (graphWidget!=nullptr) graphWidget->updateFromFeedback(feedback);
+    if (graphWidget!=nullptr && inExecution) graphWidget->updateFromFeedback(feedback);
 
     for (const ConditionType &type:feedback.getEntriesList()) {
 
@@ -128,16 +128,16 @@ void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
             QString message = feedback.getMessage(type);
 
             if (feedback.isCritical(type)){
-                ui->criticalMsgEdit->append(QString("<b style='color:red;'" + message + "</b>"+"\n"));
-                if (!mute && criticaSoundEnable)soundManager->play(type);
+                ui->criticalMsgEdit->append(QString("<b style='color:red;'>[CRÍTICO] " + message + "</b>"+"\n"));
+                if (!mute && criticaSoundEnable && inExecution)soundManager->play(type,ConditionCategory::critical);
             }
             else if (feedback.isAlert(type)){
-                 ui->alertsMsgEdit->append(QString("<span style='color:orange;'" + message + "</span>"+"\n"));
-                 if (!mute && alertSoundEnabled)soundManager->play(type);
+                 ui->alertsMsgEdit->append(QString("<span style='color:orange;'>[ALERTA] " + message + "</span>"+"\n"));
+                 if (!mute && alertSoundEnabled && inExecution)soundManager->play(type,ConditionCategory::alert);
             }
             else{
-                 ui->infoMsgEdit->append(QString("<span style='color:gray;'" + message + "</span>"+"\n"));
-                 if (!mute && infoSoundEnable)soundManager->play(type);
+                 ui->infoMsgEdit->append(QString("<span style='color:gray;'>[INFO] " + message + "</span>"+"\n"));
+                 if (!mute && infoSoundEnable && inExecution)soundManager->play(type,ConditionCategory::info);
             }
         }
         switch (type){

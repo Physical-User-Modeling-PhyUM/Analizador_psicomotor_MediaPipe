@@ -1,11 +1,3 @@
-/**
- * @file soundfeedbackmanager.h
- * @brief Declaración de la clase SoundFeedbackManager encargada del feedback sonoro en base a condiciones biomecánicas.
- *
- * Esta clase gestiona los efectos de sonido asociados a distintos tipos de condiciones detectadas durante un ejercicio.
- * Permite configurar qué sonidos se reproducen, ajustar el volumen y silenciar la salida.
- */
-
 #ifndef SOUNDFEEDBACKMANAGER_H
 #define SOUNDFEEDBACKMANAGER_H
 
@@ -15,13 +7,14 @@
 #include "pose/feedback.h"
 #include "pose/condition.h"
 #include <QDir>
+#include <QList>
 
 /**
  * @class SoundFeedbackManager
  * @brief Clase encargada de reproducir sonidos asociados a condiciones específicas del ejercicio.
  *
- * Esta clase permite la asociación entre `ConditionType` y archivos de sonido. Soporta reproducción de múltiples
- * sonidos simultáneos, control de volumen, y configuración de filtros según el nivel de criticidad (informativo, alerta, crítico).
+ * Esta clase permite la asociación entre `ConditionType` y archivos de sonido. Soporta reproducción priorizada
+ * en tiempo real, control de volumen, enmudecimiento global y activación selectiva por severidad.
  */
 class SoundFeedbackManager : public QObject
 {
@@ -36,12 +29,13 @@ public:
 
     /**
      * @brief Reproduce todos los sonidos asociados a las condiciones contenidas en el feedback.
+     * Aplica prioridad crítica > alerta > informativa y controla la cola de reproducción con un máximo de 5 sonidos.
      * @param feedback Objeto de tipo `FeedBack` con las condiciones generadas.
      */
     void playFeedback(const FeedBack& feedback);
 
     /**
-     * @brief Reproduce directamente el sonido asociado a una condición específica.
+     * @brief Reproduce directamente el sonido asociado a una condición específica si no hay otro en reproducción.
      * @param cond Condición a reproducir.
      */
     void play(ConditionType cond);
@@ -76,13 +70,18 @@ public:
      */
     void setCriticaSoundEnable(bool newCriticaSoundEnable);
 
+    void play(ConditionType cond, ConditionCategory cat);
 private:
     QHash<ConditionType, QSoundEffect*> soundMap; ///< Mapa que asocia condiciones con efectos de sonido.
+    QList<QPair<QSoundEffect*,ConditionCategory>> soundQueue;              ///< Cola de reproducción priorizada.
+    bool isPlaying = false;                       ///< Indica si un sonido está siendo reproducido actualmente.
 
     bool infoSoundEnable = true;    ///< Bandera para sonidos informativos.
     bool alertSoundEnabled = true;  ///< Bandera para sonidos de alerta.
     bool criticaSoundEnable = true; ///< Bandera para sonidos críticos.
-
+    qint64 lastPlayTimestamp = 0; ///< Tiempo (ms) del último sonido reproducido
+    const int minDelayMs = 2000;
+    QSoundEffect* currentPlayingEffect = nullptr;
     QString soundPath; ///< Ruta base a la carpeta de sonidos.
 
     /**
@@ -91,12 +90,39 @@ private:
     void loadSounds();
 
     /**
+     * @brief Reproduce el siguiente sonido de la cola, si existe.
+     */
+    void playNext();
+
+    /**
      * @brief Añade un nuevo sonido al mapa de condiciones.
      * @param type Tipo de condición.
      * @param path Ruta al archivo de sonido.
      */
     void addSound(ConditionType type, const QString& path);
+
+    /**
+     * @brief Gestiona eventos del sistema de sonido cuando se completa la carga o se produce un error.
+     * @param effect Efecto de sonido implicado.
+     * @param path Ruta del archivo de sonido.
+     */
     void onSoundStatusChanged(QSoundEffect *effect, const QString &path);
+
+    /**
+     * @brief Añade un sonido a la cola con lógica de prioridad y reemplazo, según la categoría proporcionada por el feedback.
+     * Si la cola ya contiene el sonido, no se añade. Si está llena, se aplica la siguiente política:
+     * - ALERTA reemplaza INFO; si no hay, reemplaza ALERTA; si todos son CRÍTICOS, elimina el primero y añade al final.
+     * - CRÍTICO reemplaza INFO o ALERTA; si todos son CRÍTICOS, elimina el primero y añade al final.
+     * @param feedback Objeto `FeedBack` que proporciona la categoría del sonido.
+     * @param type Tipo de condición cuyo sonido se desea añadir.
+     */
+    void addtoSoundList(const FeedBack& feedback, ConditionType type);
+
+private slots:
+    /**
+     * @brief Slot llamado automáticamente al terminar un sonido, lanza el siguiente si existe.
+     */
+    void onSoundFinished();
 };
 
 #endif // SOUNDFEEDBACKMANAGER_H
