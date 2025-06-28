@@ -55,8 +55,19 @@ void UserClientMainBoardWidget::setUser(QSharedPointer<Client> user)
 {
 
     currentUser = user;
-    //updateUserInfo();
+
+    // Cargar su perfil desde el UserManager
+    auto profile = controller->getUserManager()->getClientProfile(user->getId());
+
+    if (profile) {
+        currentUser->setProfile(profile);
+        qDebug() << "Perfil cargado correctamente en el cliente";
+    } else {
+        qWarning() << "No se encontró el perfil del cliente";
+    }
+
     configWidget->loadConfig();
+
 }
 /// @brief Cambia la sección visible en el stackedWidget.
 /// Si se selecciona la última entrada, se interpreta como logout.

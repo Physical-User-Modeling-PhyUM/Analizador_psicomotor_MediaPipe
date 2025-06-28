@@ -8,6 +8,11 @@
 #include "core/appcontroller.h"
 #include "ui_userclientprofilewidget.h"
 #include <QLoggingCategory>
+#include "ui/main/uitablemodel.h"
+#include <QSharedPointer>
+#include <QPointer>
+#include <QSortFilterProxyModel>
+#include "profiles/client.h"
 
 Q_DECLARE_LOGGING_CATEGORY(UserClientProfileBoard)
 
@@ -32,11 +37,13 @@ public:
     /// @brief Asigna el usuario cliente cuyos datos se mostrarán en el perfil.
     /// @param user Usuario de tipo `Client`.
     void setUser(QSharedPointer<Client> user);
-
+    /// @brief Establece el cliente actual y muestra su perfil.
+    void setClient(QSharedPointer<Client> client);
 private:
     Ui_UserClientprofileWidget *ui; ///< Interfaz gráfica asociada al widget.
-    QSharedPointer<Client> currentUser; ///< Cliente actualmente visualizado.
+    QSharedPointer<Client> currentClient; ///< Cliente actualmente visualizado.
     QSharedPointer<AppController> controller; ///< Controlador principal para acceder a datos y lógica.
+    void loadProfileToTables(QSharedPointer<ClientProfile> profile);
 };
 
 #endif // USERCLIENTPROFILEWIDGET_H

@@ -73,11 +73,14 @@ Client::Client(QHash<UserField, QVariant> dataMap, QObject* parent)
     QVariant imageData = dataMap.value(UserField::Picture);
     QImage image;
     if (imageData.canConvert<QByteArray>()) {
+        qDebug()<<"imagen convertida a QbyteArray";
         image.loadFromData(imageData.toByteArray());
     }
 
     if (image.isNull()) {
-       qWarning() << "No se pudo cargar ninguna imagen del perfil. Usando imagen en blanco.";
+        image = QImage(":/images/images/blank-profile.jpg");
+       qWarning() << "No se pudo cargar ninguna imagen del perfil. Usando imagen en blanco.,,"
+                   <<"null"<<imageData.isNull()<<"valid"<<imageData.isValid();
       }
 
     this->profile_Picture = image;

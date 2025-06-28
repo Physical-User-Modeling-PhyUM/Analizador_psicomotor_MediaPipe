@@ -55,11 +55,6 @@
          <string>Log Out</string>
         </property>
        </item>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
       </widget>
      </item>
      <item>

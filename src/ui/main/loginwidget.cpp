@@ -72,3 +72,8 @@ void LoginWidget::on_CancelButton_clicked()
      ui->stackedWidget->setCurrentIndex(0);
 }
 
+void LoginWidget::clearFields() {
+    ui->emailEdit->clear();
+    ui->passwordEdit->clear();
+    ui->statusLabel->clear();
+}

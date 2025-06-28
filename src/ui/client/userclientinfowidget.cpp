@@ -49,7 +49,7 @@ void UserClientinfoWidget::setUser(QSharedPointer<Client> user)
 {
 
     userClient = user;
-    //updateUserInfo();
+    updateUserInfo();
 }
 
 /// @brief Permite al usuario seleccionar una nueva imagen de perfil desde el sistema de archivos.

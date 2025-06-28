@@ -1,5 +1,8 @@
 #include "ui/main/mainwindow.h"
 
+#include <QDialog>
+#include <QMessageBox>
+
 
 
 MainWindow::MainWindow(QSharedPointer<AppController> controller, QWidget *parent)
@@ -40,6 +43,8 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::onLoginSuccess(QSharedPointer<User> user) {
+
+   // mostrarImagenEnPopUp(user->getProfile_Picture());
     switch (user->getUserType()) {
     case UserType::Client: {
         resize(clientBoard->size());
@@ -69,9 +74,29 @@ void MainWindow::onLoginSuccess(QSharedPointer<User> user) {
 }
 
 void MainWindow::showLoginScreen() {
-
+     loginWidget->clearFields();
     ui->centralStack->setCurrentWidget(loginWidget);
 }
 
 
+void MainWindow::mostrarImagenEnPopUp(QImage image) {
+    // if (image.isNull()) {
+    //     QMessageBox::warning(nullptr, "Imagen no válida", "La imagen no pudo cargarse correctamente.");
+    //     return;
+    // }
 
+    // QDialog* dialog = new QDialog();
+    // dialog->setWindowTitle("Imagen de perfil cargada");
+    // dialog->resize(image.width() + 20, image.height() + 20);
+
+    // QLabel* label = new QLabel(dialog);
+    // label->setPixmap(QPixmap::fromImage(image));
+    // label->setAlignment(Qt::AlignCenter);
+
+    // QVBoxLayout* layout = new QVBoxLayout(dialog);
+    // layout->addWidget(label);
+    // dialog->setLayout(layout);
+
+    // dialog->exec(); // Modal
+
+}

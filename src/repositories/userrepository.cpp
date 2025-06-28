@@ -6,6 +6,7 @@
 #include "userrepository.h"
 #include <QDebug>
 #include <QCoreApplication>
+#include <QBuffer>
 // Definimos una categoría para los logs
 Q_LOGGING_CATEGORY(UserRepo, "UserRepo")
 /**
@@ -167,6 +168,10 @@ bool UserRepository::saveUser(QSharedPointer<User> user) {
         }
     }
 
+    QByteArray arrayImagen;
+    QBuffer buffer(&arrayImagen);
+    buffer.open(QIODevice::WriteOnly);
+    user->getProfile_Picture().save(&buffer, "PNG");
 
     userTable.addRow({
         id,
@@ -176,7 +181,8 @@ bool UserRepository::saveUser(QSharedPointer<User> user) {
         UserTypeToString(type),
         user->getJoin_up_date().toString(Qt::ISODate),
         user->getLast_login().toString(Qt::ISODate),
-        user->getProfile_Picture()
+        arrayImagen
+        //user->getProfile_Picture()
     });
     //qDebug(UserRepo)<<"Tabla generada";
     //userTable.print();
@@ -209,6 +215,8 @@ bool UserRepository::saveUser(QSharedPointer<User> user) {
         if (!trainerPtr) {
             qWarning(UserRepo) << "Ha fallado el dinamic Cast a la clase Trainer .";
             return false;}
+
+
 
         DBTable trainerTable("trainers");
         trainerTable.setColumns({"idUser","idTrainer",

@@ -2,6 +2,7 @@
     <qresource prefix="/images">
         <file>images/blank-profile.jpg</file>
         <file>images/login.png</file>
+        <file>images/1.png</file>
     </qresource>
     <qresource prefix="/sounds">
         <file>sounds/tadaa.wav</file>

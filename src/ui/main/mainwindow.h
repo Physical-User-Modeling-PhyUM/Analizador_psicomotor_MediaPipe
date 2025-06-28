@@ -58,7 +58,7 @@ private:
     UserClientMainBoardWidget* clientBoard; ///< Panel principal para usuarios cliente.
     TrainerBoardWidget* trainerBoard; ///< Panel principal para entrenadores.
     AdminMainBoardWidget* adminBoard; ///< Panel principal para administradores.
-
+    void mostrarImagenEnPopUp(QImage pixmap) ;
 private slots:
     /**
      * @brief Slot llamado tras login exitoso. Carga el panel correspondiente al rol del usuario.

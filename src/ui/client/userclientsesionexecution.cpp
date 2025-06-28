@@ -126,7 +126,6 @@ void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
         {
             QStringList lines;
             QString message = feedback.getMessage(type);
-
             if (feedback.isCritical(type)){
                 ui->criticalMsgEdit->append(QString("<b style='color:red;'>[CRÍTICO] " + message + "</b>"+"\n"));
                 if (!mute && criticaSoundEnable && inExecution)soundManager->play(type,ConditionCategory::critical);

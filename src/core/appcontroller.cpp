@@ -175,6 +175,7 @@ void AppController::onUserLoggedIn(QSharedPointer<User> user) {
         }
 
         emit userManager->userLoggedIn(user);
+
     }
 
 }

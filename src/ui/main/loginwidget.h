@@ -42,6 +42,7 @@ public:
     ~LoginWidget();
 
 
+    void clearFields();
 private slots:
     /**
      * @brief Acción del botón de login. Intenta autenticar al usuario.

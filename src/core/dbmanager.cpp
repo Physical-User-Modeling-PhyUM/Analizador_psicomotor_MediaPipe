@@ -250,88 +250,189 @@ QString DBManager::getNameIdColumn(TypeBDEnum tipo) const {
  * @param valorFiltro Valor del filtro.
  * @return true si se ejecutó correctamente, false si hubo errores.
  */
+// bool DBManager::save(TypeBDEnum tipo, DBTable& elem, DBFilter filtro, QString valorFiltro) {
+//     QString tableName = TableName(tipo);
+
+//     if (tableName.isEmpty()) return false;
+//     if (elem.rowCount() == 0) return false;
+
+//     QStringList columns = elem.getColumnsNames();
+//     QString fieldList = columns.join(", ");
+//     QString idColumn = getNameIdColumn(tipo);
+
+//     for (int row = 0; row < elem.rowCount(); ++row) {
+//         QList<QVariant> valores = elem.getRow(row);
+
+
+//         QStringList valoresFormateados;
+
+//         for (const QVariant& val : valores) {
+
+//             QString valorSeguro = val.toString().replace("'", "''");
+//             valoresFormateados << QString("'%1'").arg(valorSeguro);
+//         }
+
+//         QString valueList = valoresFormateados.join(", ");
+
+//         // QStringList sims;
+//         // for (int i = 0; i < valores.size(); ++i) {
+//         //     sims << "?";
+//         // }
+//         // QString valueList = sims.join(", ");
+
+
+//         bool filtroAplicable = !valorFiltro.isEmpty() &&
+//                              filtro != DBFilter::none &&
+//                              isValidFilterForTable(tableName, filtro);
+
+//         QSqlQuery query(qdb);
+//         QString queryStr;
+
+//         if (filtroAplicable) {
+//             QString campoFiltro = BDFilterToString(filtro);
+//             QString filtroFormateado = valorFiltro.replace("'", "''");
+
+//             // Obtenemos el  valor de la clave primaria para esa fila
+//             int idxClave = columns.indexOf(idColumn);
+//             if (idxClave == -1) {
+//                 qWarning(DBManagerLog) << "No se encontró la columna clave primaria:" << idColumn;
+//                 return false;
+//             }
+//             QString valorClave = valoresFormateados[idxClave];
+
+//             // ¿Existe ya una fila con ese filtro y esa clave?
+//             //Comprobacion para hacer un update o un insert
+//             QString checkQuery = QString("SELECT COUNT(*) FROM %1 WHERE %2 = '%3' AND %4 = %5").arg(tableName, campoFiltro, filtroFormateado, idColumn, valorClave);
+//             if (!query.exec(checkQuery)) {
+
+//                 qWarning(DBManagerLog) << "Error ejecutando SELECT previo en save():" << query.lastError().text();
+//                 return false;
+//             }
+
+//             query.next();
+//             int count = query.value(0).toInt();
+
+//             if (count > 0) {
+
+//                 QStringList updateconditions;
+//                 for (int i = 0; i < columns.size(); ++i) {
+//                     updateconditions << QString("%1 = %2").arg(columns[i], valoresFormateados[i]);
+//                 }
+//                 QString conditions = updateconditions.join(", ");
+//                 queryStr = QString("UPDATE %1 SET %2 WHERE %3 = '%4' AND %5 = %6") .arg(tableName, conditions, campoFiltro, filtroFormateado, idColumn, valorClave);
+//             } else {
+
+//                 queryStr = QString("INSERT INTO %1 (%2) VALUES (%3)").arg(tableName, fieldList, valueList);
+//             }
+
+//         } else {
+//             // En caso de que el filtro no se aplique se modifican las filas con misma clave primarioa
+//             //Se agregarán las nuevas filas al hacer el replace
+//             queryStr = QString("REPLACE INTO %1 (%2) VALUES (%3)").arg(tableName, fieldList, valueList);
+//         }
+
+//         query.prepare(QString("REPLACE INTO %1 (%2) VALUES (%3)").arg(tableName, fieldList, valueList));
+//         // for (const QVariant& val : valores) {
+//         //     query.addBindValue(val);
+//         // }
+//         // if (!query.exec()) {
+
+//          if (!query.exec(queryStr)) {
+//             qWarning(DBManagerLog) << "Error ejecutando la consulta en save():" << queryStr << " ->" << query.lastError().text();
+//             return false;
+//         }
+//     }
+
+//     return true;
+// }
 bool DBManager::save(TypeBDEnum tipo, DBTable& elem, DBFilter filtro, QString valorFiltro) {
     QString tableName = TableName(tipo);
-
-    if (tableName.isEmpty()) return false;
-    if (elem.rowCount() == 0) return false;
+    if (tableName.isEmpty() || elem.rowCount() == 0) return false;
 
     QStringList columns = elem.getColumnsNames();
-    QString fieldList = columns.join(", ");
+    QString fieldss = columns.join(", ");
     QString idColumn = getNameIdColumn(tipo);
 
     for (int row = 0; row < elem.rowCount(); ++row) {
         QList<QVariant> valores = elem.getRow(row);
 
-
-        QStringList valoresFormateados;
-
-        for (const QVariant& val : valores) {
-
-            QString valorSeguro = val.toString().replace("'", "''");
-            valoresFormateados << QString("'%1'").arg(valorSeguro);
-        }
-
-        QString valueList = valoresFormateados.join(", ");
-
-        bool filtroAplicable = !valorFiltro.isEmpty() &&
-                             filtro != DBFilter::none &&
-                             isValidFilterForTable(tableName, filtro);
+        bool filtroAplicable = !valorFiltro.isEmpty() && filtro != DBFilter::none &&
+                               isValidFilterForTable(tableName, filtro);
 
         QSqlQuery query(qdb);
         QString queryStr;
 
         if (filtroAplicable) {
+
             QString campoFiltro = BDFilterToString(filtro);
             QString filtroFormateado = valorFiltro.replace("'", "''");
 
-            // Obtenemos el  valor de la clave primaria para esa fila
-            int idxClave = columns.indexOf(idColumn);
-            if (idxClave == -1) {
+            int idx = columns.indexOf(idColumn);
+            if (idx == -1) {
                 qWarning(DBManagerLog) << "No se encontró la columna clave primaria:" << idColumn;
                 return false;
             }
-            QString valorClave = valoresFormateados[idxClave];
 
-            // ¿Existe ya una fila con ese filtro y esa clave?
-            //Comprobacion para hacer un update o un insert
-            QString checkQuery = QString("SELECT COUNT(*) FROM %1 WHERE %2 = '%3' AND %4 = %5").arg(tableName, campoFiltro, filtroFormateado, idColumn, valorClave);
-            if (!query.exec(checkQuery)) {
+            QVariant valorClave = valores[idx];
+            QString cQuery = QString("SELECT COUNT(*) FROM %1 WHERE %2 = ? AND %3 = ?")
+                                     .arg(tableName, campoFiltro, idColumn);
 
-                qWarning(DBManagerLog) << "Error ejecutando SELECT previo en save():" << query.lastError().text();
+            QSqlQuery check(qdb);
+
+            check.prepare(cQuery);
+            check.addBindValue(valorFiltro);
+            check.addBindValue(valorClave);
+
+
+
+            if (!check.exec()) {
+                qWarning(DBManagerLog) << "Error ejecutando SELECT previo en save():" << check.lastError().text();
                 return false;
             }
+            check.next();
 
-            query.next();
-            int count = query.value(0).toInt();
+            int count = check.value(0).toInt();
 
             if (count > 0) {
 
-                QStringList updateconditions;
-                for (int i = 0; i < columns.size(); ++i) {
-                    updateconditions << QString("%1 = %2").arg(columns[i], valoresFormateados[i]);
+                QStringList sets;
+
+                for ( QString col : columns) {
+                    sets << col + " = ?";
                 }
-                QString conditions = updateconditions.join(", ");
-                queryStr = QString("UPDATE %1 SET %2 WHERE %3 = '%4' AND %5 = %6") .arg(tableName, conditions, campoFiltro, filtroFormateado, idColumn, valorClave);
+                queryStr = QString("UPDATE %1 SET %2 WHERE %3 = ? AND %4 = ?").arg(tableName, sets.join(", "), campoFiltro, idColumn);
+                query.prepare(queryStr);
+
+                for ( QVariant val : valores) query.addBindValue(val);
+
+                query.addBindValue(valorFiltro);
+                query.addBindValue(valorClave);
+
             } else {
-
-                queryStr = QString("INSERT INTO %1 (%2) VALUES (%3)").arg(tableName, fieldList, valueList);
+                QStringList simbs;
+                for (int i = 0; i < valores.size(); ++i) simbs << "?";
+                queryStr = QString("INSERT INTO %1 (%2) VALUES (%3)").arg(tableName, fieldss, simbs.join(", "));
+                query.prepare(queryStr);
+                for (const QVariant& val : valores) query.addBindValue(val);
             }
-
         } else {
-            // En caso de que el filtro no se aplique se modifican las filas con misma clave primarioa
-            //Se agregarán las nuevas filas al hacer el replace
-            queryStr = QString("REPLACE INTO %1 (%2) VALUES (%3)").arg(tableName, fieldList, valueList);
+
+            QStringList simbs;
+            for (int i = 0; i < valores.size(); ++i) simbs << "?";
+            queryStr = QString("REPLACE INTO %1 (%2) VALUES (%3)").arg(tableName, fieldss, simbs.join(", "));
+            query.prepare(queryStr);
+            for (const QVariant& val : valores) query.addBindValue(val);
         }
 
-        if (!query.exec(queryStr)) {
-            qWarning(DBManagerLog) << "Error ejecutando la consulta en save():" << queryStr << " ->" << query.lastError().text();
+        if (!query.exec()) {
+            qWarning(DBManagerLog) << "Error ejecutando la query:" << queryStr << " -> " << query.lastError().text();
             return false;
         }
     }
-
     return true;
 }
+
+
 
 /**
  * @brief Recupera datos desde la base de datos con filtro simple.
