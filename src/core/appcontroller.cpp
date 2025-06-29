@@ -74,6 +74,15 @@ void AppController::initialize() {
         //Init_Loader u;
        // u.load(dbManager);
    // }
+    if (!dbExists) {
+        if (!dbManager->initializeSchema()) {
+            qCritical(AppControllerLog) << "Error inicializando esquema.";
+            exit(1);
+        }
+        Init_Loader loader;
+        loader.load(dbManager);
+    }
+
         // dbManager->get(TypeBDEnum::User).print();
         //  dbManager->get(TypeBDEnum::Client).print();
         //  dbManager->get(TypeBDEnum::ClientWorkoutCalendar).print();

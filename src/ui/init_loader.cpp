@@ -7,6 +7,7 @@
 #include "repositories/trainingrepository.h"
 #include "repositories/userrepository.h"
 #include "core/dbmanager.h"
+#include "core/loginmanager.h"
 
 class init_LoaderData : public QSharedData
 {
@@ -214,141 +215,91 @@ void Init_Loader::loadClients(QSharedPointer<DBManager> db)
 
     UserRepository *repo = new UserRepository(&*db);
 
-
     QImage image("config/blank-profile.jpg");
     if (image.isNull()) {
         qWarning() << "No se pudo cargar la imagen del perfil.";
     }
 
+    LoginManager login(db, nullptr);
+    QString hashedPass = login.hashPassword("1234");
 
-    //VAmos a crear un cliente con datos completos con profile
-    qDebug() << "Creamos cliente con  todo completo";
+    qDebug() << "Creamos cliente con todo completo";
 
-    QHash<UserField, QVariant> data4;
-    data4[UserField::IdUser] = -1;
-    data4[UserField::UserName] = "client1";
-    data4[UserField::Email] = " client1@c.com";
-    data4[UserField::Pass] = "1234";
-    data4[UserField::Picture] = image;
+    QHash<UserField, QVariant> data1;
+    data1[UserField::IdUser] = -1;
+    data1[UserField::UserName] = "client1";
+    data1[UserField::Email] = "client1@c.com";
+    data1[UserField::Pass] = hashedPass;
+    data1[UserField::Picture] = image;
 
-    QSharedPointer<Client> client4(new Client(data4));
+    QSharedPointer<Client> client1(new Client(data1));
+    client1->setUserType(UserType::Client);
+    client1->setJoin_up_date(QDateTime::currentDateTime());
+    client1->setLast_login(QDateTime::currentDateTime());
+    client1->setWorkout(QDateTime::currentDateTime(), 201);
+    client1->setPlan("weekly plan");
 
-    client4->setUserType(UserType::Client);
-    client4->setJoin_up_date(QDateTime::currentDateTime());
-    client4->setLast_login(QDateTime::currentDateTime());
-    client4->setWorkout(QDateTime::currentDateTime(), 201);
-    client4->setPlan("weekly plan");
-    QSharedPointer<ClientProfile> profile(new ClientProfile);
-    profile->setIdClient(-1);
-    profile->setRecord(GeneralDataField::Age, 30);
-    profile->setRecord(MorfologicalFields::FatPercentage, 18.5);
-    client4->setProfile(profile);
+    QSharedPointer<ClientProfile> profile1(new ClientProfile);
+    profile1->setIdClient(-1);
+    profile1->setRecord(GeneralDataField::Age, 30);
+    profile1->setRecord(MorfologicalFields::FatPercentage, 18.5);
+    client1->setProfile(profile1);
 
+    QHash<UserField, QVariant> data2;
+    data2[UserField::IdUser] = -1;
+    data2[UserField::UserName] = "client2";
+    data2[UserField::Email] = "client2@c.com";
+    data2[UserField::Pass] = hashedPass;
+    data2[UserField::Picture] = image;
 
-    QHash<UserField, QVariant> data3;
-    data3[UserField::IdUser] = -1;
-    data3[UserField::UserName] = "client2";
-    data3[UserField::Email] = " client2@c.com";
-    data3[UserField::Pass] = "1234";
-     data3[UserField::Picture] = image;
-
-    QSharedPointer<Client> client3(new Client(data4));
-
-    client3->setUserType(UserType::Client);
-    client3->setJoin_up_date(QDateTime::currentDateTime());
-    client3->setLast_login(QDateTime::currentDateTime());
-    client3->setWorkout(QDateTime::currentDateTime(), 202);
-    client3->setPlan("weekly plan");
+    QSharedPointer<Client> client2(new Client(data2));
+    client2->setUserType(UserType::Client);
+    client2->setJoin_up_date(QDateTime::currentDateTime());
+    client2->setLast_login(QDateTime::currentDateTime());
+    client2->setWorkout(QDateTime::currentDateTime(), 202);
+    client2->setPlan("weekly plan");
 
     QSharedPointer<ClientProfile> profile2(new ClientProfile);
     profile2->setIdClient(-1);
     profile2->setRecord(GeneralDataField::Age, 30);
     profile2->setRecord(MorfologicalFields::FatPercentage, 18.5);
-    client4->setProfile(profile);
+    client2->setProfile(profile2);
 
+    repo->saveUser(client1);
+    repo->saveClientProfile(client1->getId(), client1->getProfile());
 
-
-
-    // // Obtener estructura de tablas
-    // DBTable usersS = db->get(TypeBDEnum::User);
-    // DBTable clientsS = db->get(TypeBDEnum::Client);
-    // DBTable calendarS = db->get(TypeBDEnum::ClientWorkoutCalendar);
-    // DBTable generalS = db->get(TypeBDEnum::ProfileGeneral);
-    // DBTable morphoS = db->get(TypeBDEnum::ProfileMorphology);
-    // DBTable funcS = db->get(TypeBDEnum::ProfileFunctional);
-    // DBTable romS = db->get(TypeBDEnum::ProfileROM);
-    // DBTable lifeS = db->get(TypeBDEnum::ProfileLifestyle);
-
-    // // Instancias para insertar
-    // DBTable users(usersS.getTableName()); users.setColumns(usersS.getColumnsNames());
-    // DBTable clients(clientsS.getTableName()); clients.setColumns(clientsS.getColumnsNames());
-    // DBTable calendar(calendarS.getTableName()); calendar.setColumns(calendarS.getColumnsNames());
-    // DBTable general(generalS.getTableName()); general.setColumns(generalS.getColumnsNames());
-    // DBTable morpho(morphoS.getTableName()); morpho.setColumns(morphoS.getColumnsNames());
-    // DBTable func(funcS.getTableName()); func.setColumns(funcS.getColumnsNames());
-    // DBTable rom(romS.getTableName()); rom.setColumns(romS.getColumnsNames());
-    // DBTable life(lifeS.getTableName()); life.setColumns(lifeS.getColumnsNames());
-
-    // QDateTime now = QDateTime::currentDateTime();
-    // QDateTime mesPasado = now.addMonths(-1);
-
-    // auto addCliente = [&](int idUser, int idClient, const QString& nombre, int edad, double peso, double altura, double grasa, const QString& freq) {
-    //     // Tabla users
-    //     users.addRow({idUser, nombre, nombre + "@test.com", "1234", "Client", mesPasado, now, QVariant()});
-    //     // Tabla clients
-    //     clients.addRow({idClient, idUser, QVariant(), "Plan A"});
-    //     // Workout calendar
-    //     calendar.addRow({idClient, mesPasado.date().toString(Qt::ISODate), 201});
-    //     calendar.addRow({idClient, now.date().toString(Qt::ISODate), 202});
-    //     // General
-    //     general.addRow({idClient, edad, "M", peso, altura, "Plan A"});
-    //     // Morfológico
-    //     morpho.addRow({idClient, grasa, QVariant(), QVariant(), QVariant(), QVariant(), QVariant(), QVariant(), QVariant(), QVariant(), QVariant(), QVariant()});
-    //     // Funcional
-    //     func.addRow({idClient, "Neutra", "8", "7", "6", "Media", "Buena"});
-    //     // ROM
-    //     rom.addRow({idClient, 60, 50, 70, 40, 160, 50, 120, 30, 70, 70, 120, 0,
-    //                 80, 80, 60, 50, 15, 30});
-    //     // Estilo de vida
-    //     life.addRow({idClient, freq, "Fuerza", "Ciclismo", "No"});
-    // };
-
-    // addCliente(2, 2, "cliente1", 28, 70, 175, 15.2, "3 veces/semana");
-    // addCliente(3, 3, "cliente2", 35, 78, 168, 18.5, "2 veces/semana");
-
-    // // Guardar
-    // db->save(TypeBDEnum::User, users);
-    // db->save(TypeBDEnum::Client, clients);
-    // db->save(TypeBDEnum::ClientWorkoutCalendar, calendar);
-    // db->save(TypeBDEnum::ProfileGeneral, general);
-    // db->save(TypeBDEnum::ProfileMorphology, morpho);
-    // db->save(TypeBDEnum::ProfileFunctional, func);
-    // db->save(TypeBDEnum::ProfileROM, rom);
-    // db->save(TypeBDEnum::ProfileLifestyle, life);
+    repo->saveUser(client2);
+    repo->saveClientProfile(client2->getId(), client2->getProfile());
 }
+
+
 void Init_Loader::loadTrainerAndAdmin(QSharedPointer<DBManager> db)
 {
-    // Obtener estructura de tablas reales
+
+
     DBTable usersS = db->get(TypeBDEnum::User);
     DBTable trainersS = db->get(TypeBDEnum::Trainer);
     DBTable adminsS = db->get(TypeBDEnum::Admin);
 
-    // Crear tablas con columnas correctas
     DBTable users(usersS.getTableName()); users.setColumns(usersS.getColumnsNames());
     DBTable trainers(trainersS.getTableName()); trainers.setColumns(trainersS.getColumnsNames());
     DBTable admins(adminsS.getTableName()); admins.setColumns(adminsS.getColumnsNames());
 
     QDateTime now = QDateTime::currentDateTime();
 
+    // contraseñas
+    LoginManager login(db, nullptr);
+    QString hashedAdminPass = login.hashPassword("admin123");
+    QString hashedTrainerPass = login.hashPassword("trainer123");
+
     // ADMIN (ID 1)
-    users.addRow({1, "admin1", "admin@test.com", "admin123", "Admin", now.addYears(-1), now, QVariant()});
+    users.addRow({1, "admin1", "admin@test.com", hashedAdminPass, "Admin", now.addYears(-1), now, QVariant()});
     admins.addRow({1, 1, "Administrador general", true, true, "10"});
 
     // TRAINER (ID 4)
-    users.addRow({4, "trainer1", "trainer@test.com", "trainer123", "Trainer", now.addYears(-2), now, QVariant()});
+    users.addRow({4, "trainer1", "trainer@test.com", hashedTrainerPass, "Trainer", now.addYears(-2), now, QVariant()});
     trainers.addRow({4, 4, "Lic. Ciencias del Deporte", "Fuerza y Rehabilitación", 8, "Experiencia en readaptación y entrenamiento funcional."});
 
-    // Guardar
     db->save(TypeBDEnum::User, users);
     db->save(TypeBDEnum::Trainer, trainers);
     db->save(TypeBDEnum::Admin, admins);

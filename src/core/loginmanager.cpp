@@ -58,12 +58,12 @@ QSharedPointer<User> LoginManager::login(const QString& User_Email, const QStrin
 
         //descomentar para que funcione el cifrado de password
 
-        // QString storedHash = tableU.value(0, columnPass).toString();
-        // if (!verifyPassword(password, storedHash)) {
-        //     emit loginError(QString("Usuario o password incorrectos"));
-        //     return nullptr;
-        // };
-        if(!(tableU.value(0, columnPass).toString()==password)) return nullptr;
+        QString storedHash = tableU.value(0, columnPass).toString();
+        if (!verifyPassword(password, storedHash)) {
+            emit loginError(QString("Usuario o password incorrectos"));
+            return nullptr;
+        };
+        //if(!(tableU.value(0, columnPass).toString()==password)) return nullptr;
 
         idUser=tableU.value(0, columnUser).toInt();
     }else{
