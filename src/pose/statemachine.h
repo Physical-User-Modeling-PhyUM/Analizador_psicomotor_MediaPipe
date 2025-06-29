@@ -14,6 +14,7 @@
 #include <QHash>
 #include <QLoggingCategory>
 #include <QSharedPointer>
+#include <QDateTime>
 #include "state.h"
 #include "feedback.h"
 #include "workouts/exerciseespec.h"
@@ -64,7 +65,24 @@ public:
      * \return Objeto `SesionReport` con información detallada.
      */
     SesionReport getReport();
-
+    /**
+     * @brief Interrumpe la serie actual de forma manual y fuerza el inicio de una nueva serie.
+     *
+     * Este método permite interrumpir el flujo natural de la máquina de estados,
+     * sumando una serie (setCount++), reiniciando el contador de repeticiones (repCount = 1),
+     * y posicionando el estado actual en el estado inicial (`initState`).
+     *
+     * También reinicia los temporizadores relevantes (`initTime`, `initSetTime`, `initRestTime`)
+     * y activa el modo descanso (`resting = true`) para que el sistema espere el inicio
+     * de la nueva serie de forma controlada.
+     *
+     * Este método está pensado para ser invocado desde la interfaz de usuario o un controlador externo,
+     * por ejemplo, cuando el usuario desee finalizar manualmente una serie incompleta.
+     *
+     * No emite ninguna condición (`Condition`) directamente, pero deja el sistema en un estado coherente
+     * para que en la siguiente ejecución de `run()` se genere `InitSet` y `InitRepetition` al detectar movimiento.
+     */
+    void newSerie();
 private:
     int64_t initTime,duration;
     int64_t initRestTime,restTime;
@@ -74,6 +92,7 @@ private:
     bool repComplete;
     bool complete;
     bool firstRep=true;
+    bool hasEmittedRestTime = false;
 
     int repCount=1;
     int setCount=1;
@@ -90,18 +109,8 @@ private:
     QMap<int,QMap<int,QMap<int,QHash<PoseView,QHash<QString, QPair<double, double>>>>>> globalMinMaxByLine;
     QMap<int,QMap<int,QMap<int,QHash<PoseView,QHash<QString, double>>>>> globalAngleOverloads;
 
-                             //!< Reporte de condiciones generadas durante la sesión.
 
-    // /*!
-    //  * \brief Inicializa la estructura interna de estados y transiciones a partir del objeto `ExerciseEspec`.
-    //  */
-    // void buildStateMachine();
 
-    // /*!
-    //  * \brief Evalúa si debe realizarse una transición a otro estado en base a las condiciones actuales.
-    //  * \param conditions Lista de condiciones detectadas en el estado actual.
-    //  */
-    // void checkTransition(const QList<Condition>& conditions);
 };
 
 

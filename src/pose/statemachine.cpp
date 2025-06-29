@@ -188,6 +188,7 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
                     qDebug(StateMachineLog) << "Serie completada. Series restantes:" << series;
                     resting=true;
                     initSetTime=time;
+                    //firstRep=true;
                 }
                 if ( setCount>series) {
                     complete = true;
@@ -203,6 +204,24 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
                 qDebug(StateMachineLog) << "Volvió a estado 1 pero sin pasar por todos los estados: repetición NO contada";
             }
             currentReport.append(Condition(ConditionType::EndOfMovementPhase,QString::number(currentId),(time-initStateTime)));
+            //La nueva repeticion no se detecta hasta que se ha salido del estado inicial
+            if (currentState.getId() == 1) currentReport.append(Condition(ConditionType::InitRepetition,QString::number(repCount),time));
+            //Misma lógica para la serie pero además debemos estar en la primera repetición
+            if (resting && currentState.getId() == 1 && repCount == 1) {
+                currentReport.append(Condition(ConditionType::InitSet,QString::number(setCount),time));
+                if (!firstRep && hasEmittedRestTime && initRestTime != -1 && restTime != -1 && (time - initRestTime) > restTime) {
+                    currentReport.append(Condition(ConditionType::RestOverTime, "", (time - initRestTime) - restTime));
+                    qDebug(StateMachineLog) << "Descanso excedido: RestOverTime generado con " << (time - initRestTime - restTime) << " ms adicionales.";
+
+                }
+                resting = false;
+                initRestTime = -1;
+                hasEmittedRestTime = false;
+                qDebug(StateMachineLog) << "Movimiento detectado: saliendo del modo descanso.";
+            }
+
+
+
             initStateTime=time;
         }
     }
@@ -229,10 +248,19 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
 
     // Evaluamos las condiciones temporales de los estados
 
-    if (initRestTime != -1 && restTime != -1 && time - initRestTime > restTime){
-        currentReport.append(Condition(ConditionType::RestOverTime,"",(time-initRestTime)-restTime));
+
+
+    if ( !hasEmittedRestTime && initRestTime != -1 && restTime != -1 && time - initRestTime > restTime){
+        currentReport.append(Condition(ConditionType::RestTime,"",restTime));
         //resting=false;
+         hasEmittedRestTime = true;
     }
+
+    // if (!firstRep && hasEmittedRestTime && (initRestTime != -1 && restTime != -1 && time - initRestTime > restTime)){
+    //     currentReport.append(Condition(ConditionType::RestOverTime,"",(time-initRestTime)-restTime));
+    //     //resting=false;
+    // }
+
     if (initTime != -1 && duration != -1 && time - initTime > duration)
         currentReport.append(Condition(ConditionType::SetTime, "", (time-initSetTime)-duration));
 
@@ -278,4 +306,25 @@ SesionReport StateMachine::getReport()
     report.setLineAngleRange(globalMinMaxByLine);
     report.setGlobalAngleOverloads(globalAngleOverloads);
     return report;
+}
+
+void StateMachine::newSerie() {
+    setCount++;
+    repCount = 1;
+
+    currentState = initState;
+    currentState.setEntryTime(QDateTime::currentMSecsSinceEpoch());
+
+    initTime = -1;
+    initSetTime = QDateTime::currentMSecsSinceEpoch();
+    initStateTime = initSetTime;
+    initRestTime = initSetTime;
+
+    resting = true;
+    hasEmittedRestTime = false;
+
+    repComplete = false;
+    complete = false;
+
+    qDebug(StateMachineLog) << "[Interrupción] Serie interrumpida manualmente. Se inicia nueva serie #" << setCount;
 }

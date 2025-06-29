@@ -106,7 +106,7 @@ void UserClientSesionExecution::onNewImage1(const cv::Mat& image)
 /// @brief Muestra imagen secundaria capturada en tiempo real.
 void UserClientSesionExecution::onNewImage2( const cv::Mat& image)
 {
-    qDebug() << "[UI] Imagen secundaria recibida en sideImage, tamaño:" << image.cols << "x" << image.rows;
+    qDebug() << " Imagen secundaria recibida en sideImage, tamaño:" << image.cols << "x" << image.rows;
     if (image.empty()) return;
     cv::Mat img;
     cv::cvtColor(image, img, cv::COLOR_BGR2RGB);
@@ -118,6 +118,10 @@ void UserClientSesionExecution::onNewImage2( const cv::Mat& image)
 /// @brief Procesa feedback recibido y actualiza gráficas, mensajes y sonidos si corresponde.
 void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
 {
+
+    if (!inExecution && !waitingForExecutionActivation)
+        return;
+
     if (graphWidget!=nullptr && inExecution) graphWidget->updateFromFeedback(feedback);
 
     for (const ConditionType &type:feedback.getEntriesList()) {
@@ -144,6 +148,7 @@ void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
                     if (waitingForExecutionActivation){
                         inRest=false;
                         inExecution=true;
+                        executionTime = 0;
                         ui->restTimeBar->setValue(0);
                         ui->restTimeLabel->setStyleSheet("QLabel { color : black; }");
                         ui->restTimeBar->setStyleSheet("QProgressBar::chunk { background-color: blue; }");
@@ -184,7 +189,44 @@ void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
             }
             case ConditionType::RestTime: {
                 waitingForExecutionActivation=true;
+                inExecution = false;
+                inRest = true;
+                restTime = 0;
 
+                ui->restTimeBar->setValue(0);
+                ui->restTimeBar->setStyleSheet("QProgressBar::chunk { background-color: blue; }");
+                ui->restTimeLabel->setStyleSheet("QLabel { color : green; }");
+
+                ui->workingTimeLabel->setText("Working Time: 00:00");
+                ui->workingTimeBar->setValue(0);
+                ui->workingTimeBar->setStyleSheet("QProgressBar::chunk { background-color: black; }");
+                break;
+            }
+
+            case ConditionType::InitSet: {
+                // Inicio de nueva serie → reseteo de barra de sets, ejecución y descanso
+                executionTime = 0;
+                restTime = 0;
+
+                inExecution = true;
+                inRest = false;
+                waitingForExecutionActivation = false;
+
+                ui->restTimeBar->setValue(0);
+                ui->restTimeBar->setStyleSheet("QProgressBar::chunk { background-color: blue; }");
+                ui->restTimeLabel->setText("Rest Time: 00:00");
+                ui->restTimeLabel->setStyleSheet("QLabel { color : black; }");
+
+                ui->workingTimeBar->setValue(0);
+                ui->workingTimeBar->setStyleSheet("QProgressBar::chunk { background-color: green; }");
+                ui->workingTimeLabel->setText("Working Time: 00:00");
+
+                qDebug() << " Nueva serie iniciada.";
+                break;
+            }
+            case ConditionType::InitRepetition: {
+                // Aquí puedes usar para marcar animación o highlight de barra si quieres
+                qDebug() << " Inicio de nueva repetición " ;
                 break;
             }
             default:
@@ -276,6 +318,7 @@ void UserClientSesionExecution::on_ReadyButon_clicked()
 {
     controller->startSesionAnalysis();
     waitingForExecutionActivation=true;
+    inRest=false;
 }
 
 /// @brief Pausa o reanuda la sesión.
@@ -363,5 +406,34 @@ void UserClientSesionExecution::on_volumeUpButton_clicked()
         currentVolume += 0.1;
         soundManager->setVolume(currentVolume);
     }
+}
+
+
+
+
+void UserClientSesionExecution::on_NewSetButton_clicked()
+{
+    controller->interruptSerie();
+
+    //Se inicia en la fase de descanso de la nueva serie
+    inExecution = false;
+    inRest = true;
+    waitingForExecutionActivation = true;
+
+    executionTime = 0;
+    restTime = 0;
+
+    ui->workingTimeLabel->setText("Working Time: 00:00");
+    ui->workingTimeBar->setValue(0);
+    ui->workingTimeBar->setStyleSheet("QProgressBar::chunk { background-color: black; }");
+
+    ui->restTimeLabel->setText("Rest Time: 00:00");
+    ui->restTimeBar->setValue(0);
+    ui->restTimeLabel->setStyleSheet("QLabel { color : black; }");
+    ui->restTimeBar->setStyleSheet("QProgressBar::chunk { background-color: blue; }");
+
+    ui->infoMsgEdit->append("<span style='color:blue;'>[INFO] Serie interrumpida. Descanso iniciado.</span>");
+    qDebug() << "Serie interrumpida manualmente: entrando en descanso.";
+
 }
 

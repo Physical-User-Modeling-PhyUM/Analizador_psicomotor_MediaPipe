@@ -682,6 +682,17 @@ void PoseManager::PythonProccesErrorOutput2(){
     QByteArray output = process_cam2->readAllStandardError();
     qWarning(PoseManagerLog) << "PYTHON_ERROR_CAM2:" << QString::fromUtf8(output);
 }
+
+void PoseManager::newSerie() {
+    if (!poseAnalyzer)
+        return;
+
+    qInfo(PoseManagerLog) << "== Serie interrumpida manualmente desde interfaz ==";
+
+    // Reinicia estado y contadores para forzar una nueva serie
+    poseAnalyzer->newSerie();
+}
+
 /**
  * @brief Activa el modo test, cargando las poses desde una carpeta local.
  * @param folderPath Ruta a la carpeta con imágenes y archivos JSON.

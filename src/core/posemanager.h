@@ -88,7 +88,14 @@ public:
      * @brief Libera recursos compartidos como memoria y semáforos.
      */
     void resetMemory();
-
+    /**
+     * @brief Interrumpe la serie actual y reinicia la máquina de estados.
+     *
+     * Este método permite reiniciar la serie activa sin finalizar el ejercicio completo.
+     * Se reinician los contadores de repetición, se incrementa el número de serie
+     * y se restablece el estado inicial de la máquina de estados para comenzar la siguiente serie.
+     */
+    void newSerie();
 signals:
     void newImage1(cv::Mat image);          ///< Imagen de la cámara 1 con keypoints.
     void newImage2(cv::Mat image);          ///< Imagen de la cámara 2 con keypoints.
@@ -192,6 +199,7 @@ private:
      * @return Puntero a Pose o nullptr si falla.
      */
     Pose* getNewPose(QString cam_name, sem_t* sem, uchar* shm_pose, PoseView view = PoseView::Front);
+
 
     /**
      * @brief Método auxiliar para pruebas de memoria compartida.

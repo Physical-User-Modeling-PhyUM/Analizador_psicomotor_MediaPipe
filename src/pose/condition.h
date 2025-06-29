@@ -39,7 +39,9 @@ enum class ConditionType {
     exerciseInit,          ///< Inicio del ejercicio.
 
     // Generadas por la máquina de estados
+    InitRepetition,         ///< coimenzo de una repetición.
     EndOfRepetition,       ///< Fin de una repetición.
+    InitSet,                ///< comienzo de una serie.
     EndOfSet,              ///< Fin de una serie.
     EndOfExercise,         ///< Fin del ejercicio.
     SetTime,               ///< Tiempo asignado a la serie alcanzado.
@@ -97,6 +99,8 @@ inline ConditionType conditionTypeFromString(const QString& str) {
         if (s == "symmetrydeviation") return ConditionType::symmetryDeviation;
         if (s == "exerciseinit")  return ConditionType::exerciseInit;
         if (s == "endofrepetition") return ConditionType::EndOfRepetition;
+         if (s == "initrepetition") return ConditionType::InitRepetition;
+          if (s == "initset") return ConditionType::InitSet;
         if (s == "endofset") return ConditionType::EndOfSet;
         if (s == "endofexercise") return ConditionType::EndOfExercise;
         if (s == "settime") return ConditionType::SetTime;
@@ -137,6 +141,8 @@ inline QString conditionTypeToString(ConditionType type) {
         case ConditionType::exerciseInit:  return "exerciseInit";
         case ConditionType::EndOfRepetition: return "EndOfRepetition";
         case ConditionType::EndOfSet: return "EndOfSet";
+        case ConditionType::InitSet: return "InitSet";
+        case ConditionType::InitRepetition: return "InitRepetition";
         case ConditionType::EndOfExercise: return "EndOfExercise";
         case ConditionType::SetTime:    return "SetTime";
         case ConditionType::RestTime: return "RestTime";

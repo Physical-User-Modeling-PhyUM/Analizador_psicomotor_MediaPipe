@@ -453,6 +453,12 @@ void AppController::startPoseCapture() {
 }
 
 
+void AppController::interruptSerie() {
+    if (!poseManager.isNull()) {
+        poseManager->newSerie();
+        qDebug(AppControllerLog) << "Serie interrumpida manualmente desde AppController.";
+    }
+}
 
 
 

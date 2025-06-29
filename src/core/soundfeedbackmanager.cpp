@@ -119,6 +119,9 @@ void SoundFeedbackManager::addtoSoundList(const FeedBack& feedback, ConditionTyp
 {
     if (!soundMap.contains(type)) return;
 
+    if (QDateTime::currentMSecsSinceEpoch() - lastPlayTimestamp < 2000)
+        return;
+
     QSoundEffect* effect = soundMap.value(type);
 
     if (!effect || !effect->isLoaded()) return;
@@ -182,6 +185,9 @@ void SoundFeedbackManager::play(ConditionType cond, ConditionCategory catCond) {
     int firstAlert = -1;
     int firstCritical = -1;
     QSoundEffect* effect = soundMap.value(cond);
+
+    if (QDateTime::currentMSecsSinceEpoch() - lastPlayTimestamp < 2000)
+        return;
 
     if (!effect || !effect->isLoaded()) return;
     for (const auto& pair : soundQueue) {

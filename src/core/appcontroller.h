@@ -136,6 +136,17 @@ public:
      * @brief Inicia el análisis post-ejecución de la sesión capturada.
      */
     void startSesionAnalysis();
+    /**
+     * @brief Interrumpe la serie actual en ejecución.
+     *
+     * Este método llama a `interruptSerie()` en el `PoseManager`,
+     * lo que provoca que la `StateMachine` reinicie los contadores de repetición,
+     * incremente el número de serie y vuelva al estado inicial.
+     *
+     * Este método puede ser invocado desde la interfaz gráfica (por ejemplo, desde un botón)
+     * cuando el usuario desea cortar la serie en curso.
+     */
+    void interruptSerie();
     void setSelf(QSharedPointer<AppController> selfController);
     /// Instancias compartidas de sesión y ejercicio en ejecución.
     QSharedPointer<TrainingSesion> sesion;

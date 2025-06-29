@@ -193,17 +193,10 @@ void TimeWidget::onSerieChanged(int index)
     QList<QList<QPair<QString, int>>> segments;
     QMap<int, QMap<int, int>> maxTimeouts;
     QMap<int, QSet<int>> hasMinTimeout;
-
-    // QMap<int, QMap<int, int>> serieOverDurations;
-    // QMap<int, QMap<int, int>> repOverDurations;
     QSet<int> states;
-
     qint64 totalOverSetTime = 0;
     qint64 totalRestTime = 0;
-    qint64 workingTime=0;
-    // qint64 initTime = -1;
-    // qint64 endTime = -1;
-
+    qint64 workingTime = 0;
 
     for (auto itRep = reps.begin(); itRep != reps.end(); ++itRep) {
         int repIndex = itRep.key();
@@ -215,56 +208,49 @@ void TimeWidget::onSerieChanged(int index)
             const auto& conds = itState.value();
             states.insert(stateId);
 
-            for (const auto& [cond, _] : conds.asKeyValueRange()) {
+            for (const auto& entry : conds.asKeyValueRange()) {
+                const Condition& cond = entry.first;
+
                 if (cond.type == ConditionType::EndOfMovementPhase) {
                     QString name = stateNames.value(stateId);
                     if (name.isEmpty() || name == "Unknown")
                         name = QString("Estado %1").arg(stateId);
-                    segmentList.append(qMakePair(name, cond.value.toInt()));
-                    //qDebug(timeWidget) << " Serie:" << serieId << "Repetición:" << repIndex << "Estado:" << stateId << "Tiempo(ms):" << cond.value;
-
-                }
-                // if (cond.type == ConditionType::exerciseInit)
-                //     {initTime = cond.value.toLongLong();}
-                // if (cond.type == ConditionType::EndOfExercise)
-                //     {endTime = cond.value.toLongLong();}
-                if (cond.type == ConditionType::SetTime)
-                {
-                    if (cond.value.toInt()>totalOverSetTime)  totalOverSetTime = cond.value.toInt();
-                    //qDebug(timeWidget)<<"Repeticion"<<repIndex<<" Estado"<<cond.keypointLine.toInt()<<"SetTime"<<totalOverSetTime;
+                    //segmentList.append(qMakePair(name, entry.second.toInt()));
+                    //segmentList.append(qMakePair(name, entry.second));
+                     segmentList.append(qMakePair(name, cond.value.toInt()));
                 }
 
-                if (cond.type == ConditionType::EndOfRepetition){
-                    //qDebug(timeWidget)<<"Repeticion"<<repIndex<<" Estado"<<cond.keypointLine.toInt()<<"EndOfRepetition"<<cond.value.toInt();
-                    workingTime +=cond.value.toInt();
+                if (cond.type == ConditionType::SetTime) {
+                    if (cond.value.toInt() > totalOverSetTime)
+                        totalOverSetTime = cond.value.toInt();
                 }
-                if (cond.type == ConditionType::RestOverTime)
-                {
-                    if (cond.value.toInt()>totalRestTime)  totalRestTime = cond.value.toInt();
-                     //qDebug(timeWidget)<<"Repeticion"<<repIndex<<" Estado"<<cond.keypointLine.toInt()<<"RestOverTime"<<totalRestTime;
+
+                if (cond.type == ConditionType::EndOfRepetition) {
+                    workingTime += cond.value.toInt();
                 }
-                if (cond.type == ConditionType::MaxStateTimeout){
-                    //if( maxTimeouts[repIndex][cond.keypointLine.toInt()]<cond.value.toInt()){maxTimeouts[repIndex][cond.keypointLine.toInt()] = cond.value.toInt();}
-                    if (!maxTimeouts[repIndex].contains(cond.keypointLine.toInt()) || maxTimeouts[repIndex][cond.keypointLine.toInt()] < cond.value.toInt()) {
-                        maxTimeouts[repIndex][cond.keypointLine.toInt()] = cond.value.toInt();
+
+                if (cond.type == ConditionType::RestOverTime) {
+                    if (cond.value.toInt() > totalRestTime)
+                        totalRestTime = cond.value.toInt();
+                }
+
+                if (cond.type == ConditionType::MaxStateTimeout) {
+                    int line = cond.keypointLine.toInt();
+                    if (!maxTimeouts[repIndex].contains(line) || maxTimeouts[repIndex][line] < cond.value.toInt()) {
+                        maxTimeouts[repIndex][line] = cond.value.toInt();
                     }
-                    //qDebug(timeWidget)<<"Repeticion"<<repIndex<<" Estado"<<cond.keypointLine.toInt()<<"valor"<<cond.value.toInt()<<"guardado:"<<maxTimeouts[repIndex][cond.keypointLine.toInt()];
-                 }
-                if (cond.type == ConditionType::MinStateTimeout)
-                 { hasMinTimeout[repIndex].insert(cond.keypointLine.toInt());}
+                }
+
+                if (cond.type == ConditionType::MinStateTimeout) {
+                    hasMinTimeout[repIndex].insert(cond.keypointLine.toInt());
+                }
             }
         }
+
         segments.append(segmentList);
     }
 
     setRepetitionSegments(segments);
-
-    // if (initTime > 0 && endTime > initTime) {
-    //     labelDuration->setText(QString("Duración serie: %1 s").arg((endTime - initTime) / 1000));
-    // } else {
-    //     labelDuration->setText("Duración serie: no finalizada");
-    // }
-
 
     labelDuration->setText(QString("Serie working time: %1 s").arg(workingTime / 1000));
     labelOverSerie->setText(QString("Overtime serie: %1 s").arg(totalOverSetTime / 1000));
@@ -281,7 +267,6 @@ void TimeWidget::onSerieChanged(int index)
     QStringList rowLabels;
     QList<int> sortedStates = states.values();
     std::sort(sortedStates.begin(), sortedStates.end());
-
     stateTimes->setRowCount(sortedStates.size());
 
     for (int row = 0; row < sortedStates.size(); ++row) {
@@ -294,24 +279,25 @@ void TimeWidget::onSerieChanged(int index)
 
     stateTimes->setVerticalHeaderLabels(rowLabels);
 
-
     for (int rep = 0; rep < headers.size(); ++rep) {
         for (int row = 0; row < sortedStates.size(); ++row) {
             int stateId = sortedStates[row];
             if (maxTimeouts.contains(rep) && maxTimeouts[rep].contains(stateId)) {
-                qreal val = (maxTimeouts[rep][stateId])/1000;
-                //qDebug(timeWidget)<<" dibujado-> Repeticion"<<rep<<" Estado"<<stateId<<"valor"<< maxTimeouts[rep][stateId]<<"val "<<val;
+                qreal val = maxTimeouts[rep][stateId] / 1000.0;
                 QTableWidgetItem* item = new QTableWidgetItem(QString::number(val, 'f', 2));
                 Qt::GlobalColor color;
-                if (val>0){color=Qt::red;}
-                else if ( hasMinTimeout[rep].contains(stateId)) color= Qt::green;
-                else color=Qt::yellow;
+                if (val > 0)
+                    color = Qt::red;
+                else if (hasMinTimeout[rep].contains(stateId))
+                    color = Qt::green;
+                else
+                    color = Qt::yellow;
                 item->setBackground(color);
-
                 stateTimes->setItem(row, rep, item);
             }
         }
     }
+
     stateTimes->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     stateTimes->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }

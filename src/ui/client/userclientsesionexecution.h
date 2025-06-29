@@ -88,6 +88,11 @@ private slots:
     void on_muteButton_clicked();        ///< Activa o desactiva el modo silencio.
     void on_volumeDownButton_clicked();  ///< Disminuye el volumen.
     void on_volumeUpButton_clicked();    ///< Aumenta el volumen.
+    /**
+     * @brief Slot que interrumpe manualmente la serie en curso.
+     * Llama a AppController para resetear la serie y reinicia el estado visual del widget.
+     */
+    void on_NewSetButton_clicked();
 
 private:
     Ui_UserClientSesionExecution *ui; ///< Interfaz gráfica generada por Qt Designer.
