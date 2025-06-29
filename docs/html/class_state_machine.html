@@ -107,6 +107,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a9fc651fa9a0ffc05f19866794474f286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifica si el ejercicio ha sido completado.  <br /></td></tr>
 <tr class="memitem:a419576ffb2a3b69d0c2e75e29726d48a" id="r_a419576ffb2a3b69d0c2e75e29726d48a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sesion_report.html">SesionReport</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a419576ffb2a3b69d0c2e75e29726d48a">getReport</a> ()</td></tr>
 <tr class="memdesc:a419576ffb2a3b69d0c2e75e29726d48a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve el reporte completo de condiciones y métricas generadas durante la sesión.  <br /></td></tr>
+<tr class="memitem:a9834ca3da2281c2678ce8f0af2cbe320" id="r_a9834ca3da2281c2678ce8f0af2cbe320"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9834ca3da2281c2678ce8f0af2cbe320">newSerie</a> ()</td></tr>
+<tr class="memdesc:a9834ca3da2281c2678ce8f0af2cbe320"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrumpe la serie actual de forma manual y fuerza el inicio de una nueva serie.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Clase que implementa una máquina de estados para el análisis biomecánico de un ejercicio físico. </p>
@@ -189,6 +191,29 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true si todas las series y repeticiones se han realizado correctamente; false en caso contrario.</dd></dl>
 <p>Retorna verdadero si todas las repeticiones y series han sido ejecutadas correctamente y se ha alcanzado el estado final según la configuración.</p>
 <dl class="section return"><dt>Returns</dt><dd>true si el ejercicio ha terminado; false en caso contrario. </dd></dl>
+
+</div>
+</div>
+<a id="a9834ca3da2281c2678ce8f0af2cbe320" name="a9834ca3da2281c2678ce8f0af2cbe320"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9834ca3da2281c2678ce8f0af2cbe320">&#9670;&#160;</a></span>newSerie()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateMachine::newSerie </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Interrumpe la serie actual de forma manual y fuerza el inicio de una nueva serie. </p>
+<p>Este método permite interrumpir el flujo natural de la máquina de estados, sumando una serie (setCount++), reiniciando el contador de repeticiones (repCount = 1), y posicionando el estado actual en el estado inicial (<span class="tt">initState</span>).</p>
+<p>También reinicia los temporizadores relevantes (<span class="tt">initTime</span>, <span class="tt">initSetTime</span>, <span class="tt">initRestTime</span>) y activa el modo descanso (<span class="tt">resting = true</span>) para que el sistema espere el inicio de la nueva serie de forma controlada.</p>
+<p>Este método está pensado para ser invocado desde la interfaz de usuario o un controlador externo, por ejemplo, cuando el usuario desee finalizar manualmente una serie incompleta.</p>
+<p>No emite ninguna condición (<span class="tt"><a class="el" href="struct_condition.html" title="Representa una condición específica ocurrida durante el ejercicio.">Condition</a></span>) directamente, pero deja el sistema en un estado coherente para que en la siguiente ejecución de <span class="tt"><a class="el" href="#a022aa5a6865d0e1e1e6f52fdbc423731" title="Ejecuta la evaluación del estado actual con los ángulos detectados y decide si realizar una transició...">run()</a></span> se genere <span class="tt">InitSet</span> y <span class="tt">InitRepetition</span> al detectar movimiento. </p>
 
 </div>
 </div>

@@ -107,10 +107,6 @@ Inheritance diagram for SoundFeedbackManager:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a5482cb242e41b965e4acfe99c7918c2c" id="r_a5482cb242e41b965e4acfe99c7918c2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5482cb242e41b965e4acfe99c7918c2c">SoundFeedbackManager</a> (QObject *parent=nullptr)</td></tr>
 <tr class="memdesc:a5482cb242e41b965e4acfe99c7918c2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor por defecto del gestor de feedback sonoro.  <br /></td></tr>
-<tr class="memitem:a1156c215cb8ceb8a674e9f641f5dbc88" id="r_a1156c215cb8ceb8a674e9f641f5dbc88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1156c215cb8ceb8a674e9f641f5dbc88">playFeedback</a> (const <a class="el" href="class_feed_back.html">FeedBack</a> &amp;feedback)</td></tr>
-<tr class="memdesc:a1156c215cb8ceb8a674e9f641f5dbc88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reproduce todos los sonidos asociados a las condiciones contenidas en el feedback.  <br /></td></tr>
-<tr class="memitem:a467611e335433c2fcd44b596acdc144d" id="r_a467611e335433c2fcd44b596acdc144d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a467611e335433c2fcd44b596acdc144d">play</a> (<a class="el" href="condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446">ConditionType</a> cond)</td></tr>
-<tr class="memdesc:a467611e335433c2fcd44b596acdc144d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reproduce directamente el sonido asociado a una condición específica.  <br /></td></tr>
 <tr class="memitem:a2a584e6594a4ead059b3c7c2110e4ad0" id="r_a2a584e6594a4ead059b3c7c2110e4ad0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a584e6594a4ead059b3c7c2110e4ad0">setVolume</a> (qreal volume)</td></tr>
 <tr class="memdesc:a2a584e6594a4ead059b3c7c2110e4ad0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establece el volumen global de los sonidos.  <br /></td></tr>
 <tr class="memitem:ac3ad797d916995d63734f4165e7cbbaf" id="r_ac3ad797d916995d63734f4165e7cbbaf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3ad797d916995d63734f4165e7cbbaf">mute</a> (bool mute)</td></tr>
@@ -121,10 +117,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6b12d1dfca870ff1faec6df18858236a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita o deshabilita sonidos de alerta.  <br /></td></tr>
 <tr class="memitem:a8b50fad723b67d8d3dd5abf25eda49f7" id="r_a8b50fad723b67d8d3dd5abf25eda49f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b50fad723b67d8d3dd5abf25eda49f7">setCriticaSoundEnable</a> (bool newCriticaSoundEnable)</td></tr>
 <tr class="memdesc:a8b50fad723b67d8d3dd5abf25eda49f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita o deshabilita sonidos críticos.  <br /></td></tr>
+<tr class="memitem:acc73e9be4ee9cbb2d00d80c3584f7b44" id="r_acc73e9be4ee9cbb2d00d80c3584f7b44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc73e9be4ee9cbb2d00d80c3584f7b44">checkAndPlayNext</a> ()</td></tr>
+<tr class="memdesc:acc73e9be4ee9cbb2d00d80c3584f7b44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reproduce el siguiente sonido en la cola si no hay ninguno en reproducción.  <br /></td></tr>
+<tr class="memitem:a5a6e7b6968a1b448aa9eca036584cd7a" id="r_a5a6e7b6968a1b448aa9eca036584cd7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a6e7b6968a1b448aa9eca036584cd7a">addtoSoundList</a> (<a class="el" href="condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446">ConditionType</a> cond, <a class="el" href="condition_8h.html#aa09a486d490962f742dd1067eb31dbfd">ConditionCategory</a> catCond)</td></tr>
+<tr class="memdesc:a5a6e7b6968a1b448aa9eca036584cd7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Añade un sonido a la cola con lógica de prioridad y reemplazo, según la categoría proporcionada por el feedback. Si la cola ya contiene el sonido, no se añade. Si está llena, se aplica la siguiente política:  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Clase encargada de reproducir sonidos asociados a condiciones específicas del ejercicio. </p>
-<p>Esta clase permite la asociación entre <span class="tt"><a class="el" href="condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446" title="Enum que representa los distintos tipos de condiciones detectables durante la ejecución de un ejercic...">ConditionType</a></span> y archivos de sonido. Soporta reproducción de múltiples sonidos simultáneos, control de volumen, y configuración de filtros según el nivel de criticidad (informativo, alerta, crítico). </p>
+<p>Esta clase permite la asociación entre <span class="tt"><a class="el" href="condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446" title="Enum que representa los distintos tipos de condiciones detectables durante la ejecución de un ejercic...">ConditionType</a></span> y archivos de sonido. Soporta reproducción priorizada en tiempo real, control de volumen, enmudecimiento global y activación selectiva por severidad. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5482cb242e41b965e4acfe99c7918c2c" name="a5482cb242e41b965e4acfe99c7918c2c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5482cb242e41b965e4acfe99c7918c2c">&#9670;&#160;</a></span>SoundFeedbackManager()</h2>
@@ -161,6 +161,61 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a5a6e7b6968a1b448aa9eca036584cd7a" name="a5a6e7b6968a1b448aa9eca036584cd7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a6e7b6968a1b448aa9eca036584cd7a">&#9670;&#160;</a></span>addtoSoundList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SoundFeedbackManager::addtoSoundList </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446">ConditionType</a></td>          <td class="paramname"><span class="paramname"><em>cond</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="condition_8h.html#aa09a486d490962f742dd1067eb31dbfd">ConditionCategory</a></td>          <td class="paramname"><span class="paramname"><em>catCond</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Añade un sonido a la cola con lógica de prioridad y reemplazo, según la categoría proporcionada por el feedback. Si la cola ya contiene el sonido, no se añade. Si está llena, se aplica la siguiente política: </p>
+<ul>
+<li>ALERTA reemplaza INFO; si no hay, reemplaza ALERTA; si todos son CRÍTICOS, elimina el primero y añade al final.</li>
+<li>CRÍTICO reemplaza INFO o ALERTA; si todos son CRÍTICOS, elimina el primero y añade al final. <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">feedback</td><td>Objeto <span class="tt"><a class="el" href="class_feed_back.html" title="Clase que procesa una lista de condiciones y genera mensajes clasificados para retroalimentación al u...">FeedBack</a></span> que proporciona la categoría del sonido. </td></tr>
+    <tr><td class="paramname">type</td><td>Tipo de condición cuyo sonido se desea añadir. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="acc73e9be4ee9cbb2d00d80c3584f7b44" name="acc73e9be4ee9cbb2d00d80c3584f7b44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc73e9be4ee9cbb2d00d80c3584f7b44">&#9670;&#160;</a></span>checkAndPlayNext()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SoundFeedbackManager::checkAndPlayNext </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reproduce el siguiente sonido en la cola si no hay ninguno en reproducción. </p>
+<p>Este método se llama de forma periódica mediante un QTimer. Si no hay ningún sonido en reproducción actualmente y la cola contiene sonidos pendientes, se reproduce el siguiente.</p>
+<p>También establece una conexión temporal a la señal <span class="tt">playingChanged</span> del QSoundEffect para detectar cuándo finaliza la reproducción, permitiendo continuar con el siguiente sonido. </p>
+
+</div>
+</div>
 <a id="ac3ad797d916995d63734f4165e7cbbaf" name="ac3ad797d916995d63734f4165e7cbbaf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac3ad797d916995d63734f4165e7cbbaf">&#9670;&#160;</a></span>mute()</h2>
 
@@ -182,60 +237,6 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">mute</td><td>true para silenciar, false para restaurar volumen.</td></tr>
     <tr><td class="paramname">mute</td><td>true para silenciar, false para restaurar. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a467611e335433c2fcd44b596acdc144d" name="a467611e335433c2fcd44b596acdc144d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a467611e335433c2fcd44b596acdc144d">&#9670;&#160;</a></span>play()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SoundFeedbackManager::play </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446">ConditionType</a></td>          <td class="paramname"><span class="paramname"><em>cond</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reproduce directamente el sonido asociado a una condición específica. </p>
-<p>Reproduce el sonido asociado a una única condición.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cond</td><td>Condición a reproducir.</td></tr>
-    <tr><td class="paramname">cond</td><td>Tipo de condición a reproducir. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a1156c215cb8ceb8a674e9f641f5dbc88" name="a1156c215cb8ceb8a674e9f641f5dbc88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1156c215cb8ceb8a674e9f641f5dbc88">&#9670;&#160;</a></span>playFeedback()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SoundFeedbackManager::playFeedback </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_feed_back.html">FeedBack</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>feedback</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reproduce todos los sonidos asociados a las condiciones contenidas en el feedback. </p>
-<p>Reproduce los sonidos correspondientes a las condiciones contenidas en un feedback.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">feedback</td><td>Objeto de tipo <span class="tt"><a class="el" href="class_feed_back.html" title="Clase que procesa una lista de condiciones y genera mensajes clasificados para retroalimentación al u...">FeedBack</a></span> con las condiciones generadas.</td></tr>
-    <tr><td class="paramname">feedback</td><td>Objeto que contiene las condiciones evaluadas. </td></tr>
   </table>
   </dd>
 </dl>

@@ -239,6 +239,7 @@ void AppController::loadConfig() {
     poseCaptureConfig.insert("JSON_SIZE", config["JSON_SIZE"].get<int>());
     poseCaptureConfig.insert("FLAG_SIZE", config["FLAG_SIZE"].get<int>());
     poseCaptureConfig.insert("PYTHON_SCRIPT", QString::fromStdString(config["PYTHON_SCRIPT"]));
+     poseCaptureConfig.insert("PYTHON_ENV", QString::fromStdString(config["PYTHON_ENV"]));
     poseCaptureConfig.insert("CAM1", QString::fromStdString(config["CAM1"]));
     poseCaptureConfig.insert("CAM2", QString::fromStdString(config["CAM2"]));
     poseCaptureConfig.insert("SEM_SHM1", QString::fromStdString(config["SEM_SHM1"]));
@@ -289,6 +290,7 @@ void AppController::loadConfig() {
 
     // Mostrar valores cargados
     qDebug(AppControllerLog) << "PYTHON_SCRIPT:" << poseCaptureConfig["PYTHON_SCRIPT"].toString();
+      qDebug(AppControllerLog) << "PYTHON_ENV:" << poseCaptureConfig["PYTHON_ENV"].toString();
     qDebug(AppControllerLog) << "CAM_1:" << poseCaptureConfig["CAM1"].toString();
     qDebug(AppControllerLog) << "CAM_2:" << poseCaptureConfig["CAM2"].toString();
     qDebug(AppControllerLog) << "WIDTH:" << poseCaptureConfig["WIDTH"].toInt();

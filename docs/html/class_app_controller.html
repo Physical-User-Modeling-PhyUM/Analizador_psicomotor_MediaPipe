@@ -148,6 +148,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4a8a9da6659786fd82f95875055170ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pausa temporalmente el análisis de la sesión.  <br /></td></tr>
 <tr class="memitem:af9d685fff5844821b5517f8fc6df8d7d" id="r_af9d685fff5844821b5517f8fc6df8d7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9d685fff5844821b5517f8fc6df8d7d">startSesionAnalysis</a> ()</td></tr>
 <tr class="memdesc:af9d685fff5844821b5517f8fc6df8d7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicia el análisis post-ejecución de la sesión capturada.  <br /></td></tr>
+<tr class="memitem:a3e957d1ae1072efdf2b195682b51da79" id="r_a3e957d1ae1072efdf2b195682b51da79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e957d1ae1072efdf2b195682b51da79">interruptSerie</a> ()</td></tr>
+<tr class="memdesc:a3e957d1ae1072efdf2b195682b51da79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrumpe la serie actual en ejecución.  <br /></td></tr>
 <tr class="memitem:ab44b6bb41048fe0e5f46f0d334c86386" id="r_ab44b6bb41048fe0e5f46f0d334c86386"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab44b6bb41048fe0e5f46f0d334c86386">setSelf</a> (QSharedPointer&lt; <a class="el" href="class_app_controller.html">AppController</a> &gt; selfController)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -476,6 +478,27 @@ true si se guardó correctamente; false en caso contrario. </dd></dl>
 <p>Carga la configuración desde el archivo <span class="tt">poseConfig.json</span>, inicializa la base de datos, crea los repositorios y gestores lógicos, y conecta las señales principales.</p>
 <p>Esta función carga la configuración desde JSON, crea la instancia de <a class="el" href="class_d_b_manager.html" title="Clase responsable de gestionar la conexión y las operaciones de lectura/escritura en una base de dato...">DBManager</a>, y los gestores de usuario, login, entrenamiento, captura de pose, feedback auditivo, validación y métricas. También conecta señales clave entre módulos.</p>
 <p>Si la base de datos no existe, puede lanzarse <a class="el" href="class_init___loader.html" title="Clase encargada de inicializar la base de datos del sistema con datos de prueba o despliegue.">Init_Loader</a> (comentado por ahora). </p>
+
+</div>
+</div>
+<a id="a3e957d1ae1072efdf2b195682b51da79" name="a3e957d1ae1072efdf2b195682b51da79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e957d1ae1072efdf2b195682b51da79">&#9670;&#160;</a></span>interruptSerie()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AppController::interruptSerie </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Interrumpe la serie actual en ejecución. </p>
+<p>Este método llama a <span class="tt"><a class="el" href="#a3e957d1ae1072efdf2b195682b51da79" title="Interrumpe la serie actual en ejecución.">interruptSerie()</a></span> en el <span class="tt"><a class="el" href="class_pose_manager.html" title="Controlador de alto nivel que captura y analiza poses del usuario en tiempo real.">PoseManager</a></span>, lo que provoca que la <span class="tt"><a class="el" href="class_state_machine.html" title="Clase que implementa una máquina de estados para el análisis biomecánico de un ejercicio físico.">StateMachine</a></span> reinicie los contadores de repetición, incremente el número de serie y vuelva al estado inicial.</p>
+<p>Este método puede ser invocado desde la interfaz gráfica (por ejemplo, desde un botón) cuando el usuario desea cortar la serie en curso. </p>
 
 </div>
 </div>

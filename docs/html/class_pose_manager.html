@@ -153,6 +153,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5a117ff9fb507148c2c437377ef5ce39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aplica configuración externa de cámaras, keypoints y conexiones.  <br /></td></tr>
 <tr class="memitem:a7541297f42c2900b394a476c9b018e76" id="r_a7541297f42c2900b394a476c9b018e76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7541297f42c2900b394a476c9b018e76">resetMemory</a> ()</td></tr>
 <tr class="memdesc:a7541297f42c2900b394a476c9b018e76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Libera recursos compartidos como memoria y semáforos.  <br /></td></tr>
+<tr class="memitem:ae8373ac84e35c2c5321f7d9625c7d20a" id="r_ae8373ac84e35c2c5321f7d9625c7d20a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8373ac84e35c2c5321f7d9625c7d20a">newSerie</a> ()</td></tr>
+<tr class="memdesc:ae8373ac84e35c2c5321f7d9625c7d20a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrumpe la serie actual y reinicia la máquina de estados.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-friends" class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -457,6 +459,26 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Imagen de la cámara 2 con keypoints. </p>
+
+</div>
+</div>
+<a id="ae8373ac84e35c2c5321f7d9625c7d20a" name="ae8373ac84e35c2c5321f7d9625c7d20a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8373ac84e35c2c5321f7d9625c7d20a">&#9670;&#160;</a></span>newSerie()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PoseManager::newSerie </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Interrumpe la serie actual y reinicia la máquina de estados. </p>
+<p>Este método permite reiniciar la serie activa sin finalizar el ejercicio completo. Se reinician los contadores de repetición, se incrementa el número de serie y se restablece el estado inicial de la máquina de estados para comenzar la siguiente serie. </p>
 
 </div>
 </div>

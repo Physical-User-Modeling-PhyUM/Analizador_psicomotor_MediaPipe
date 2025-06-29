@@ -15,6 +15,7 @@ var class_app_controller =
     [ "getUserManager", "class_app_controller.html#a9536f627fbd3adecd454b3a18174f1e9", null ],
     [ "getValidationManager", "class_app_controller.html#a0a2ac16559dd7a26002a2c184603d010", null ],
     [ "initialize", "class_app_controller.html#a61afa8cb28f6e13042f834c85c0a2492", null ],
+    [ "interruptSerie", "class_app_controller.html#a3e957d1ae1072efdf2b195682b51da79", null ],
     [ "pauseSesion", "class_app_controller.html#a4a8a9da6659786fd82f95875055170ab", null ],
     [ "setConnections", "class_app_controller.html#a67a91e1e80c4f7a1d531a5e6e3ebeb09", null ],
     [ "setKeypoints", "class_app_controller.html#adb4426be26b8928dc9415a930ab997a1", null ],

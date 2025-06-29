@@ -148,6 +148,7 @@ private:
     int WIDTH, HEIGHT, FRAME_SIZE, JSON_SIZE, FLAG_SIZE, TOTAL_SIZE;
     QString CAM_1, CAM_2, SEM_SHM1, SEM_SHM2;
     QString pythonScript;
+    QString PythonEnv;
     sem_t* sem1, *sem2;
     int shm_fd1, shm_fd2;
 

@@ -74,6 +74,7 @@ void PoseManager::applyConfiguration(QHash<QString, QVariant>& config,QHash<QPai
     SEM_SHM1 = config["SEM_SHM1"].toString();
     SEM_SHM2 = config["SEM_SHM2"].toString();
     pythonScript = config["PYTHON_SCRIPT"].toString();
+    PythonEnv= config["PYTHON_ENV"].toString();
     //view1=PoseViewFromString(config["VIEW1"].toString().toLower());
     //view2=PoseViewFromString(config["VIEW2"].toString().toLower());
     testInputFolder=config["TEST_FOLDER"].toString();
@@ -103,13 +104,17 @@ void PoseManager::startPythonProcesses() {
     qInfo(PoseManagerLog) << "Iniciando procesos de Python...";
     qInfo(PoseManagerLog) << "Ejecutando en modo dual..."<<dualMode;
     QString pythonPath = "/Users/MZT/vscode/MPipe/MediaPipe/venv/bin/python3";
+    //QString scriptPath = QDir(QCoreApplication::applicationDirPath()).filePath(pythonScript);
+    if (pythonScript.startsWith("/")) {
+        pythonScript = pythonScript.mid(1); // eliminar la barra inicial
+    }
     QString scriptPath = QDir(QCoreApplication::applicationDirPath()).filePath(pythonScript);
-
     qInfo(PoseManagerLog) << "Ejecutando script: " << scriptPath;
 
     // Proceso para cámara 1
     process_cam1 = new QProcess(this);
-    process_cam1->setProgram(pythonPath);
+    //process_cam1->setProgram(pythonPath);
+    process_cam1->setProgram(PythonEnv);
     process_cam1->setArguments({scriptPath, "0"});
 
     connect(process_cam1, &QProcess::readyReadStandardOutput, this, &PoseManager::PythonProccesLogOutput1);
@@ -130,7 +135,8 @@ void PoseManager::startPythonProcesses() {
     // Proceso para cámara 2,
     if (dualMode) {
         process_cam2 = new QProcess(this);
-        process_cam2->setProgram(pythonPath);
+        //process_cam2->setProgram(pythonPath);
+        process_cam2->setProgram(PythonEnv);
         process_cam2->setArguments({scriptPath, "1"});
         process_cam2->start();
         qDebug(PoseManagerLog) << "Ejecutando Python con: " << process_cam2->program() << process_cam2->arguments();

@@ -55,10 +55,10 @@ var NAVTREEINDEX =
 [
 "_ex_espec_field_enum_8h.html",
 "class_angle_constraint.html#a5df658632f65c48e5e5118901967a96c",
-"class_metrics_manager.html#a12b3060615048c0c8a176e6b892d115b",
-"class_user.html",
-"functions_func_s.html",
-"statemachine_8cpp.html"
+"class_main_window.html#ae98d00a93bc118200eeef9f9bba1dba7",
+"class_ui_table_model.html#ad518cae9f7f54a1c07bf9bc7fdc1ed2e",
+"functions_func_i.html",
+"state_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

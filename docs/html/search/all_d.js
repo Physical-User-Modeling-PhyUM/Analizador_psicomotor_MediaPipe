@@ -9,9 +9,10 @@ var searchData=
   ['newclientreg_6',['newClientReg',['../class_login_manager.html#a60efd5868fe27f819e19abf1be1c0e77',1,'LoginManager']]],
   ['newimage1_7',['newImage1',['../class_pose_manager.html#a9ae58935626973b4212eb6d8024b7bf1',1,'PoseManager']]],
   ['newimage2_8',['newImage2',['../class_pose_manager.html#a8b33c49f4a984342b2f02b929feeae7d',1,'PoseManager']]],
-  ['none_9',['None',['../_feedback_mode_enum_8h.html#a599357f0b0f8ea57e787d513c7d678f5a6adf97f83acf6453d4a6a4b1070f3754',1,'FeedbackModeEnum.h']]],
-  ['none_10',['none',['../_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca334c4a4c42fdb79d7ebc3e73b517e6f8',1,'none:&#160;TypeBDEnum.h'],['../condition_8h.html#aa09a486d490962f742dd1067eb31dbfda334c4a4c42fdb79d7ebc3e73b517e6f8',1,'none:&#160;condition.h']]],
-  ['not_5fmatter_11',['Not_matter',['../angleconstraint_8h.html#a224b9163917ac32fc95a60d8c1eec3aaaf2e9050282689172515c926415d7eef0',1,'angleconstraint.h']]],
-  ['not_5fsteady_12',['Not_Steady',['../condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a18e5a5e24044ff6d78afdc50daeb834f',1,'condition.h']]],
-  ['notifications_13',['Notifications',['../profile_enums_8h.html#a2014d48d975c8158127e9b9c4be0da0daa274f4d4670213a9045ce258c6c56b80',1,'Notifications:&#160;profileEnums.h'],['../_userdatatypes_8h.html#ad8ed01ff3ff33333d8e19db4d2818bb6aa274f4d4670213a9045ce258c6c56b80',1,'Notifications:&#160;Userdatatypes.h']]]
+  ['newserie_9',['newSerie',['../class_pose_manager.html#ae8373ac84e35c2c5321f7d9625c7d20a',1,'PoseManager::newSerie()'],['../class_state_machine.html#a9834ca3da2281c2678ce8f0af2cbe320',1,'StateMachine::newSerie()']]],
+  ['none_10',['None',['../_feedback_mode_enum_8h.html#a599357f0b0f8ea57e787d513c7d678f5a6adf97f83acf6453d4a6a4b1070f3754',1,'FeedbackModeEnum.h']]],
+  ['none_11',['none',['../_type_b_d_enum_8h.html#a1ddfc8c88ec4cdd750c5ddd39316d0bca334c4a4c42fdb79d7ebc3e73b517e6f8',1,'none:&#160;TypeBDEnum.h'],['../condition_8h.html#aa09a486d490962f742dd1067eb31dbfda334c4a4c42fdb79d7ebc3e73b517e6f8',1,'none:&#160;condition.h']]],
+  ['not_5fmatter_12',['Not_matter',['../angleconstraint_8h.html#a224b9163917ac32fc95a60d8c1eec3aaaf2e9050282689172515c926415d7eef0',1,'angleconstraint.h']]],
+  ['not_5fsteady_13',['Not_Steady',['../condition_8h.html#a8fc1b7d50bd342b43d026ee18bece446a18e5a5e24044ff6d78afdc50daeb834f',1,'condition.h']]],
+  ['notifications_14',['Notifications',['../profile_enums_8h.html#a2014d48d975c8158127e9b9c4be0da0daa274f4d4670213a9045ce258c6c56b80',1,'Notifications:&#160;profileEnums.h'],['../_userdatatypes_8h.html#ad8ed01ff3ff33333d8e19db4d2818bb6aa274f4d4670213a9045ce258c6c56b80',1,'Notifications:&#160;Userdatatypes.h']]]
 ];

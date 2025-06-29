@@ -144,89 +144,91 @@ $(function(){initNavTree('posemanager_8h_source.html','',''); });
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                            QHash&lt;int, QString&gt;&amp; kpts);</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span></div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_pose_manager.html#a7541297f42c2900b394a476c9b018e76">resetMemory</a>();</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>signals:</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a9ae58935626973b4212eb6d8024b7bf1">   93</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a9ae58935626973b4212eb6d8024b7bf1">newImage1</a>(cv::Mat image);          </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a8b33c49f4a984342b2f02b929feeae7d">   94</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a8b33c49f4a984342b2f02b929feeae7d">newImage2</a>(cv::Mat image);          </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a2dd618be0b865f1d7c4785020694c8a6">   95</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a2dd618be0b865f1d7c4785020694c8a6">feedbackGenerated</a>(<a class="code hl_class" href="class_feed_back.html">FeedBack</a> feedback); </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a619a0ba2bf079d3df6460e82b0993cd4">   96</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a619a0ba2bf079d3df6460e82b0993cd4">exerciseCompleted</a>();               </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="class_pose_manager.html#aa5c88a1337fca89a129bee36061d1d54">   97</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#aa5c88a1337fca89a129bee36061d1d54">exerciseInit</a>();                    </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="class_pose_manager.html#ae871582e9352d7a6d0e3ecbad3c6c7e9">   98</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#ae871582e9352d7a6d0e3ecbad3c6c7e9">repetitionComplete</a>();              </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a389ef2359a956399a9024efce78243a6">   99</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a389ef2359a956399a9024efce78243a6">setComplete</a>();                     </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a4e0397b5a16a045e7a3f8de70821af68">  100</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a4e0397b5a16a045e7a3f8de70821af68">timeout</a>(QString msg);              </div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="keyword">public</span> slots:</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#a5f1671532ca0780ae4dbe5c6fe5939bc">stopCapture</a>();</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#ab556a5254564d8ad54ce9aba6e3e9c7e">PythonProccesLogOutput1</a>();   </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#a6f293e4bbd178b10f64415695e7566a7">PythonProccesErrorOutput1</a>(); </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#a6e4021835b25c89870dcc84ff66a5741">PythonProccesLogOutput2</a>();   </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#a557f8f410caa0181f92f3a8185938e40">PythonProccesErrorOutput2</a>(); </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span></div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#af91c9b2415a5af7390b3d177623ca886">enableTestMode</a>(<span class="keyword">const</span> QString&amp; folderPath);</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="keyword">private</span> slots:</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keywordtype">void</span> processNextFrame();</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    QProcess *process_cam1, *process_cam2;</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keywordtype">bool</span> infoMessage = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keywordtype">bool</span> alerts = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="keywordtype">bool</span> critical = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    QTimer* frameTimer = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    int64_t lastTimestamp1 = -1;</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    int64_t lastTimestamp2 = -1;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keywordtype">bool</span> configured = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="keywordtype">char</span>* shm_1;</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="keywordtype">char</span>* shm_2;</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keywordtype">bool</span> dualMode;</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="keywordtype">bool</span> running, runningAnalysis;</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    QTimer* timer = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="keywordtype">int</span> WIDTH, HEIGHT, FRAME_SIZE, JSON_SIZE, FLAG_SIZE, TOTAL_SIZE;</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    QString CAM_1, CAM_2, SEM_SHM1, SEM_SHM2;</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    QString pythonScript;</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    sem_t* sem1, *sem2;</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <span class="keywordtype">int</span> shm_fd1, shm_fd2;</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keywordtype">int</span> initFrameCount = 0;</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordtype">int</span> MAX_ALLOWED_MISSES = 5;</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keywordtype">int</span> STARTING_MISSES_FRAMES = 30;</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <a class="code hl_enumeration" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967d">PoseView</a> view1 = <a class="code hl_enumvalue" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967da5835bab1ade0060909e31a06af2e2cde">PoseView::Front</a>;</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <a class="code hl_enumeration" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967d">PoseView</a> view2 = <a class="code hl_enumvalue" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967da92b09c7c48c520c3c55e497875da437c">PoseView::Right</a>;</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    QQueue&lt;QPair&lt;int64_t, QSharedPointer&lt;Pose&gt;&gt;&gt; poseQueue;</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    QSharedPointer&lt;Pose&gt; lastValidSidePose;</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keywordtype">int</span> view1MissCount = 0;</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordtype">int</span> view2MissCount = 0;</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    QQueue&lt;QPair&lt;int64_t, QHash&lt;QString, double&gt;&gt;&gt; angleQueueView2;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keywordtype">int</span> SYNC_TOLERANCE_MS = 200;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_pose_manager.html#ae8373ac84e35c2c5321f7d9625c7d20a">newSerie</a>();</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>signals:</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a9ae58935626973b4212eb6d8024b7bf1">  100</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a9ae58935626973b4212eb6d8024b7bf1">newImage1</a>(cv::Mat image);          </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a8b33c49f4a984342b2f02b929feeae7d">  101</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a8b33c49f4a984342b2f02b929feeae7d">newImage2</a>(cv::Mat image);          </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a2dd618be0b865f1d7c4785020694c8a6">  102</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a2dd618be0b865f1d7c4785020694c8a6">feedbackGenerated</a>(<a class="code hl_class" href="class_feed_back.html">FeedBack</a> feedback); </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a619a0ba2bf079d3df6460e82b0993cd4">  103</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a619a0ba2bf079d3df6460e82b0993cd4">exerciseCompleted</a>();               </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="class_pose_manager.html#aa5c88a1337fca89a129bee36061d1d54">  104</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#aa5c88a1337fca89a129bee36061d1d54">exerciseInit</a>();                    </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="class_pose_manager.html#ae871582e9352d7a6d0e3ecbad3c6c7e9">  105</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#ae871582e9352d7a6d0e3ecbad3c6c7e9">repetitionComplete</a>();              </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a389ef2359a956399a9024efce78243a6">  106</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a389ef2359a956399a9024efce78243a6">setComplete</a>();                     </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="class_pose_manager.html#a4e0397b5a16a045e7a3f8de70821af68">  107</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_pose_manager.html#a4e0397b5a16a045e7a3f8de70821af68">timeout</a>(QString msg);              </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keyword">public</span> slots:</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#a5f1671532ca0780ae4dbe5c6fe5939bc">stopCapture</a>();</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#ab556a5254564d8ad54ce9aba6e3e9c7e">PythonProccesLogOutput1</a>();   </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#a6f293e4bbd178b10f64415695e7566a7">PythonProccesErrorOutput1</a>(); </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#a6e4021835b25c89870dcc84ff66a5741">PythonProccesLogOutput2</a>();   </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#a557f8f410caa0181f92f3a8185938e40">PythonProccesErrorOutput2</a>(); </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_pose_manager.html#af91c9b2415a5af7390b3d177623ca886">enableTestMode</a>(<span class="keyword">const</span> QString&amp; folderPath);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="keyword">private</span> slots:</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="keywordtype">void</span> processNextFrame();</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    QProcess *process_cam1, *process_cam2;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keywordtype">bool</span> infoMessage = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="keywordtype">bool</span> alerts = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="keywordtype">bool</span> critical = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    QTimer* frameTimer = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    int64_t lastTimestamp1 = -1;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    int64_t lastTimestamp2 = -1;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <span class="keywordtype">bool</span> configured = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keywordtype">char</span>* shm_1;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keywordtype">char</span>* shm_2;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <span class="keywordtype">bool</span> dualMode;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="keywordtype">bool</span> running;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keywordtype">bool</span> runningAnalysis=<span class="keyword">false</span>;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    QTimer* timer = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keywordtype">int</span> WIDTH, HEIGHT, FRAME_SIZE, JSON_SIZE, FLAG_SIZE, TOTAL_SIZE;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    QString CAM_1, CAM_2, SEM_SHM1, SEM_SHM2;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    QString pythonScript;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    sem_t* sem1, *sem2;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="keywordtype">int</span> shm_fd1, shm_fd2;</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keywordtype">int</span> initFrameCount = 0;</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordtype">int</span> MAX_ALLOWED_MISSES = 5;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <span class="keywordtype">int</span> STARTING_MISSES_FRAMES = 30;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <a class="code hl_enumeration" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967d">PoseView</a> view1 = <a class="code hl_enumvalue" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967da5835bab1ade0060909e31a06af2e2cde">PoseView::Front</a>;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <a class="code hl_enumeration" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967d">PoseView</a> view2 = <a class="code hl_enumvalue" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967da92b09c7c48c520c3c55e497875da437c">PoseView::Right</a>;</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    QSharedPointer&lt;TrainingSesion&gt; runningSesion;</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    QSharedPointer&lt;StateMachine&gt; poseAnalyzer;</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="comment">// --- Test Mode ---</span></div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="keywordtype">bool</span> testMode = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    QString testInputFolder;</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    QStringList testFrames;</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    <span class="keywordtype">int</span> currentTestFrameIndex = 0;</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span></div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="keywordtype">void</span> startPythonProcesses();</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span></div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    <span class="keywordtype">bool</span> connectSharedMemory();</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span></div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keywordtype">void</span> stopPythonProcesses();</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span></div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <a class="code hl_class" href="class_pose.html">Pose</a>* getNewPose(QString cam_name, sem_t* sem, uchar* shm_pose, <a class="code hl_enumeration" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967d">PoseView</a> view = <a class="code hl_enumvalue" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967da5835bab1ade0060909e31a06af2e2cde">PoseView::Front</a>);</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span></div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keywordtype">void</span> testShareMemory();</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    QHash&lt;QPair&lt;int, int&gt;, QString&gt; connections; </div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>};</div>
-</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    QQueue&lt;QPair&lt;int64_t, QSharedPointer&lt;Pose&gt;&gt;&gt; poseQueue;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    QSharedPointer&lt;Pose&gt; lastValidSidePose;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keywordtype">int</span> view1MissCount = 0;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="keywordtype">int</span> view2MissCount = 0;</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    QQueue&lt;QPair&lt;int64_t, QHash&lt;QString, double&gt;&gt;&gt; angleQueueView2;</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keywordtype">int</span> SYNC_TOLERANCE_MS = 200;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    QSharedPointer&lt;TrainingSesion&gt; runningSesion;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    QSharedPointer&lt;StateMachine&gt; poseAnalyzer;</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="comment">// --- Test Mode ---</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="keywordtype">bool</span> testMode = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    QString testInputFolder;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    QStringList testFrames;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    <span class="keywordtype">int</span> currentTestFrameIndex = 0;</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="keywordtype">void</span> startPythonProcesses();</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="keywordtype">bool</span> connectSharedMemory();</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    <span class="keywordtype">void</span> stopPythonProcesses();</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <a class="code hl_class" href="class_pose.html">Pose</a>* getNewPose(QString cam_name, sem_t* sem, uchar* shm_pose, <a class="code hl_enumeration" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967d">PoseView</a> view = <a class="code hl_enumvalue" href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967da5835bab1ade0060909e31a06af2e2cde">PoseView::Front</a>);</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="preprocessor">#endif </span><span class="comment">// POSEMANAGER_H</span></div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <span class="keywordtype">void</span> testShareMemory();</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    QHash&lt;QPair&lt;int, int&gt;, QString&gt; connections; </div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>};</div>
+</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><span class="preprocessor">#endif </span><span class="comment">// POSEMANAGER_H</span></div>
 <div class="ttc" id="a_pose_view_enum_8h_html_a27013d7e1e1f59100c23eb269bb8967d"><div class="ttname"><a href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967d">PoseView</a></div><div class="ttdeci">PoseView</div><div class="ttdoc">Representa la perspectiva desde la que se observa la pose.</div><div class="ttdef"><b>Definition</b> PoseViewEnum.h:22</div></div>
 <div class="ttc" id="a_pose_view_enum_8h_html_a27013d7e1e1f59100c23eb269bb8967da5835bab1ade0060909e31a06af2e2cde"><div class="ttname"><a href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967da5835bab1ade0060909e31a06af2e2cde">PoseView::Front</a></div><div class="ttdeci">@ Front</div><div class="ttdoc">Vista frontal.</div><div class="ttdef"><b>Definition</b> PoseViewEnum.h:23</div></div>
 <div class="ttc" id="a_pose_view_enum_8h_html_a27013d7e1e1f59100c23eb269bb8967da92b09c7c48c520c3c55e497875da437c"><div class="ttname"><a href="_pose_view_enum_8h.html#a27013d7e1e1f59100c23eb269bb8967da92b09c7c48c520c3c55e497875da437c">PoseView::Right</a></div><div class="ttdeci">@ Right</div><div class="ttdoc">Vista lateral derecha.</div><div class="ttdef"><b>Definition</b> PoseViewEnum.h:25</div></div>
@@ -251,8 +253,9 @@ $(function(){initNavTree('posemanager_8h_source.html','',''); });
 <div class="ttc" id="aclass_pose_manager_html_aaf8ad7cb972d1f9e36ec19738de6e403"><div class="ttname"><a href="class_pose_manager.html#aaf8ad7cb972d1f9e36ec19738de6e403">PoseManager::runAnalysis</a></div><div class="ttdeci">void runAnalysis()</div><div class="ttdoc">Inicia el análisis biomecánico sobre las poses recibidas.</div><div class="ttdef"><b>Definition</b> posemanager.cpp:428</div></div>
 <div class="ttc" id="aclass_pose_manager_html_ab120ec2bddf5e109f8e736a242c9d6e6"><div class="ttname"><a href="class_pose_manager.html#ab120ec2bddf5e109f8e736a242c9d6e6">PoseManager::pauseAnalysis</a></div><div class="ttdeci">void pauseAnalysis()</div><div class="ttdoc">Pausa el análisis biomecánico.</div><div class="ttdef"><b>Definition</b> posemanager.cpp:435</div></div>
 <div class="ttc" id="aclass_pose_manager_html_ab556a5254564d8ad54ce9aba6e3e9c7e"><div class="ttname"><a href="class_pose_manager.html#ab556a5254564d8ad54ce9aba6e3e9c7e">PoseManager::PythonProccesLogOutput1</a></div><div class="ttdeci">void PythonProccesLogOutput1()</div><div class="ttdoc">Captura salida estándar del proceso Python 1.</div><div class="ttdef"><b>Definition</b> posemanager.cpp:651</div></div>
+<div class="ttc" id="aclass_pose_manager_html_ae8373ac84e35c2c5321f7d9625c7d20a"><div class="ttname"><a href="class_pose_manager.html#ae8373ac84e35c2c5321f7d9625c7d20a">PoseManager::newSerie</a></div><div class="ttdeci">void newSerie()</div><div class="ttdoc">Interrumpe la serie actual y reinicia la máquina de estados.</div><div class="ttdef"><b>Definition</b> posemanager.cpp:686</div></div>
 <div class="ttc" id="aclass_pose_manager_html_ae871582e9352d7a6d0e3ecbad3c6c7e9"><div class="ttname"><a href="class_pose_manager.html#ae871582e9352d7a6d0e3ecbad3c6c7e9">PoseManager::repetitionComplete</a></div><div class="ttdeci">void repetitionComplete()</div><div class="ttdoc">Final de una repetición.</div></div>
-<div class="ttc" id="aclass_pose_manager_html_af91c9b2415a5af7390b3d177623ca886"><div class="ttname"><a href="class_pose_manager.html#af91c9b2415a5af7390b3d177623ca886">PoseManager::enableTestMode</a></div><div class="ttdeci">void enableTestMode(const QString &amp;folderPath)</div><div class="ttdoc">Activa el modo test y carga las poses desde disco.</div><div class="ttdef"><b>Definition</b> posemanager.cpp:689</div></div>
+<div class="ttc" id="aclass_pose_manager_html_af91c9b2415a5af7390b3d177623ca886"><div class="ttname"><a href="class_pose_manager.html#af91c9b2415a5af7390b3d177623ca886">PoseManager::enableTestMode</a></div><div class="ttdeci">void enableTestMode(const QString &amp;folderPath)</div><div class="ttdoc">Activa el modo test y carga las poses desde disco.</div><div class="ttdef"><b>Definition</b> posemanager.cpp:700</div></div>
 <div class="ttc" id="adbmanager_8h_html_ab2aec4086e8f9064f5bac6b3295a9e1a"><div class="ttname"><a href="dbmanager_8h.html#ab2aec4086e8f9064f5bac6b3295a9e1a">Q_DECLARE_LOGGING_CATEGORY</a></div><div class="ttdeci">Q_DECLARE_LOGGING_CATEGORY(DBManagerLog)</div></div>
 <div class="ttc" id="afeedback_8h_html"><div class="ttname"><a href="feedback_8h.html">feedback.h</a></div><div class="ttdoc">Declara la clase FeedBack utilizada para generar mensajes según condiciones biomecánicas detectadas.</div></div>
 <div class="ttc" id="apose_8h_html"><div class="ttname"><a href="pose_8h.html">pose.h</a></div><div class="ttdoc">Define la clase Pose para representar y procesar datos de una pose humana obtenida mediante visión ar...</div></div>

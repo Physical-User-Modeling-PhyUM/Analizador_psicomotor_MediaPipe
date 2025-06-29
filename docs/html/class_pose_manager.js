@@ -10,6 +10,7 @@ var class_pose_manager =
     [ "init", "class_pose_manager.html#a6e16b24e3a140c41afd45bedfd7914df", null ],
     [ "newImage1", "class_pose_manager.html#a9ae58935626973b4212eb6d8024b7bf1", null ],
     [ "newImage2", "class_pose_manager.html#a8b33c49f4a984342b2f02b929feeae7d", null ],
+    [ "newSerie", "class_pose_manager.html#ae8373ac84e35c2c5321f7d9625c7d20a", null ],
     [ "pauseAnalysis", "class_pose_manager.html#ab120ec2bddf5e109f8e736a242c9d6e6", null ],
     [ "PythonProccesErrorOutput1", "class_pose_manager.html#a6f293e4bbd178b10f64415695e7566a7", null ],
     [ "PythonProccesErrorOutput2", "class_pose_manager.html#a557f8f410caa0181f92f3a8185938e40", null ],
