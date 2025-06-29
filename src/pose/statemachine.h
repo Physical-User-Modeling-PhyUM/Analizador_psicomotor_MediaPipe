@@ -93,6 +93,7 @@ private:
     bool complete;
     bool firstRep=true;
     bool hasEmittedRestTime = false;
+    bool hasEmittedInitSet = false;
 
     int repCount=1;
     int setCount=1;

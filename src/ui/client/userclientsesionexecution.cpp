@@ -132,15 +132,15 @@ void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
             QString message = feedback.getMessage(type);
             if (feedback.isCritical(type)){
                 ui->criticalMsgEdit->append(QString("<b style='color:red;'>[CRÍTICO] " + message + "</b>"+"\n"));
-                if (!mute && criticaSoundEnable && inExecution)soundManager->play(type,ConditionCategory::critical);
+                if (!mute && criticaSoundEnable && inExecution)soundManager->addtoSoundList(type,ConditionCategory::critical);
             }
             else if (feedback.isAlert(type)){
                  ui->alertsMsgEdit->append(QString("<span style='color:orange;'>[ALERTA] " + message + "</span>"+"\n"));
-                 if (!mute && alertSoundEnabled && inExecution)soundManager->play(type,ConditionCategory::alert);
+                 if (!mute && alertSoundEnabled && inExecution)soundManager->addtoSoundList(type,ConditionCategory::alert);
             }
             else{
                  ui->infoMsgEdit->append(QString("<span style='color:gray;'>[INFO] " + message + "</span>"+"\n"));
-                 if (!mute && infoSoundEnable && inExecution)soundManager->play(type,ConditionCategory::info);
+                 if (!mute && infoSoundEnable && inExecution)soundManager->addtoSoundList(type,ConditionCategory::info);
             }
         }
         switch (type){
@@ -227,6 +227,7 @@ void UserClientSesionExecution::onFeedbackReceived( const FeedBack& feedback)
             case ConditionType::InitRepetition: {
                 // Aquí puedes usar para marcar animación o highlight de barra si quieres
                 qDebug() << " Inicio de nueva repetición " ;
+                inExecution = true;
                 break;
             }
             default:
@@ -319,6 +320,16 @@ void UserClientSesionExecution::on_ReadyButon_clicked()
     controller->startSesionAnalysis();
     waitingForExecutionActivation=true;
     inRest=false;
+
+    ui->restTimeBar->setValue(0);
+    ui->restTimeLabel->setText("Rest Time: 00:00");
+    ui->restTimeLabel->setStyleSheet("QLabel { color : black; }");
+    ui->restTimeBar->setStyleSheet("QProgressBar::chunk { background-color: black; }");
+
+    ui->workingTimeBar->setValue(0);
+    ui->workingTimeBar->setStyleSheet("QProgressBar::chunk { background-color: green; }");
+    ui->workingTimeLabel->setText("Working Time: 00:00");
+
 }
 
 /// @brief Pausa o reanuda la sesión.

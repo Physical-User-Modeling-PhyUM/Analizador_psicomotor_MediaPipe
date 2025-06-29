@@ -8,6 +8,7 @@
 #include "pose/condition.h"
 #include <QDir>
 #include <QList>
+#include <QTimer>
 
 /**
  * @class SoundFeedbackManager
@@ -71,6 +72,26 @@ public:
     void setCriticaSoundEnable(bool newCriticaSoundEnable);
 
     void play(ConditionType cond, ConditionCategory cat);
+    /**
+     * @brief Reproduce el siguiente sonido en la cola si no hay ninguno en reproducción.
+     *
+     * Este método se llama de forma periódica mediante un QTimer. Si no hay ningún sonido
+     * en reproducción actualmente y la cola contiene sonidos pendientes, se reproduce el siguiente.
+     *
+     * También establece una conexión temporal a la señal `playingChanged` del QSoundEffect
+     * para detectar cuándo finaliza la reproducción, permitiendo continuar con el siguiente sonido.
+     */
+    void checkAndPlayNext();
+
+    /**
+     * @brief Añade un sonido a la cola con lógica de prioridad y reemplazo, según la categoría proporcionada por el feedback.
+     * Si la cola ya contiene el sonido, no se añade. Si está llena, se aplica la siguiente política:
+     * - ALERTA reemplaza INFO; si no hay, reemplaza ALERTA; si todos son CRÍTICOS, elimina el primero y añade al final.
+     * - CRÍTICO reemplaza INFO o ALERTA; si todos son CRÍTICOS, elimina el primero y añade al final.
+     * @param feedback Objeto `FeedBack` que proporciona la categoría del sonido.
+     * @param type Tipo de condición cuyo sonido se desea añadir.
+     */
+    void addtoSoundList(ConditionType cond, ConditionCategory catCond);
 private:
     QHash<ConditionType, QSoundEffect*> soundMap; ///< Mapa que asocia condiciones con efectos de sonido.
     QList<QPair<QSoundEffect*,ConditionCategory>> soundQueue;              ///< Cola de reproducción priorizada.
@@ -83,7 +104,7 @@ private:
     const int minDelayMs = 2000;
     QSoundEffect* currentPlayingEffect = nullptr;
     QString soundPath; ///< Ruta base a la carpeta de sonidos.
-
+    QTimer* soundTimer;///<Temporizador para la emisión de los sonidos
     /**
      * @brief Carga los sonidos predeterminados desde la carpeta de configuración.
      */

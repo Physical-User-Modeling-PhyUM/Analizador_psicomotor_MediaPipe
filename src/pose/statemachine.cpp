@@ -70,9 +70,19 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
     currentReport.clear();
 
     //Durante el tiempo de descanso no se realizará ningun análisis, si se incluye un tiempo este sera respetado siempre
+
+    // if ( !hasEmittedRestTime && initRestTime != -1 && restTime != -1 && time - initRestTime > restTime){
+    //     currentReport.append(Condition(ConditionType::RestTime,"",restTime));
+    //     //resting=false;
+    //     hasEmittedRestTime = true;
+    // }
+
     if (resting) {
         if (initRestTime != -1 && restTime != -1 && (time - initRestTime) > restTime) {
             resting = false;
+             currentReport.append(Condition(ConditionType::RestTime,"",restTime));
+             hasEmittedRestTime = true;
+
         } else {
             return currentReport;
         }
@@ -188,6 +198,7 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
                     qDebug(StateMachineLog) << "Serie completada. Series restantes:" << series;
                     resting=true;
                     initSetTime=time;
+                    hasEmittedInitSet=false;
                     //firstRep=true;
                 }
                 if ( setCount>series) {
@@ -204,23 +215,34 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
                 qDebug(StateMachineLog) << "Volvió a estado 1 pero sin pasar por todos los estados: repetición NO contada";
             }
             currentReport.append(Condition(ConditionType::EndOfMovementPhase,QString::number(currentId),(time-initStateTime)));
-            //La nueva repeticion no se detecta hasta que se ha salido del estado inicial
-            if (currentState.getId() == 1) currentReport.append(Condition(ConditionType::InitRepetition,QString::number(repCount),time));
-            //Misma lógica para la serie pero además debemos estar en la primera repetición
-            if (resting && currentState.getId() == 1 && repCount == 1) {
-                currentReport.append(Condition(ConditionType::InitSet,QString::number(setCount),time));
-                if (!firstRep && hasEmittedRestTime && initRestTime != -1 && restTime != -1 && (time - initRestTime) > restTime) {
+
+
+            // Emitimos InitSet si entramos al estado 1, es la primera repetición y venimos de un descanso
+            if (!hasEmittedInitSet && currentState.getId() == 1 && repCount == 1 /*&& resting*/) {
+                currentReport.append(Condition(ConditionType::InitSet, QString::number(setCount), time));
+                qDebug(StateMachineLog) << "Inicio de nueva serie:" << setCount << ": condición InitSet generada.";
+                hasEmittedInitSet=true;
+                if (!firstRep && hasEmittedRestTime) {
                     currentReport.append(Condition(ConditionType::RestOverTime, "", (time - initRestTime) - restTime));
                     qDebug(StateMachineLog) << "Descanso excedido: RestOverTime generado con " << (time - initRestTime - restTime) << " ms adicionales.";
-
+                    hasEmittedRestTime=false;
                 }
+            }
+
+            // Emitimos InitRepetition cada vez que se entra a estado 1
+            if (currentState.getId() == 1) {
+                currentReport.append(Condition(ConditionType::InitRepetition, QString::number(repCount), time));
+                qDebug(StateMachineLog) << "Inicio de repetición:" << repCount << ": condición InitRepetition generada.";
+            }
+
+            // Si estamos en estado 1 y estábamos en descanso, salimos del modo resting
+            if (resting && currentState.getId() == 1) {
+
                 resting = false;
                 initRestTime = -1;
                 hasEmittedRestTime = false;
                 qDebug(StateMachineLog) << "Movimiento detectado: saliendo del modo descanso.";
             }
-
-
 
             initStateTime=time;
         }
@@ -250,11 +272,7 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
 
 
 
-    if ( !hasEmittedRestTime && initRestTime != -1 && restTime != -1 && time - initRestTime > restTime){
-        currentReport.append(Condition(ConditionType::RestTime,"",restTime));
-        //resting=false;
-         hasEmittedRestTime = true;
-    }
+
 
     // if (!firstRep && hasEmittedRestTime && (initRestTime != -1 && restTime != -1 && time - initRestTime > restTime)){
     //     currentReport.append(Condition(ConditionType::RestOverTime,"",(time-initRestTime)-restTime));

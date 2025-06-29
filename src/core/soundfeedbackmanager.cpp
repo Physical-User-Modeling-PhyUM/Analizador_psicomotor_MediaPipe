@@ -13,6 +13,11 @@ SoundFeedbackManager::SoundFeedbackManager(QObject *parent)
 {
     soundPath = QCoreApplication::applicationDirPath() + "/sounds/";
     loadSounds();
+
+    soundTimer = new QTimer(this);
+    connect(soundTimer, &QTimer::timeout, this, &SoundFeedbackManager::checkAndPlayNext);
+    soundTimer->start(250);
+
 }
 /**
  * @brief Asocia un archivo de sonido con un tipo de condición.
@@ -116,11 +121,11 @@ void SoundFeedbackManager::playFeedback(const FeedBack &feedback)
 }
 
 void SoundFeedbackManager::addtoSoundList(const FeedBack& feedback, ConditionType type)
-{
+{/*
     if (!soundMap.contains(type)) return;
 
-    if (QDateTime::currentMSecsSinceEpoch() - lastPlayTimestamp < 2000)
-        return;
+    // if (QDateTime::currentMSecsSinceEpoch() - lastPlayTimestamp < 2000)
+    //     return;
 
     QSoundEffect* effect = soundMap.value(type);
 
@@ -177,17 +182,18 @@ void SoundFeedbackManager::addtoSoundList(const FeedBack& feedback, ConditionTyp
             soundQueue.removeAt(firstCritical);
             soundQueue.append(QPair(effect,ConditionCategory::critical));
         }
-    }
+    }*/
 }
-void SoundFeedbackManager::play(ConditionType cond, ConditionCategory catCond) {
+
+void SoundFeedbackManager::addtoSoundList(ConditionType cond, ConditionCategory catCond){
 
     int firstInfo = -1;
     int firstAlert = -1;
     int firstCritical = -1;
     QSoundEffect* effect = soundMap.value(cond);
 
-    if (QDateTime::currentMSecsSinceEpoch() - lastPlayTimestamp < 2000)
-        return;
+    // if (QDateTime::currentMSecsSinceEpoch() - lastPlayTimestamp < 2000)
+    //     return;
 
     if (!effect || !effect->isLoaded()) return;
     for (const auto& pair : soundQueue) {
@@ -201,43 +207,105 @@ void SoundFeedbackManager::play(ConditionType cond, ConditionCategory catCond) {
         return;
     }
 
-    for (int i = 0; i < soundQueue.size(); ++i) {
-        ConditionType t = soundMap.key(soundQueue[i].first);
-        ConditionCategory cat = soundQueue[i].second;
+    // for (int i = 0; i < soundQueue.size(); ++i) {
+    //     ConditionType t = soundMap.key(soundQueue[i].first);
+    //     ConditionCategory cat = soundQueue[i].second;
 
-        if (cat == ConditionCategory::info && firstInfo == -1)
-            firstInfo = i;
-        else if (cat == ConditionCategory::alert && firstAlert == -1)
-            firstAlert = i;
-        else if (cat == ConditionCategory::critical && firstCritical == -1)
-            firstCritical = i;
-    }
+    //     if (cat == ConditionCategory::info && firstInfo == -1)
+    //         firstInfo = i;
+    //     else if (cat == ConditionCategory::alert && firstAlert == -1)
+    //         firstAlert = i;
+    //     else if (cat == ConditionCategory::critical && firstCritical == -1)
+    //         firstCritical = i;
+    // }
 
 
-    // una vez vista la posicion reemplazamos el sonido por el nuevo
-    if (catCond == ConditionCategory::alert) {
-        if (firstInfo != -1)
-            soundQueue[firstInfo] = QPair(effect,ConditionCategory::alert);
-        else if (firstAlert != -1)
-            soundQueue[firstAlert] = QPair(effect,ConditionCategory::alert);
-        else if (firstCritical != -1) {
-            soundQueue.removeAt(firstCritical);
-            soundQueue.append(QPair(effect,ConditionCategory::alert));
-        }
-    } else if (catCond == ConditionCategory::critical) {
-        if (firstInfo != -1)
+    // // una vez vista la posicion reemplazamos el sonido por el nuevo
+    // if (catCond == ConditionCategory::alert) {
+    //     if (firstInfo != -1)
+    //         soundQueue[firstInfo] = QPair(effect,ConditionCategory::alert);
+    //     else if (firstAlert != -1)
+    //         soundQueue[firstAlert] = QPair(effect,ConditionCategory::alert);
+    //     else if (firstCritical != -1) {
+    //         soundQueue.removeAt(firstCritical);
+    //         soundQueue.append(QPair(effect,ConditionCategory::alert));
+    //     }
+    // } else if (catCond == ConditionCategory::critical) {
+    //     if (firstInfo != -1)
 
-        soundQueue[firstInfo] = QPair(effect,ConditionCategory::critical);
-        else if (firstAlert != -1)
-            soundQueue[firstAlert] = QPair(effect,ConditionCategory::critical);
-        else if (firstCritical != -1) {
+    //     soundQueue[firstInfo] = QPair(effect,ConditionCategory::critical);
+    //     else if (firstAlert != -1)
+    //         soundQueue[firstAlert] = QPair(effect,ConditionCategory::critical);
+    //     else if (firstCritical != -1) {
 
-            soundQueue.removeAt(firstCritical);
-            soundQueue.append(QPair(effect,ConditionCategory::critical));
-        }
-    }
-    if (!isPlaying)
-        playNext();
+    //         soundQueue.removeAt(firstCritical);
+    //         soundQueue.append(QPair(effect,ConditionCategory::critical));
+    //     }
+   //}
+
+
+}
+
+
+void SoundFeedbackManager::play(ConditionType cond, ConditionCategory catCond) {
+
+    // int firstInfo = -1;
+    // int firstAlert = -1;
+    // int firstCritical = -1;
+    // QSoundEffect* effect = soundMap.value(cond);
+
+    // // if (QDateTime::currentMSecsSinceEpoch() - lastPlayTimestamp < 2000)
+    // //     return;
+
+    // if (!effect || !effect->isLoaded()) return;
+    // for (const auto& pair : soundQueue) {
+    //     if (pair.first == effect)
+    //         return;
+    // }
+
+    // // Si hay espacio, se agrega al final
+    // if (soundQueue.size() < 5) {
+    //     soundQueue.append(QPair(effect,catCond));
+    //     return;
+    // }
+
+    // for (int i = 0; i < soundQueue.size(); ++i) {
+    //     ConditionType t = soundMap.key(soundQueue[i].first);
+    //     ConditionCategory cat = soundQueue[i].second;
+
+    //     if (cat == ConditionCategory::info && firstInfo == -1)
+    //         firstInfo = i;
+    //     else if (cat == ConditionCategory::alert && firstAlert == -1)
+    //         firstAlert = i;
+    //     else if (cat == ConditionCategory::critical && firstCritical == -1)
+    //         firstCritical = i;
+    // }
+
+
+    // // una vez vista la posicion reemplazamos el sonido por el nuevo
+    // if (catCond == ConditionCategory::alert) {
+    //     if (firstInfo != -1)
+    //         soundQueue[firstInfo] = QPair(effect,ConditionCategory::alert);
+    //     else if (firstAlert != -1)
+    //         soundQueue[firstAlert] = QPair(effect,ConditionCategory::alert);
+    //     else if (firstCritical != -1) {
+    //         soundQueue.removeAt(firstCritical);
+    //         soundQueue.append(QPair(effect,ConditionCategory::alert));
+    //     }
+    // } else if (catCond == ConditionCategory::critical) {
+    //     if (firstInfo != -1)
+
+    //     soundQueue[firstInfo] = QPair(effect,ConditionCategory::critical);
+    //     else if (firstAlert != -1)
+    //         soundQueue[firstAlert] = QPair(effect,ConditionCategory::critical);
+    //     else if (firstCritical != -1) {
+
+    //         soundQueue.removeAt(firstCritical);
+    //         soundQueue.append(QPair(effect,ConditionCategory::critical));
+    //     }
+    // }
+    // if (!isPlaying)
+    //     playNext();
 
 }
 
@@ -247,48 +315,64 @@ void SoundFeedbackManager::play(ConditionType cond, ConditionCategory catCond) {
  * @param cond Tipo de condición a reproducir.
  */
 void SoundFeedbackManager::play(ConditionType cond) {
-    if (soundMap.contains(cond)) {
-        QSoundEffect* effect = soundMap.value(cond);
-        if (effect && effect->isLoaded()) {
-            //effect->play();
-            //soundQueue.append(effect);
+    // if (soundMap.contains(cond)) {
+    //     QSoundEffect* effect = soundMap.value(cond);
+    //     if (effect && effect->isLoaded()) {
+    //         //effect->play();
+    //         //soundQueue.append(effect);
 
-            if (!isPlaying)
-                playNext();
-        } else {
-            qWarning() << "Sonido no cargado o nulo para:" << conditionTypeToString(cond);
-        }
-    }
+    //         if (!isPlaying)
+    //             playNext();
+    //     } else {
+    //         qWarning() << "Sonido no cargado o nulo para:" << conditionTypeToString(cond);
+    //     }
+    // }
 }
 
-void SoundFeedbackManager::playNext() {
-
-    if (soundQueue.isEmpty() || isPlaying)
+void SoundFeedbackManager::checkAndPlayNext()
+{
+    if (isPlaying || soundQueue.isEmpty())
         return;
 
     auto pair = soundQueue.takeFirst();
     currentPlayingEffect = pair.first;
 
+    if (!currentPlayingEffect || !currentPlayingEffect->isLoaded())
+        return;
+
     isPlaying = true;
-    connect(currentPlayingEffect, &QSoundEffect::playingChanged,
-            this, &SoundFeedbackManager::onSoundFinished, Qt::UniqueConnection);
+
+
+    connect(currentPlayingEffect, &QSoundEffect::playingChanged, this, &SoundFeedbackManager::onSoundFinished, Qt::UniqueConnection);
+
     currentPlayingEffect->play();
     lastPlayTimestamp = QDateTime::currentMSecsSinceEpoch();
+}
+
+void SoundFeedbackManager::playNext() {
+
+    // if (soundQueue.isEmpty() || isPlaying)
+    //     return;
+
+    // auto pair = soundQueue.takeFirst();
+    // currentPlayingEffect = pair.first;
+
+    // isPlaying = true;
+    // connect(currentPlayingEffect, &QSoundEffect::playingChanged,
+    //         this, &SoundFeedbackManager::onSoundFinished, Qt::UniqueConnection);
+    // currentPlayingEffect->play();
+    // lastPlayTimestamp = QDateTime::currentMSecsSinceEpoch();
 
 
 }
 
 void SoundFeedbackManager::onSoundFinished() {
 
-    if (!currentPlayingEffect || currentPlayingEffect->isPlaying())
-        return;  // Aún se está reproduciendo, no hacer nada
-
-    disconnect(currentPlayingEffect, &QSoundEffect::playingChanged,
-               this, &SoundFeedbackManager::onSoundFinished);
-
-    isPlaying = false;
-    currentPlayingEffect = nullptr;
-    playNext();
+    if (currentPlayingEffect && !currentPlayingEffect->isPlaying()) {
+        disconnect(currentPlayingEffect, &QSoundEffect::playingChanged,this, &SoundFeedbackManager::onSoundFinished);
+        isPlaying = false;
+        currentPlayingEffect = nullptr;
+    }
 }
 
 /**

@@ -133,6 +133,18 @@ void FeedBack::processConditions(QList<Condition> &conds) {
                ConditionCategory::info
             };
             break;
+        case ConditionType::InitSet:
+            entries[ConditionType::InitSet] = {
+                "serie iniciada!!",
+                ConditionCategory::info
+            };
+            break;
+        case ConditionType::InitRepetition:
+            entries[ConditionType::InitRepetition] = {
+                "repetición iniciada!!",
+                ConditionCategory::info
+            };
+            break;
         case ConditionType::EndOfRepetition:
             entries[ConditionType::EndOfRepetition] = {
                 "Repetición Completada!!",

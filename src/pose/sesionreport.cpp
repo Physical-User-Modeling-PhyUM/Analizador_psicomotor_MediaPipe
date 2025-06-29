@@ -119,38 +119,6 @@ void SesionReport::setStateName(int idState, const QString& name)
         stateNames[idState] = name;
     }
 
-// int SesionReport::getConditionCount(int serie,int rep,  QString keypointLine, ConditionType type) {
-//     int count = 0;
-
-//     if (seriesData.contains(serie) && seriesData[serie].contains(rep)) {
-//         auto& conditions = seriesData[serie][rep];
-//         for ( auto& c : conditions) {
-//             if (c.type == type && c.keypointLine == keypointLine) {
-//                 count++;
-//             }
-//         }
-//     }
-//     return count;
-// }
-
-// QHash<QString, QHash<ConditionType, int>> SesionReport::getRepetitionData(int rep) const {
-
-//     QHash<QString, QHash<ConditionType, int>> result;
-//     if (seriesData.contains(0) && seriesData[0].contains(rep)) {
-//         const auto& conditions = seriesData[0][rep];
-
-//         for (const auto& c : conditions) {
-//             result[c.keypointLine][c.type]++;
-//         }
-//     }
-//     return result;
-// }
-
-// QList<int> SesionReport::getStoredRepetitions() const {
-//     if (seriesData.contains(0))
-//         return seriesData[0].keys();
-//     return {};
-// }
     /*!
  * \brief Obtiene todas las condiciones asociadas a una serie y repetición.
  * \param serie Serie deseada.

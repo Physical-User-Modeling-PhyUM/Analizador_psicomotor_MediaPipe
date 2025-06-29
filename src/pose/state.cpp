@@ -158,8 +158,10 @@ QList<Condition> State::getReport(QHash<QString, double> detectedAngles, int cur
         QString lineName = it.key();
         double currentAngle = it.value();
 
-        // Actualización del acumulador de rango global
+        // Actualizamos los ángulos detectados de tal forma que siempre tenemos el máximo y el mínimo
         QPair<double, double>& range = rangeAccumulator[lineName];
+        if (range.first !=0) range.first=currentAngle;
+         if (range.second !=0) range.second=currentAngle;
         if (range.first > currentAngle) range.first = currentAngle;
         if (range.second < currentAngle) range.second = currentAngle;
 
@@ -187,20 +189,7 @@ QList<Condition> State::getReport(QHash<QString, double> detectedAngles, int cur
                     dif=std::fabs(presviousAngle-currentAngle);
                     double toler=(line.getToler()==-1)? 0:line.getToler();
 
-                    // if(line.getMaxAngle()!=-1  && std::fabs(currentAngle-line.getMaxAngle())<toler){
-                    //     report.append(Condition(ConditionType::MaxAngle,lineName, view ));
-                    //     //isOptimo=false;
-                    //     qDebug(stateLog)<<conditionTypeToString(ConditionType::MaxAngle)<<"currentAngle:"
-                    //              <<currentAngle<<"maxAngle:"<<line.getMaxAngle()
-                    //              <<"toler:"<<toler<<"dif"<<fabs(currentAngle-line.getMaxAngle());
-                    //         }
-                    // if(line.getMinAngle()!=-1 && std::fabs(currentAngle-line.getMinAngle())<toler){
-                    //     report.append(Condition(ConditionType::MinAngle,lineName , view));
-                    //     //isOptimo=false;
-                    //     qDebug(stateLog)<<conditionTypeToString(ConditionType::MinAngle)<<"currentAngle:"
-                    //              <<currentAngle<<"minAngle:"<<line.getMinAngle()
-                    //              <<"toler:"<<toler<<"dif"<<std::fabs(currentAngle-line.getMinAngle());
-                    // }
+
                     if(line.getMaxSafeAngle()!=-1 && currentAngle>line.getMaxSafeAngle()
                         && fabs(currentAngle-line.getMaxSafeAngle())>toler){
                         report.append(Condition(ConditionType::JointOverload,lineName ,currentAngle, view));
