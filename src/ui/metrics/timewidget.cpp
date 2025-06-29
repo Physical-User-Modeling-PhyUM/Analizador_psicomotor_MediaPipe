@@ -168,6 +168,7 @@ void TimeWidget::setReport(const SesionReport& rep)
 {
     report = QSharedPointer<SesionReport>::create(rep);
     QStringList names;
+
     stateNames=report->getStateNames();
     QList<int> series = report->getStoredSeries();
     for (int serieId : series)
@@ -195,6 +196,7 @@ void TimeWidget::onSerieChanged(int index)
     QMap<int, QSet<int>> hasMinTimeout;
     QSet<int> states;
     qint64 totalOverSetTime = 0;
+    qint64 totalTime = 0;
     qint64 totalRestTime = 0;
     qint64 workingTime = 0;
 
@@ -212,6 +214,7 @@ void TimeWidget::onSerieChanged(int index)
                 const Condition& cond = entry.first;
 
                 if (cond.type == ConditionType::EndOfMovementPhase) {
+
                     QString name = stateNames.value(stateId);
                     if (name.isEmpty() || name == "Unknown")
                         name = QString("Estado %1").arg(stateId);
@@ -233,7 +236,9 @@ void TimeWidget::onSerieChanged(int index)
                     if (cond.value.toInt() > totalRestTime)
                         totalRestTime = cond.value.toInt();
                 }
-
+                if (cond.type == ConditionType::EndOfExercise) {
+                        totalTime = cond.value.toInt();
+                }
                 if (cond.type == ConditionType::MaxStateTimeout) {
                     int line = cond.keypointLine.toInt();
                     if (!maxTimeouts[repIndex].contains(line) || maxTimeouts[repIndex][line] < cond.value.toInt()) {
@@ -252,9 +257,9 @@ void TimeWidget::onSerieChanged(int index)
 
     setRepetitionSegments(segments);
 
-    labelDuration->setText(QString("Serie working time: %1 s").arg(workingTime / 1000));
-    labelOverSerie->setText(QString("Overtime serie: %1 s").arg(totalOverSetTime / 1000));
-    labelOverRest->setText(QString("Overtime descanso: %1 s").arg(totalRestTime / 1000));
+    labelDuration->setText(QString("Total Time: %1 s").arg(totalTime / 1000));
+    labelOverSerie->setText(QString("Working Time: %1 s").arg(workingTime / 1000));
+    labelOverRest->setText(QString("Rest Overtime: %1 s").arg(totalRestTime / 1000));
 
     // Tabla de tiempos
     stateTimes->clear();

@@ -171,8 +171,8 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
                 initTime = time;
                 initSetTime=time;
                 initStateTime=time;
-
-                initRestTime = -1;
+                initRepTime=time;
+                initRestTime = 0;
                 resting=false;
 
                 //validRepetitionInProgress = true;
@@ -184,27 +184,31 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
                 previousStateId == states.last().getId())
             {
                 repCount++;
-                currentReport.append(Condition(ConditionType::EndOfRepetition,QString::number(repCount),time-initTime ));
+                currentReport.append(Condition(ConditionType::EndOfRepetition,QString::number(repCount),time-initRepTime ));
                 qDebug(StateMachineLog) << "Repetición completada. Reps restantes:" << repetitions;
-                initTime=time;
+                initRepTime=0;
                 //Serie completada
                 if (repCount > repetitions) {
                     setCount++;
                     repCount=1;
                     initRestTime = time;
-                    initTime = -1;
+                    //initTime = -1;
+
                     repComplete = true;
                     currentReport.append(Condition(ConditionType::EndOfSet,QString::number(setCount),time-initSetTime));
                     qDebug(StateMachineLog) << "Serie completada. Series restantes:" << series;
                     resting=true;
-                    initSetTime=time;
+                    initSetTime=0;
+                    initRepTime=0;
                     hasEmittedInitSet=false;
+                    initRestTime = time;
                     //firstRep=true;
                 }
                 if ( setCount>series) {
                     complete = true;
-                    currentReport.append(Condition(ConditionType::EndOfExercise,"",time));
+                    currentReport.append(Condition(ConditionType::EndOfExercise,"",time-initTime));
                     qDebug(StateMachineLog) << "Ejercicio completado.";
+
                     resting=true;
                    }
                 // if (resting==true && initRestTime != -1 && restTime != -1 && time - initRestTime < restTime){
@@ -222,6 +226,8 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
                 currentReport.append(Condition(ConditionType::InitSet, QString::number(setCount), time));
                 qDebug(StateMachineLog) << "Inicio de nueva serie:" << setCount << ": condición InitSet generada.";
                 hasEmittedInitSet=true;
+                initSetTime=time;
+                initRepTime=time;
                 if (!firstRep && hasEmittedRestTime) {
                     currentReport.append(Condition(ConditionType::RestOverTime, "", (time - initRestTime) - restTime));
                     qDebug(StateMachineLog) << "Descanso excedido: RestOverTime generado con " << (time - initRestTime - restTime) << " ms adicionales.";
@@ -233,13 +239,16 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
             if (currentState.getId() == 1) {
                 currentReport.append(Condition(ConditionType::InitRepetition, QString::number(repCount), time));
                 qDebug(StateMachineLog) << "Inicio de repetición:" << repCount << ": condición InitRepetition generada.";
+                //initTime=time;
+                initRepTime=time;
+                initRestTime=0;
             }
 
             // Si estamos en estado 1 y estábamos en descanso, salimos del modo resting
             if (resting && currentState.getId() == 1) {
 
                 resting = false;
-                initRestTime = -1;
+                initRestTime = 0;
                 hasEmittedRestTime = false;
                 qDebug(StateMachineLog) << "Movimiento detectado: saliendo del modo descanso.";
             }
@@ -279,7 +288,7 @@ QList<Condition> StateMachine::run(QHash<PoseView, QHash<QString, double>> angle
     //     //resting=false;
     // }
 
-    if (initTime != -1 && duration != -1 && time - initTime > duration)
+    if (initTime != -1 && duration != -1 && time - initSetTime > duration)
         currentReport.append(Condition(ConditionType::SetTime, "", (time-initSetTime)-duration));
 
     // Añadir al reporte acumulado

@@ -29,19 +29,6 @@ public:
     explicit SoundFeedbackManager(QObject *parent = nullptr);
 
     /**
-     * @brief Reproduce todos los sonidos asociados a las condiciones contenidas en el feedback.
-     * Aplica prioridad crítica > alerta > informativa y controla la cola de reproducción con un máximo de 5 sonidos.
-     * @param feedback Objeto de tipo `FeedBack` con las condiciones generadas.
-     */
-    void playFeedback(const FeedBack& feedback);
-
-    /**
-     * @brief Reproduce directamente el sonido asociado a una condición específica si no hay otro en reproducción.
-     * @param cond Condición a reproducir.
-     */
-    void play(ConditionType cond);
-
-    /**
      * @brief Establece el volumen global de los sonidos.
      * @param volume Valor de volumen entre 0.0 y 1.0.
      */
@@ -71,7 +58,7 @@ public:
      */
     void setCriticaSoundEnable(bool newCriticaSoundEnable);
 
-    void play(ConditionType cond, ConditionCategory cat);
+
     /**
      * @brief Reproduce el siguiente sonido en la cola si no hay ninguno en reproducción.
      *
@@ -111,11 +98,6 @@ private:
     void loadSounds();
 
     /**
-     * @brief Reproduce el siguiente sonido de la cola, si existe.
-     */
-    void playNext();
-
-    /**
      * @brief Añade un nuevo sonido al mapa de condiciones.
      * @param type Tipo de condición.
      * @param path Ruta al archivo de sonido.
@@ -129,15 +111,7 @@ private:
      */
     void onSoundStatusChanged(QSoundEffect *effect, const QString &path);
 
-    /**
-     * @brief Añade un sonido a la cola con lógica de prioridad y reemplazo, según la categoría proporcionada por el feedback.
-     * Si la cola ya contiene el sonido, no se añade. Si está llena, se aplica la siguiente política:
-     * - ALERTA reemplaza INFO; si no hay, reemplaza ALERTA; si todos son CRÍTICOS, elimina el primero y añade al final.
-     * - CRÍTICO reemplaza INFO o ALERTA; si todos son CRÍTICOS, elimina el primero y añade al final.
-     * @param feedback Objeto `FeedBack` que proporciona la categoría del sonido.
-     * @param type Tipo de condición cuyo sonido se desea añadir.
-     */
-    void addtoSoundList(const FeedBack& feedback, ConditionType type);
+
 
 private slots:
     /**

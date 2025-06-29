@@ -160,8 +160,10 @@ QList<Condition> State::getReport(QHash<QString, double> detectedAngles, int cur
 
         // Actualizamos los ángulos detectados de tal forma que siempre tenemos el máximo y el mínimo
         QPair<double, double>& range = rangeAccumulator[lineName];
-        if (range.first !=0) range.first=currentAngle;
-         if (range.second !=0) range.second=currentAngle;
+        if (range.first == 0 && range.second == 0) {
+            range.first = currentAngle;
+            range.second = currentAngle;
+        }
         if (range.first > currentAngle) range.first = currentAngle;
         if (range.second < currentAngle) range.second = currentAngle;
 

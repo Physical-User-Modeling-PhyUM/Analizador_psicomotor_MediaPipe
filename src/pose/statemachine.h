@@ -86,7 +86,7 @@ public:
 private:
     int64_t initTime,duration;
     int64_t initRestTime,restTime;
-    int64_t initSetTime,initRepTime,initStateTime;
+    int64_t initExerciseTime,initSetTime,initRepTime,initStateTime;
     int series,repetitions;
     SesionReport report;
     bool repComplete;
