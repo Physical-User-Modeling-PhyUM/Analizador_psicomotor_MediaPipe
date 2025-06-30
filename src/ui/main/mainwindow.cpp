@@ -35,6 +35,8 @@ MainWindow::MainWindow(QSharedPointer<AppController> controller, QWidget *parent
     connect(appController->getUserManager().data(), &UserManager::userLoggedOut,this, &MainWindow::showLoginScreen);
     connect(trainerBoard, &TrainerBoardWidget::logoutRequested,appController->getUserManager().data(), &UserManager::logout);
     connect(clientBoard, &UserClientMainBoardWidget::logoutRequested,appController->getUserManager().data(), &UserManager::logout);
+    connect(adminBoard, &AdminMainBoardWidget::logoutRequested,appController->getUserManager().data(), &UserManager::logout);
+
 
 }
 

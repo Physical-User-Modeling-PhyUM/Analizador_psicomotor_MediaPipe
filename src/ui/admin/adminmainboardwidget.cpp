@@ -30,3 +30,4 @@ void AdminMainBoardWidget::sectionChanged(int index) {
     }
     ui->stackedWidget->setCurrentIndex(index);
 }
+

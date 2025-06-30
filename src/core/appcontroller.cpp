@@ -4,7 +4,7 @@
 #include <nlohmann/json.hpp>
 #include "ui/client/userclientsesionexecution.h"
 #include "ui/main/mainwindow.h"
-
+#include <QStandardPaths>
 // Definimos una categoría para los logs
 Q_LOGGING_CATEGORY(AppControllerLog, "Controller")
 
@@ -41,7 +41,7 @@ void AppController::initialize() {
 
 
     loadConfig();
-
+    //QString dbPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.db";
     QString dbPath = QCoreApplication::applicationDirPath() + "/data.db";
 
     bool dbExists = QFile::exists(dbPath);
@@ -104,6 +104,67 @@ void AppController::setSelf(QSharedPointer<AppController> selfController) {
     self = selfController;
 }
 
+
+void AppController::initializeAppData() {
+    QString basePath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);  // ~/Library/Application Support/pfg/
+    QDir dir(basePath);
+
+    if (!dir.exists()) {
+        dir.mkpath(".");
+        qDebug() << "Creando carpeta base:" << basePath;
+    }
+
+    // Crear subdirectorios
+    dir.mkpath("sounds");
+    dir.mkpath("config");
+
+    // Lista de archivos a copiar
+    struct CopyItem { QString src; QString dst; };
+    QList<CopyItem> filesToCopy = {
+                                   {":/mediaPipe/VideoCapture.py", basePath + "/VideoCapture.py"},
+                                   {":/config/poseConfig.json", basePath + "/config/poseConfig.json"},
+                                   {":/config/schema.sql", basePath + "/config/schema.sql"},
+                                   {":/sounds/tadaa.wav", basePath + "/sounds/tadaa.wav"},
+                                   {":/sounds/camera_qt.wav", basePath + "/sounds/camera_qt.wav"},
+                                   {":/sounds/good_job.wav", basePath + "/sounds/good_job.wav"},
+                                   {":/sounds/overload.wav", basePath + "/sounds/overload.wav"},
+                                   {":/sounds/rest.wav", basePath + "/sounds/rest.wav"},
+                                   {":/sounds/set.wav", basePath + "/sounds/set.wav"},
+                                   {":/sounds/rep.wav", basePath + "/sounds/rep.wav"},
+                                   {":/sounds/slow.wav", basePath + "/sounds/slow.wav"},
+                                   {":/sounds/fast.wav", basePath + "/sounds/fast.wav"},
+                                   {":/sounds/time.wav", basePath + "/sounds/time.wav"},
+                                   {":/sounds/No_stop.wav", basePath + "/sounds/No_stop.wav"},
+                                   {":/sounds/symetry.wav", basePath + "/sounds/symetry.wav"},
+                                   {":/sounds/Wrong_exec.wav", basePath + "/sounds/Wrong_exec.wav"},
+                                   {":/sounds/Not_steady.wav", basePath + "/sounds/Not_steady.wav"},
+                                   {":/sounds/go.wav", basePath + "/sounds/go.wav"},
+                                   };
+
+    // Copiar archivos si no existen
+    for (const auto& item : filesToCopy) {
+        if (!QFile::exists(item.dst)) {
+            if (QFile::copy(item.src, item.dst)) {
+                qDebug() << "Copiado:" << item.dst;
+            } else {
+                qWarning() << "Error al copiar:" << item.src << "->" << item.dst;
+            }
+        }
+    }
+
+    // Base de datos (solo si no existe ya)
+    QString dbPath = basePath + "/data.db";
+    if (!QFile::exists(dbPath)) {
+        // Copiar o generar desde schema
+        QString schemaSrc = basePath + "/config/schema.sql";
+        QFile schemaFile(schemaSrc);
+        if (schemaFile.exists()) {
+            // Aquí podrías ejecutar el SQL para crear la BD vacía, si deseas.
+            // Por ahora, solo te deja la SQL en el sistema.
+            qDebug() << "Base de datos aún no implementada desde schema.";
+        }
+    }
+}
 
 /**
  * @brief Devuelve el puntero compartido al LoginManager.
@@ -219,7 +280,7 @@ void AppController::onUserLoggedOut() {
  */
 void AppController::loadConfig() {
 
-
+    //QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/config/poseConfig.json";
     QString configPath = QCoreApplication::applicationDirPath() + "/config/poseConfig.json";
     qDebug(AppControllerLog) << "Buscando config.json en:" << configPath;
 

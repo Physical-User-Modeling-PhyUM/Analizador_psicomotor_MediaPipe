@@ -116,14 +116,24 @@ void UsersAdminWidget::onSaveClicked() {
     if (!editUser) return;
 
     QHash<UserField, QVariant> data = collectEditTableData();
-    qDebug(UserRepo) << "[userAdminWidget]Contenido de userData:";
+   // qDebug(UserRepo) << "Contenido de userData:";
     for (UserField f:data.keys()) qDebug()<<UserFieldToString(f)<<":"<<data.value(f).toString();
     // editUser->setUserName(data[UserField::UserName].toString());
     // editUser->setEmail(data[UserField::Email].toString());
     // //editUser->changePassword(data[UserField::Pass].toString());
     // editUser->setJoin_up_date(QDateTime::fromString(data[UserField::join_up_date].toString(), Qt::ISODate));
     // //editUser->setLast_login(QDateTime::fromString(data[UserField::last_login].toString(), Qt::ISODate));
-    // if (data.contains(UserField::Qualification)) editUser
+    // if (data
+
+    // ciframos la contraseña si aún no está en formato hash
+    if (data.contains(UserField::Pass)) {
+        QString rawPass = data[UserField::Pass].toString();
+
+        if (rawPass.length() < 50) {
+            QString hashedPass = controller->getLoginManager()->hashPassword(rawPass);
+            data[UserField::Pass] = hashedPass;
+        }
+    }
 
     if (editUser->getUserType() == UserType::Admin){
         editUser.clear();

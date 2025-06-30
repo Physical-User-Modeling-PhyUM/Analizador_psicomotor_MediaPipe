@@ -5,12 +5,14 @@
 #include "soundfeedbackmanager.h"
 #include <QCoreApplication>
 #include <QDebug>
+#include <QStandardPaths>
 /**
  * @brief Constructor del SoundFeedbackManager. Establece la ruta de sonidos y los carga.
  */
 SoundFeedbackManager::SoundFeedbackManager(QObject *parent)
     : QObject(parent)
 {
+    //soundPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/sounds/";
     soundPath = QCoreApplication::applicationDirPath() + "/sounds/";
     loadSounds();
 

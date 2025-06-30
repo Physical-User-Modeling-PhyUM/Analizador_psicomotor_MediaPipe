@@ -152,6 +152,7 @@ public:
     QSharedPointer<TrainingSesion> sesion;
     QSharedPointer<ExerciseEspec> espec;
 
+    void initializeAppData();
 private:
     QSharedPointer<DBManager> dbManager;  ///< Gestor de acceso a base de datos SQLite.
     QSharedPointer<LoginManager> loginManager;  ///< Gestor de autenticación de usuarios.

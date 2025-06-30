@@ -1,0 +1,11 @@
+Copyright (c) 2025 MZT
+
+Todos los derechos reservados.
+
+Este software ha sido desarrollado como parte de un Proyecto de Fin de Grado en Ingenieria Informatica.
+
+Queda prohibida la copia, distribucion o uso con fines comerciales sin autorizacion previa por escrito.
+
+Solo se permite el uso personal y academico, previa identificacion del autor.
+
+Contacto: mzarza8@alumno.uned.com

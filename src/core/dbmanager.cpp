@@ -15,7 +15,7 @@
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QCoreApplication>
-
+#include <QStandardPaths>
 // Definimos una categoría para los logs
 Q_LOGGING_CATEGORY(DBManagerLog, "DBManager")
 
@@ -509,7 +509,7 @@ DBTable DBManager::get(TypeBDEnum tipo, const QMap<DBFilter, QVariant>& filtros)
  * @return true si se ejecutó correctamente, false si ocurrió un error.
  */
 bool DBManager::initializeSchema() {
-
+    //QString path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/config/poseConfig.json";
     QString path = QCoreApplication::applicationDirPath() + "/config/schema.sql";
     QFile sqlFile(path);
     //QFile sqlFile("config/schema.sql");
