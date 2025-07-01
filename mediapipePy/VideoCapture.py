@@ -58,6 +58,10 @@ class VideoCapture:
         print ("TOTAL_SIZE: " + str(self.TOTAL_SIZE))
         print ("SEM_SHM: " + self.SEM_SHM)
         print ("=============================")
+        # Crear archivo .ready al finalizar la inicialización
+        with open(self.ready_path, 'w') as f:
+            f.write("ready")
+        print(f"Archivo .ready creado: {self.ready_path}")
 
 
         # Configurar MediaPipe Pose
@@ -263,4 +267,3 @@ if __name__ == "__main__":
     cam_index = int(sys.argv[1]) if len(sys.argv) > 1 else 0
     video_capture = VideoCapture(camera_index=cam_index)
     video_capture.start()
-

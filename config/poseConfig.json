@@ -10,7 +10,7 @@
     "SEM_SHM1":"/semShm1",
     "SEM_SHM2":"/semShm2",
     "BUFFER_SIZE": 50,
-    "TEST_MODE": true,
+    "TEST_MODE": false,
     "TEST_FOLDER": "/Users/MZT/pfg/test/images/test",
     "VIEW1": "Front",
     "VIEW2": "Right",

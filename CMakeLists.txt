@@ -196,6 +196,7 @@ set(PROJECT_SOURCES
     src/ui/client/userclientconfigwidget.cpp
     src/ui/client/userclientconfigwidget.ui
     resources.qrc
+    README_PFG.md
 )
 
 
@@ -218,11 +219,12 @@ target_link_libraries(pfg PRIVATE
 
 
 include(GNUInstallDirs)
-install(TARGETS pfg
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+#install(TARGETS pfg
+#    BUNDLE DESTINATION .
+#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#)
+install(TARGETS pfg DESTINATION .)
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(pfg)
@@ -391,4 +393,44 @@ target_link_libraries(Test_Functional PRIVATE
     nlohmann_json::nlohmann_json
     Qt6::Sql
     ${OpenCV_LIBS}
+)
+
+
+# ----------------------------------
+# Empaquetado ZIP con CPack
+# ----------------------------------
+include(InstallRequiredSystemLibraries)
+
+set(CPACK_PACKAGE_NAME "pfg")
+set(CPACK_PACKAGE_VENDOR "UNED")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Sistema psicomotor inteligente para corrección de ejercicios")
+set(CPACK_PACKAGE_VERSION_MAJOR "0")
+set(CPACK_PACKAGE_VERSION_MINOR "1")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_PACKAGE_CONTACT "mzarza8@alumno.uned.es")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README_PFG.md")
+set(CPACK_GENERATOR "ZIP")
+set(CPACK_PACKAGE_DIRECTORY "${CMAKE_BINARY_DIR}/package")
+
+include(CPack)
+
+
+
+install(FILES
+    mediapipePy/VideoCapture.py
+    DESTINATION .
+)
+
+
+install(FILES
+    config/poseConfig.json
+    config/schema.sql
+    DESTINATION config
+)
+
+install(DIRECTORY sounds/ DESTINATION sounds)
+
+install(FILES
+    data/data.db
+    DESTINATION .
 )
