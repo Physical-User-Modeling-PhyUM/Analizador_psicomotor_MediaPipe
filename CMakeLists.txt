@@ -235,6 +235,11 @@ endif()
 file(GLOB_RECURSE DOXYGEN_DOCS "docs/html/*")
 source_group("Documentation" FILES ${DOXYGEN_DOCS})
 
+
+file(GLOB_RECURSE UML_FILES "${CMAKE_SOURCE_DIR}/UML/*")
+add_custom_target(UML_Docs SOURCES ${UML_FILES})
+
+
 # -------------------------
 # Test Unitario
 # -------------------------
