@@ -28,6 +28,8 @@ UserClientMainBoardWidget::UserClientMainBoardWidget(QSharedPointer<AppControlle
     configWidget = new UserClientConfigWidget(controller, this);
     ui->stackedWidget->insertWidget(3, configWidget);
 
+    metricsWidget = new UserClientMetricsWidget(controller, this);
+    ui->stackedWidget->insertWidget(4, metricsWidget);
 
     // Escuchar errores del repositorio
     connect(controller->getTrainingManager()->getRepository().data(),
@@ -111,7 +113,7 @@ void UserClientMainBoardWidget::onSectionChanged(int index)
 
         break;
     case 4:
-
+               if (metricsWidget) metricsWidget->setUser(currentUser);
         break;
     default:
         break;

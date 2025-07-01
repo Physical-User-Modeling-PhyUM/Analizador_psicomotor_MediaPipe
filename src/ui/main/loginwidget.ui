@@ -367,7 +367,7 @@
                 <string/>
                </property>
                <property name="placeholderText">
-                <string>introduzca su nombre de usuario</string>
+                <string>Enter your userName</string>
                </property>
               </widget>
              </item>
@@ -427,7 +427,7 @@
                 <string/>
                </property>
                <property name="placeholderText">
-                <string>introduzca su email</string>
+                <string>Enter your email</string>
                </property>
               </widget>
              </item>
@@ -490,7 +490,7 @@
                 <enum>QLineEdit::EchoMode::PasswordEchoOnEdit</enum>
                </property>
                <property name="placeholderText">
-                <string>Introduzca su password</string>
+                <string>Enter your password</string>
                </property>
               </widget>
              </item>

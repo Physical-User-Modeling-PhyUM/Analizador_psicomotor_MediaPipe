@@ -13,6 +13,7 @@
 #include "profiles/user.h"
 #include "core/appcontroller.h"
 #include "ui/client/userclientconfigwidget.h"
+#include "ui/client/userclientmetricswidget.h"
 #include "ui/client/userclienttrainingsesionwidget.h"
 #include "userclientinfowidget.h"
 #include "userclientprofilewidget.h"
@@ -67,6 +68,7 @@ private:
     QPointer<UserClientTrainingSesionWidget> trainingSelectionWidget; ///< Widget de selección de entrenamientos.
     QPointer<UserClientprofileWidget> profileWidget; ///< Widget de perfil personal.
     QPointer<UserClientConfigWidget> configWidget; ///< Widget de configuración personal.
+    QPointer<UserClientMetricsWidget> metricsWidget; ///< Widget de métricas personales.
 };
 
 #endif // USERCLIENTMAINBOARDWIDGET_H

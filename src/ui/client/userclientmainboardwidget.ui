@@ -37,7 +37,7 @@
        </item>
        <item>
         <property name="text">
-         <string>Training Sesion</string>
+         <string>Training Session</string>
         </property>
        </item>
        <item>
@@ -48,6 +48,11 @@
        <item>
         <property name="text">
          <string>Settings</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Metrics</string>
         </property>
        </item>
        <item>

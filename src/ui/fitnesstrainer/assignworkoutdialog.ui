@@ -57,14 +57,14 @@
        <item>
         <widget class="QPushButton" name="Assign_Button">
          <property name="text">
-          <string>Asignar</string>
+          <string>Assign</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="cancel_Button">
          <property name="text">
-          <string>Cancelar</string>
+          <string>Cancel</string>
          </property>
         </widget>
        </item>

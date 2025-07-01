@@ -24,7 +24,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>TextLabel</string>
+          <string>Repetition times on a Set</string>
          </property>
         </widget>
        </item>
@@ -49,7 +49,7 @@
          <item>
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>TextLabel</string>
+            <string>Set</string>
            </property>
           </widget>
          </item>
@@ -65,7 +65,7 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>TextLabel</string>
+          <string>Exess in timed States</string>
          </property>
         </widget>
        </item>

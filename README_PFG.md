@@ -15,7 +15,7 @@ Este proyecto implementa una aplicación centrada en el análisis y corrección 
 
 ---
 
-## 🔧 Compilación
+## Compilación
 
 ### macOS
 
@@ -30,7 +30,7 @@ cmake -B build -DCMAKE_PREFIX_PATH="$(brew --prefix qt@6);$(brew --prefix opencv
 cmake --build build
 ```
 
-> Asegúrate de usar el entorno correcto (Xcode o Ninja). Puedes añadir `-G Ninja` si lo deseas.
+> Asegúrese de usar el entorno correcto (Xcode o Ninja).
 
 ---
 
@@ -50,20 +50,20 @@ cmake --build build
 
 ### Windows (recomendado con vcpkg)
 
-Instala [vcpkg](https://github.com/microsoft/vcpkg) y luego:
+Instale [vcpkg](https://github.com/microsoft/vcpkg) y luego:
 
 ```bash
 vcpkg install qt6-base qt6-multimedia qt6-charts opencv sqlite3 nlohmann-json
 ```
 
-Luego configura CMake con el toolchain:
+Luego configure CMake con el toolchain:
 
 ```bash
 cmake -B build -DCMAKE_TOOLCHAIN_FILE=C:/ruta/a/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build build --config Release
 ```
 
-> Usa `Visual Studio` o `Ninja` como generador.
+> Use `Visual Studio` o `Ninja` como generador.
 
 ---
 
@@ -74,7 +74,7 @@ cmake --build build --config Release
 - `Test_Integration`: pruebas de integración
 - `Test_Functional`: pruebas funcionales con `FakeDBManager`
 
-Puedes ejecutar pruebas con:
+Puede ejecutar pruebas con:
 
 ```bash
 ./build/Test_Unit
@@ -97,7 +97,7 @@ Puedes ejecutar pruebas con:
 
 ## Notas
 
-- Asegúrate de copiar `config/`, `sounds/`, `VideoCapture.py` y `data.db` en la ruta que espera tu aplicación (`AppController` lo gestiona).
-- En Windows, asegúrate de que las DLLs necesarias (Qt/OpenCV/sqlite) estén en el PATH o en el mismo directorio.
+- Asegúrese de que `config/`, `sounds/`, `VideoCapture.py` y `data.db` se encuentren en la ruta que espera tu aplicación (`AppController` lo gestiona).
+- En Windows, asegúrese de que las librerias necesarias (Qt/OpenCV/sqlite) estén en el PATH o en el mismo directorio.
 
 ---

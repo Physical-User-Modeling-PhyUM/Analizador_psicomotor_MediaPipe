@@ -36,7 +36,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Trainee performances</string>
+       <string>Trainee performance</string>
       </property>
      </item>
      <item>
@@ -494,7 +494,7 @@
                     <item>
                      <widget class="QPushButton" name="AssignButton">
                       <property name="text">
-                       <string>Asignar a Cliente</string>
+                       <string>Assign to a Client</string>
                       </property>
                      </widget>
                     </item>

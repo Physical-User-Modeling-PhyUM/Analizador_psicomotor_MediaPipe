@@ -201,7 +201,8 @@ set(PROJECT_SOURCES
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(pfg MANUAL_FINALIZATION ${PROJECT_SOURCES})
+    qt_add_executable(pfg MANUAL_FINALIZATION ${PROJECT_SOURCES}
+        src/ui/client/userclientmetricswidget.h src/ui/client/userclientmetricswidget.cpp src/ui/client/userclientmetricswidget.ui)
 else()
     add_executable(pfg ${PROJECT_SOURCES})
 endif()

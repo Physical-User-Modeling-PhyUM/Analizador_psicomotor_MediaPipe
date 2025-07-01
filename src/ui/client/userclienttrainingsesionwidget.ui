@@ -77,7 +77,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Entrenamientos Asignados</string>
+              <string>Assigned Workouts</string>
              </property>
             </widget>
            </item>
@@ -118,7 +118,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>Descrición:</string>
+                <string>Description</string>
                </property>
               </widget>
              </item>
@@ -240,7 +240,7 @@
              <item>
               <widget class="QPushButton" name="startSesionButton">
                <property name="text">
-                <string>Start a Training Sesion</string>
+                <string>Start a Training Session</string>
                </property>
               </widget>
              </item>
@@ -261,7 +261,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Ejercicios incluidos en el Plan de Entrenamiento</string>
+              <string>Exercises in the Workout Plan</string>
              </property>
             </widget>
            </item>
