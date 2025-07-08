@@ -25,7 +25,5 @@
     <qresource prefix="/config">
         <file>config/schema.sql</file>
     </qresource>
-    <qresource prefix="/UML">
-        <file> UML/PFG.asta</file>
-    </qresource>
+    <qresource prefix="/UML"/>
 </RCC>
