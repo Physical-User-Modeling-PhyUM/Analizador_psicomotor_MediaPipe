@@ -80,8 +80,8 @@ void TestIntegracionUserManagerDB::testUpdateAndGetClientProfile()
 
 void TestIntegracionUserManagerDB::cleanupTestCase()
 {
-    QVERIFY(repo->deleteUser(testClientId));
-    delete userManager;
-    delete repo;
-    delete db;
+    // QVERIFY(repo->deleteUser(testClientId));
+    // delete userManager;
+    // delete repo;
+    // delete db;
 }

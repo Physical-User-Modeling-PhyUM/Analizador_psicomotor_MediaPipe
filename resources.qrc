@@ -3,6 +3,7 @@
         <file>images/blank-profile.jpg</file>
         <file>images/login.png</file>
         <file>images/1.png</file>
+        <file>images/angulos.png</file>
     </qresource>
     <qresource prefix="/sounds">
         <file>sounds/tadaa.wav</file>

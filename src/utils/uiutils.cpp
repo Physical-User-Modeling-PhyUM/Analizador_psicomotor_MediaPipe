@@ -160,7 +160,7 @@ QHash<QPair<int, int>, QSet<Condition>> UiUtils::toStateTransitions(UiTableModel
 
     auto rows = model->getDataSet();
     for (const auto& row : rows) {
-        if (row.size() < 6) continue;
+        if (row.size() < 5) continue;
 
         int fromId = row[0].toInt();
         int toId = row[1].toInt();
@@ -172,7 +172,7 @@ QHash<QPair<int, int>, QSet<Condition>> UiUtils::toStateTransitions(UiTableModel
         QPair<int, int> key(fromId, toId);
         transitions[key].insert(Condition(type, line,0,view));
     }
-
+    //qDebug()<<"UiUtils model-> transitions"<<model->rowCount()<<"->"<<transitions.size();
     return transitions;
 }
 /**

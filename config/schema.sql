@@ -269,7 +269,7 @@ CREATE TABLE TrainingSesion (
     date TEXT ,
     duration INTEGER ,
     FOREIGN KEY (idClient) REFERENCES Users(idUser),
-    FOREIGN KEY (idExercise) REFERENCES ExerciseSummary(idExercise)
+    FOREIGN KEY (idEx) REFERENCES ExerciseSummary(idEx)
 );
 
 --Resumenes de los ejercicions de las sesiones

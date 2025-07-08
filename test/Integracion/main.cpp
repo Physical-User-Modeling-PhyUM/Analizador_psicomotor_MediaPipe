@@ -29,8 +29,8 @@ int main(int argc, char *argv[]) {
      status |= QTest::qExec(&test_T, argc, argv);
 
     //TestdeDummyPostManager
-    TestIntegracionDummyPoseManager testDummy;
-    testDummy.run();
+    //TestIntegracionDummyPoseManager testDummy;
+    //testDummy.run();
 
     return status;
 

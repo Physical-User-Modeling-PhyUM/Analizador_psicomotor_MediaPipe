@@ -5,30 +5,34 @@
 #include <QTextStream>
 #include <QLoggingCategory>
 
-QFile logFile;
+static QFile logFile;
 
-void initLogFile(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void initLogFileHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    QString fileName = "log_" + QDate::currentDate().toString("yyyyMMdd") + ".txt";
-    logFile.setFileName(QCoreApplication::applicationDirPath() + "/" + fileName);
-    logFile.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
-
-    QTextStream out(&logFile);
-    QString typeStr;
-    switch (type) {
-    case QtDebugMsg:    typeStr = "DEBUG"; break;
-    case QtInfoMsg:     typeStr = "INFO"; break;
-    case QtWarningMsg:  typeStr = "WARN"; break;
-    case QtCriticalMsg: typeStr = "CRIT"; break;
-    case QtFatalMsg:    typeStr = "FATAL"; break;
+    // Creamos la carpeta Logs si no existe
+    QString logDirPath = QCoreApplication::applicationDirPath() + "/Logs";
+    QDir logDir(logDirPath);
+    if (!logDir.exists()) {
+        logDir.mkpath(".");
     }
 
-    out << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
-        << " [" << typeStr << "] " << msg << "\n";
-    out.flush();
+    // Solo configuramos una vez
+    if (!logFile.isOpen()) {
+        QString fileName = "log_" + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + ".txt";
+        QString fullPath = logDirPath + "/" + fileName;
 
-    if (type == QtFatalMsg)
-        abort();
+        logFile.setFileName(fullPath);
+        if (!logFile.open(QIODevice::Append | QIODevice::Text)) {
+            qCritical() << "No se pudo abrir el archivo de log:" << fullPath;
+            return;
+        }
+    }
+
+    QTextStream out(&logFile);
+    out << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz ")
+        << "[" << context.category << "] "
+        << msg << "\n";
+    out.flush();
 }
 
 QScopedPointer<QFile> stateLogFile;
@@ -46,9 +50,9 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext& context, con
         logStream.flush();
     }
 
-    // Opcional: también imprimir por consola
-    stream << msg << "\n";
-    stream.flush();
+
+    //stream << msg << "\n";
+    //stream.flush();
 }
 
 
@@ -56,20 +60,17 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext& context, con
 
 int main(int argc, char *argv[])
 {
-    stateLogFile.reset(new QFile("/Users/MZT/pfg/build/Desktop_x86_darwin_generic_mach_o_64bit-Debug/log_state_machine.txt"));
-    stateLogFile->open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text);
+    //stateLogFile.reset(new QFile("/Users/MZT/pfg/build/Desktop_x86_darwin_generic_mach_o_64bit-Debug/log_state_machine.txt"));
+    //stateLogFile->open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text);
 
-    qInstallMessageHandler(customMessageHandler);
+    //qInstallMessageHandler(customMessageHandler);
 
     QApplication a(argc, argv);
 
-    //qInstallMessageHandler(initLogFile);
+    qInstallMessageHandler(initLogFileHandler);
     auto controller = QSharedPointer<AppController>::create();
     controller->setSelf(controller);
     controller->initialize();
-
-    //MainWindow w(controller);
-    //w.show();
 
     return a.exec();
 }

@@ -101,3 +101,87 @@ Puede ejecutar pruebas con:
 - En Windows, asegúrese de que las librerias necesarias (Qt/OpenCV/sqlite) estén en el PATH o en el mismo directorio.
 
 ---
+---
+
+## Empaquetado del Proyecto
+
+El proyecto incluye un sistema de empaquetado mediante **CPack**, que genera automáticamente un archivo `.zip` listo para distribución.
+
+### 🔧 Requisitos
+
+Antes de empaquetar, asegúrate de:
+
+1. Haber compilado el proyecto al menos una vez.
+2. Tener `CMake` ≥ 3.16 correctamente instalado.
+3. Que la instalación de Qt y OpenCV esté detectada por `cmake`.
+
+###  ¿Cómo generar el paquete ZIP?
+
+1. Abre una terminal y accede al **directorio de compilación creado por Qt Creator**. En macOS, normalmente se encuentra en:
+
+```bash
+cd build/Desktop_x86_darwin_generic_mach_o_64bit-Debug
+```
+
+2. Ejecuta el siguiente comando:
+
+```bash
+cmake --build . --target package
+```
+
+> Asegúrate de usar `.` como directorio actual. **No uses `--build build` desde dentro del build.**
+
+3. El archivo ZIP generado se ubicará en:
+
+```
+build/Desktop_x86_darwin_generic_mach_o_64bit-Debug/package/pfg-0.1.0-*.zip
+```
+
+###  El paquete contiene:
+
+- El ejecutable `pfg`
+- La base de datos `data.db` con usuarios y datos de prueba
+- Script de captura `VideoCapture.py`
+- Archivos de configuración (`poseConfig.json`, `schema.sql`)
+- Carpeta `sounds/` con sonidos de retroalimentación
+
+---
+
+## Base de Datos de Prueba
+
+El archivo `data.db` incluido contiene usuarios por defecto para propósitos de evaluación y demostración:
+
+| Usuario    | Tipo         | Contraseña |
+|------------|--------------|------------|
+| cliente1   | Cliente      | 1234       |
+| cliente2   | Cliente      | 1234       |
+| cliente3   | Cliente      | 1234       |
+| trainer1   | Entrenador   | 1234       |
+| admin1     | Administrador| 1234       |
+
+Estos usuarios pueden utilizarse tras el login inicial para explorar las funcionalidades desde diferentes roles.
+
+---
+
+## Documentación Generada
+
+El proyecto incluye documentación técnica generada automáticamente con **Doxygen**. Esta documentación proporciona:
+
+- Descripción estructurada del código (clases, métodos, atributos).
+- Diagramas UML generados a partir del código fuente.
+- Referencias cruzadas y navegación interactiva.
+
+Puedes acceder a la documentación desde el siguiente archivo HTML:
+
+ [`docs/html/index.html`](docs/html/index.html)
+ 
+[`UML/html/index.html`](docs/html/index.html)
+
+Para regenerar la documentación localmente, ejecuta:
+
+```bash
+doxygen Doxyfile
+```
+
+> Requiere tener instalado Doxygen (`brew install doxygen` o `sudo apt install doxygen`).
+

@@ -297,13 +297,14 @@ int TrainingRepository::saveEspec(QSharedPointer<ExerciseEspec> espec)
     trTable.setColumns(dbManager->get(TypeBDEnum::Transition).getColumnsNames());
 
     auto transitions = espec->getTransitionTable();
+    qDebug(TrainingRepo) << "transitions en ejercicio: "<<transitions.size();
     for (auto it = transitions.constBegin(); it != transitions.constEnd(); ++it) {
 
         int from = it.key().first;
         int to = it.key().second;
 
          QSet<Condition> conditions = it.value();
-
+         qDebug(TrainingRepo) << "saveEspec:Guardando transition de: "<< from<<" to "<<to;
         for (const Condition& cond : conditions) {
             trTable.addRow({
                 idEx,

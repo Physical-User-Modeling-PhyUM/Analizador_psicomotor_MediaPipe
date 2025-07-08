@@ -538,6 +538,7 @@ void TrainerWorkoutDesignWidget::on_new_TransitionButton_clicked()
 
     currentExercise->addTransition(pair,defaultCond) ;
     currentWorkout->replaceExercise(currentExercise);
+    qDebug(trainerWorkoutDesignWidget)<<"Agregada Transicion, total: "<<currentExercise->getTransitionTable().size();
 
     QHash<QPair<int, int>, QSet<Condition>>  transitions=currentExercise->getTransitionTable();
 
